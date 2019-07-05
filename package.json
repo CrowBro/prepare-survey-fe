@@ -1,0 +1,76 @@
+{
+    "name": "boilerplate",
+    "version": "1.0.0",
+    "description": "This is a boilerplate app",
+    "private": true,
+    "scripts": {
+      "build": "webpack --mode production",
+      "build:dev": "webpack --mode development",
+      "lint": "eslint src/**/*.ts src/**/*.tsx && stylelint 'src/**/*.scss' --syntax scss",
+      "lintfix": "eslint src/**/*.ts src/**/*.tsx --fix",
+      "serve": "webpack-dev-server --mode development --hot --progress",
+      "start": "npm run serve",
+      "test:watch": "jest --watchAll",
+      "test": "jest",
+      "watch": "webpack --mode development --progress --watch",
+      "backend:mock": "json-server --routes mockend/routes.json --watch mockend/mockDb.json",
+      "start:mock": "concurrently -k -p \"[{name}]\" -n \"HTTP-Server,Mock-Backend\" -c \"cyan.bold,green.bold\" \"npm run serve\" \"npm run backend:mock\""
+    },
+    "author": "",
+    "license": "ISC",
+    "husky": {
+      "hooks": {
+        "pre-push": "npm run lint && npm run test"
+      }
+    },
+    "devDependencies": {
+      "@babel/core": "7.4.0",
+      "@babel/preset-env": "7.4.2",
+      "@babel/preset-react": "7.0.0",
+      "@types/html-webpack-plugin": "3.2.0",
+      "@types/lodash": "^4.14.129",
+      "@types/node": "11.11.3",
+      "@types/react": "16.8.8",
+      "@types/react-dom": "16.8.2",
+      "@types/react-router": "^5.0.1",
+      "@types/react-router-dom": "^4.3.3",
+      "@types/redux-logger": "3.0.7",
+      "@types/redux-mock-store": "^1.0.0",
+      "@types/webpack": "4.4.26",
+      "@types/webpack-dev-server": "3.1.4",
+      "@typescript-eslint/eslint-plugin": "1.11.0",
+      "@typescript-eslint/parser": "1.11.0",
+      "babel-eslint": "10.0.1",
+      "babel-loader": "8.0.5",
+      "concurrently": "4.1.0",
+      "eslint": "5.16.0",
+      "eslint-config-react-app": "3.0.8",
+      "eslint-loader": "2.1.2",
+      "eslint-plugin-flowtype": "3.6.1",
+      "eslint-plugin-import": "2.16.0",
+      "eslint-plugin-jsx-a11y": "6.2.1",
+      "eslint-plugin-react": "7.12.4",
+      "eslint-plugin-react-hooks": "^1.6.0",
+      "html-loader": "0.5.5",
+      "html-webpack-plugin": "3.2.0",
+      "json-server": "0.15.0",
+      "source-map-loader": "0.2.4",
+      "ts-loader": "5.3.3",
+      "ts-node": "8.0.3",
+      "typescript": "3.5.2",
+      "webpack": "4.29.6",
+      "webpack-cli": "3.3.0",
+      "webpack-dev-server": "3.2.1",
+      "webpack-stylish": "^0.1.8"
+    },
+    "dependencies": {
+      "axios": "^0.18.0",
+      "lodash": "4.17.11",
+      "react": "16.8.4",
+      "react-dom": "16.8.4",
+      "react-redux": "6.0.1",
+      "react-router": "5.0.1",
+      "react-router-dom": "5.0.1"
+    }
+  }
+  

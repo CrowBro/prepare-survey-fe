@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "strictNullChecks": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowJs": false,
+        "module": "commonjs",
+        "target": "es5",
+        "jsx": "react",
+        "lib": [
+            "es2017",
+            "dom"
+        ],
+        "baseUrl": "./src"
+    },
+    "paths": {
+        "redux-thunk": ["typingsOverloads/redux-thunk"]
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules/*"
+    ]
+}
