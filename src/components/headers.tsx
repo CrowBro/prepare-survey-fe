@@ -14,7 +14,6 @@ const Header = (props: RouteComponentProps) => {
             <Tabs value={props.location.pathname} onChange={handleChange}>
                 <Tab label="Home" value={routes.home} />
                 <Tab label="Sports" value={routes.sportsList}/>
-                <Tab label="Sports form" value={routes.sportsForm}/>
             </Tabs>
         </AppBar>
     );
