@@ -14,7 +14,7 @@ const SpacedTextField = styled(TextField)({
     marginBottom: 25
 })
 
-const brands: OptionType[] = [
+const brands: OptionType<string>[] = [
     "Adidas",
     "Nike"
 ].map(brand => { return { label: brand, value: brand } });

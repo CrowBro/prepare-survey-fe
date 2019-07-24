@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import SportsForm from "components/sportsForm";
 import SportsList from "components/sportsList";
 import Header from "components/headers";
+import Competitor from "components/brandsCompetitorsForm";
 import * as routes from "constants/routes";
 
 export default () => (
@@ -11,6 +12,7 @@ export default () => (
         <Switch>
             <Route path="/sports/:id" component={SportsForm}/>
             <Route path="/sports" component={SportsList}/>
+            <Route path="/test" component={Competitor}/>
             <Route path={routes.home} component={SportsList}/>
         </Switch>
     </BrowserRouter>

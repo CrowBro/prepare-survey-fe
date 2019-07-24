@@ -18,9 +18,9 @@ import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
 import { ValueType } from "react-select/src/types";
 
-export interface OptionType {
+export interface OptionType<TKey> {
     label: string;
-    value: string;
+    value: TKey;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function NoOptionsMessage(props: NoticeProps<OptionType>) {
+function NoOptionsMessage<T>(props: NoticeProps<OptionType<T>>) {
     return (
         <Typography
             color="textSecondary"
@@ -93,7 +93,7 @@ function inputComponent({ inputRef, ...props }: InputComponentProps) {
     return <div ref={inputRef} {...props} />;
 }
 
-function Control(props: ControlProps<OptionType>) {
+function Control<T>(props: ControlProps<OptionType<T>>) {
     const {
         children,
         innerProps,
@@ -118,7 +118,7 @@ function Control(props: ControlProps<OptionType>) {
     );
 }
 
-function Option(props: OptionProps<OptionType>) {
+function Option<T>(props: OptionProps<OptionType<T>>) {
     return (
         <MenuItem
             ref={props.innerRef}
@@ -134,7 +134,7 @@ function Option(props: OptionProps<OptionType>) {
     );
 }
 
-function Placeholder(props: PlaceholderProps<OptionType>) {
+function Placeholder<T>(props: PlaceholderProps<OptionType<T>>) {
     return (
         <Typography
             color="textSecondary"
@@ -146,7 +146,7 @@ function Placeholder(props: PlaceholderProps<OptionType>) {
     );
 }
 
-function SingleValue(props: SingleValueProps<OptionType>) {
+function SingleValue<T>(props: SingleValueProps<OptionType<T>>) {
     return (
         <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
             {props.children}
@@ -154,11 +154,11 @@ function SingleValue(props: SingleValueProps<OptionType>) {
     );
 }
 
-function ValueContainer(props: ValueContainerProps<OptionType>) {
+function ValueContainer<T>(props: ValueContainerProps<OptionType<T>>) {
     return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
 }
 
-function MultiValue(props: MultiValueProps<OptionType>) {
+function MultiValue<T>(props: MultiValueProps<OptionType<T>>) {
     return (
         <Chip
             tabIndex={-1}
@@ -172,7 +172,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
     );
 }
 
-function Menu(props: MenuProps<OptionType>) {
+function Menu<T>(props: MenuProps<OptionType<T>>) {
     return (
         <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
             {props.children}
@@ -191,18 +191,19 @@ const components = {
     ValueContainer,
 };
 
-interface SelectProps {
+interface SelectProps<T> {
     label: string;
     placeholder?: string;
-    options: OptionType[];
+    options: OptionType<T>[];
 }
 
-const IntegrationReactSelect = (props: SelectProps) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [single, setSingle] = React.useState<ValueType<OptionType>>(null);
+    const [single, setSingle] = React.useState<ValueType<OptionType<T>>>(null);
 
-    function handleChangeSingle(value: ValueType<OptionType>) {
+    function handleChangeSingle(value: ValueType<OptionType<T>>) {
         setSingle(value);
     }
 
