@@ -21,7 +21,11 @@ const SurveyQuestionForm = ({ question }: SurveyQuestionFormProps) => {
                     title={
                         <>
                             {editing
-                                ? <QuestionTitleInput question={question} onConfirm={(text) => { console.log(text) }} onCancel={() => setEditing(false)} />
+                                ? <QuestionTitleInput
+                                    question={question}
+                                    onConfirm={(text) => { console.log(text) }}
+                                    onCancel={() => setEditing(false)}
+                                />
                                 : question.text
                             }
                         </>
