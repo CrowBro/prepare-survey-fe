@@ -4,6 +4,7 @@ import { TextField, Typography, Toolbar, Container, Grid, Paper } from "@materia
 import { styled } from "@material-ui/styles";
 import CategoryDetailsForm from "components/productCategories";
 import ReactSelect, { OptionType } from "components/autoComplete";
+import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
 
 const BorderedContainer = styled(Container)({
     borderBottom: "1px solid black",
@@ -56,6 +57,7 @@ const SportsForm = () => {
             </Container>
         </Paper>
         <CategoryDetailsForm />
+        <BrandsCompetitorsForm />
     </>
     );
 }
