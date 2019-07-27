@@ -1,48 +1,18 @@
 import * as React from "react";
 import { useState } from "react";
-import { Card, CardActions, CardHeader, CardContent, Typography, Grid, IconButton, Paper, InputBase } from "@material-ui/core";
-import { Edit, ExpandMore, Check, Close } from "@material-ui/icons";
-
-interface Answer {
-    id: number;
-    text: string;
-}
-
-interface SurveyQuestion {
-    id: number;
-    text: string;
-    answers: Answer[];
-}
+import { Card, CardActions, CardHeader, Grid, IconButton, Collapse } from "@material-ui/core";
+import { Edit, ExpandMore } from "@material-ui/icons";
+import { SurveyQuestion } from "types/surveyQuestion";
+import QuestionTitleInput from "components/confirmableTextInput";
 
 interface SurveyQuestionFormProps {
     question: SurveyQuestion;
     editing: boolean;
 }
 
-interface QuestionTextInputProps {
-    onConfirm: (text: string) => void;
-    onCancel: () => void;
-}
-
-const QuestionTextInput = (props: QuestionTextInputProps) => {
-    const { onConfirm, onCancel } = props;
-
-    return (
-        <Paper>
-            <InputBase
-                placeholder="Question text"/>
-            <IconButton>
-                <Check />
-            </IconButton>
-            <IconButton onClick={onCancel}>
-                <Close />
-            </IconButton>
-        </Paper>
-    )
-}
-
 const SurveyQuestionForm = ({ question }: SurveyQuestionFormProps) => {
     const [ editing, setEditing ] = useState(false);
+    const [ answerExpanded, setAnswersExpanded ] = useState(false);
 
     return (
         <Grid container>
@@ -51,7 +21,7 @@ const SurveyQuestionForm = ({ question }: SurveyQuestionFormProps) => {
                     title={
                         <>
                             {editing
-                                ? <QuestionTextInput onConfirm={() => {  }} onCancel={() => setEditing(false)} />
+                                ? <QuestionTitleInput question={question} onConfirm={(text) => { console.log(text) }} onCancel={() => setEditing(false)} />
                                 : question.text
                             }
                         </>
@@ -69,10 +39,13 @@ const SurveyQuestionForm = ({ question }: SurveyQuestionFormProps) => {
                     }
                 />
                 <CardActions>
-                    <IconButton>
+                    <IconButton onClick={() => setAnswersExpanded(s => !s)}>
                         <ExpandMore />
                     </IconButton>
                 </CardActions>
+                <Collapse in={answerExpanded} timeout={"auto"}>
+                    <div> Test </div>
+                </Collapse>
             </Card>
         </Grid>
     )
