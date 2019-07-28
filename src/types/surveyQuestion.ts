@@ -6,5 +6,6 @@ export interface Answer {
 export interface SurveyQuestion {
     id: number;
     text: string;
+    category: string;
     answers: Answer[];
 }

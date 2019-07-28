@@ -3,16 +3,16 @@ import { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { IconButton, Paper, InputBase } from "@material-ui/core";
 import { Check, Close } from "@material-ui/icons";
-import { SurveyQuestion } from "types/surveyQuestion";
 
 const useStyles = makeStyles({
     root: {
         padding: "2px 4px",
-        display: "flex",
-        alignItems: "center",
+        marginRight: "20px",
+        display: "flex"
     },
     input: {
         marginLeft: 8,
+        padding: 10,
         flex: 1,
     },
     iconButton: {
@@ -21,17 +21,17 @@ const useStyles = makeStyles({
 });
 
 interface QuestionTitleInput {
-    question: SurveyQuestion;
+    value: string;
     onConfirm: (text: string) => void;
     onCancel: () => void;
 }
 
-const QuestionTitleInput = (props: QuestionTitleInput) => {
+const ConfirmableTextInput = (props: QuestionTitleInput) => {
     const classes = useStyles();
 
-    const { onConfirm, onCancel, question } = props;
+    const { onConfirm, onCancel, value } = props;
 
-    const [ text, setText ] = useState(question.text);
+    const [ text, setText ] = useState(value);
 
     return (
         <Paper className={classes.root}>
@@ -50,4 +50,4 @@ const QuestionTitleInput = (props: QuestionTitleInput) => {
     )
 }
 
-export default QuestionTitleInput;
+export default ConfirmableTextInput;
