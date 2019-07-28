@@ -10,7 +10,7 @@ const SurveyForm = () => {
     useEffect(() => {
         getSurvey()
             .then(resp => setSurveys(resp))
-    })
+    }, []);
 
     const currentSurvey = surveys && surveys.latestVersionSurvey && surveys.latestVersionSurvey.questions;
     const currentQuestions = currentSurvey || [];
