@@ -9,7 +9,7 @@ export interface Sport {
 
 export const getSports = async () => {
     const params = {
-        year: 2018,
+        year: 2019,
         country: "fr"
     }
 

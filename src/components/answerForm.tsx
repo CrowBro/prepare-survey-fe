@@ -1,10 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import { List, ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton"
 import Switch from "@material-ui/core/Switch";
 import Edit from "@material-ui/icons/Edit";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Answer } from "types/surveyQuestion";
 import ConfirmableTextInput from "components/confirmableTextInput";
 
