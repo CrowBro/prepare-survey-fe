@@ -12,7 +12,6 @@ const Header = (props: RouteComponentProps) => {
     return (
         <AppBar position="static">
             <Tabs value={props.location.pathname} onChange={handleChange}>
-                <Tab label="Home" value={"/"} />
                 <Tab label="Sports" value={"/sports"}/>
                 <Tab label="Survey" value={"/survey"}/>
             </Tabs>
