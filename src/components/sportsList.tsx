@@ -30,7 +30,7 @@ const SportsList = (props: RouteComponentProps) => {
                 <TableBody>
                     {sports.map(sport => (
                         <TableRow key={sport.sportId} onClick={event => props.history.push(`/sports/${sport.sportId}`)}>
-                            <TableCell align="left">{sport.sportId}</TableCell>
+                            <TableCell align="left">{sport.sportDisplayId}</TableCell>
                             <TableCell align="left">{sport.sportName}</TableCell>
                             <TableCell align="right">{sport.products[0]}</TableCell>
                             <TableCell align="right">{sport.products[1]}</TableCell>

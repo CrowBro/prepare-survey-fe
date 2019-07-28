@@ -2,6 +2,7 @@ import axios from "axios";
 
 export interface Sport {
     sportId: number;
+    sportDisplayId: number;
     sportName: string;
     products: string[];
     status: number;

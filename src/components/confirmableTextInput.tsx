@@ -12,7 +12,6 @@ const useStyles = makeStyles({
     },
     input: {
         marginLeft: 8,
-        padding: 10,
         flex: 1,
     },
     iconButton: {

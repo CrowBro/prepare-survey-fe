@@ -4,7 +4,6 @@ import SportsForm from "components/sportsForm";
 import SportsList from "components/sportsList";
 import Header from "components/headers";
 import SurveyForm from "components/surveyForm";
-import * as routes from "constants/routes";
 
 export default () => (
     <BrowserRouter>
@@ -12,8 +11,8 @@ export default () => (
         <Switch>
             <Route path="/sports/:id" component={SportsForm}/>
             <Route path="/sports" component={SportsList}/>
-            <Route path="/test" component={SurveyForm}/>
-            <Route path={routes.home} component={SportsList}/>
+            <Route path="/survey" component={SurveyForm}/>
+            <Route path="/" component={SportsList}/>
         </Switch>
     </BrowserRouter>
 );

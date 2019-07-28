@@ -21,18 +21,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     expandOpen: {
         transform: "rotate(180deg)",
+    },
+    invisible: {
+        visibility: "hidden"
     }
 }));
 
 interface SurveyQuestionFormProps {
     question: SurveyQuestion;
+    expanded: boolean;
+    onExpand: () => void;
+    editable: boolean;
 }
 
-const SurveyQuestionForm = ({ question }: SurveyQuestionFormProps) => {
+const SurveyQuestionForm = ({ question, expanded, onExpand, editable }: SurveyQuestionFormProps) => {
     const classes = useStyles();
 
     const [ editing, setEditing ] = useState(false);
-    const [ answerExpanded, setAnswersExpanded ] = useState(false);
 
     return (
         <Grid container>
@@ -52,8 +57,8 @@ const SurveyQuestionForm = ({ question }: SurveyQuestionFormProps) => {
                     }
                     action={
                         <>
-                            {editing
-                                ? <></>
+                            { editing || !editable
+                                ? <IconButton />
                                 :
                                 <IconButton onClick={() => setEditing(s => !s)} >
                                     <Edit />
@@ -68,16 +73,17 @@ const SurveyQuestionForm = ({ question }: SurveyQuestionFormProps) => {
                     </Typography>
                     <IconButton
                         className={clsx(classes.expand, {
-                            [classes.expandOpen]: answerExpanded,
+                            [classes.expandOpen]: expanded,
+                            [classes.invisible]: question.answers.length === 0
                         })}
                         edge="end"
-                        onClick={() => setAnswersExpanded(s => !s)}
+                        onClick={onExpand}
                     >
                         <ExpandMore />
                     </IconButton>
                 </CardActions>
-                <Collapse in={answerExpanded} timeout={"auto"}>
-                    <AnswerForm answers={question.answers}/>
+                <Collapse in={expanded} timeout={"auto"}>
+                    <AnswerForm answers={question.answers} editable={editable}/>
                 </Collapse>
             </Card>
         </Grid>

@@ -15,20 +15,29 @@ const useStyles = makeStyles({
 
 interface AnswerFormProps {
     answers: Answer[];
+    editable: boolean;
 }
 
 interface AnswerListItemProps {
     answer: Answer;
+    editable: boolean;
 }
 
 const AnswerListItem = (props: AnswerListItemProps) => {
     const classes = useStyles();
 
-    const { answer } = props;
+    const { answer, editable } = props;
+
+    const [ isEnabled, setEnabled ] = useState(answer.isEnabled);
+
     const [ editing, setEditing ] = useState(false);
 
     return (
-        <ListItem key={answer.id}>
+        <ListItem
+            onClick={() => {
+                if(!editing) setEditing(true && editable);
+            }}
+        >
             { editing
                 ?
                 <ListItemText 
@@ -39,7 +48,7 @@ const AnswerListItem = (props: AnswerListItemProps) => {
                             onConfirm={(text) => console.log(text)}
                             onCancel={() => setEditing(false)}
                         />
-                    } 
+                    }
                 />
                 : (
                     <>
@@ -47,17 +56,26 @@ const AnswerListItem = (props: AnswerListItemProps) => {
                             disableTypography 
                             primary={answer.text} 
                         />
-                        <ListItemIcon
-                            onClick={() => setEditing(true)}
-                        >
-                            <Edit />
-                        </ListItemIcon>
+                        { editable
+                            ?
+                            <ListItemIcon>
+                                <Edit />
+                            </ListItemIcon>
+                            : <></>
+                        }
                     </>
                 )
             }
             <ListItemSecondaryAction className={classes.switchStyle}>
                 <Switch
+                    color="primary"
                     edge="end"
+                    checked={isEnabled}
+                    onClick={() => setEnabled(s => {
+                        if (editable) 
+                            return !s;
+                        return s;
+                    })}
                 />
             </ListItemSecondaryAction>
         </ListItem>
@@ -65,12 +83,12 @@ const AnswerListItem = (props: AnswerListItemProps) => {
 }
 
 const AnswerForm = (props: AnswerFormProps) => {
-    const { answers } = props;
+    const { answers, editable } = props;
 
 
     return (
         <List>
-            { answers.map(answer => <AnswerListItem answer={answer} />) }
+            { answers.map(answer => <AnswerListItem key={answer.id} answer={answer} editable={editable} />) }
         </List>
     )
 }
