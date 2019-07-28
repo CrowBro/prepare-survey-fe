@@ -10,7 +10,7 @@ import AnswerForm from "components/answerForm";
 
 const useStyles = makeStyles((theme: Theme) => ({
     card: {
-        maxWidth: 450,
+        width: "100vh"
     },
     expand: {
         transform: "rotate(0deg)",
@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface SurveyQuestionFormProps {
     question: SurveyQuestion;
-    editing: boolean;
 }
 
 const SurveyQuestionForm = ({ question }: SurveyQuestionFormProps) => {
