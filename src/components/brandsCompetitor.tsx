@@ -3,11 +3,11 @@ import FormControl from "@material-ui/core/FormControl";
 import { Grid } from "@material-ui/core";
 import ReactSelect, { OptionType } from "components/autoComplete";
 import { AddCircle, RemoveCircle } from "@material-ui/icons";
-import Product from "types/product";
 import BorderedContainer from "components/borderedContainer";
+import { BrandCompetitor } from "dataAccess/api";
 
 interface CategoryProps {
-    product: Partial<Product>;
+    product: Partial<BrandCompetitor>;
     addEnabled: boolean;
     onAdd: () => void;
     onRemove: () => void;
@@ -32,7 +32,7 @@ const Competitor = (props: CategoryProps) => {
             <Grid item md={9}>
                 <BorderedContainer maxWidth={"md"}>
                     <FormControl fullWidth>
-                        <ReactSelect label={"Name"} options={options}/>
+                        <ReactSelect label={"Name"} options={options} value={({ value: product.id, label: product.name || "Placeholder" })} />
                     </FormControl>
                 </BorderedContainer>
             </Grid>

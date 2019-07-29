@@ -40,3 +40,41 @@ export const getSportDetails = async (id: number) => {
 
     return response.data;
 }
+
+export interface ProductFamily {
+    id: number;
+    name: string;
+}
+
+export interface ProductCategory {
+    id: number;
+    name: string;
+    family: ProductFamily;
+    iconId: number;
+    order: number;
+}
+
+interface ProductCategoryResponse {
+    productCategories: ProductCategory[];
+}
+
+export const getProductCategories = async (sportId: number) => {
+    const response = await axios.get<ProductCategoryResponse>(`http://217.182.158.166:4000/api/sports/${sportId}/productCategoryDetails`);
+
+    return response.data.productCategories;
+}
+
+export interface BrandCompetitor {
+    id: number;
+    name: string;
+}
+
+interface BrandCompetitorResponse {
+    competitors: BrandCompetitor[];
+}
+
+export const getCompetitorBrands = async (sportId: number) => {
+    const response = await axios.get<BrandCompetitorResponse>(`http://217.182.158.166:4000/api/sports/${sportId}/brandsCompetitorDetails`);
+
+    return response.data.competitors;
+}

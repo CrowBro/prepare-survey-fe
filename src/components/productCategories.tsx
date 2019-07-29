@@ -3,35 +3,20 @@ import { Typography, Toolbar, Container, Grid, Paper } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 import { AddCircle } from "@material-ui/icons";
 import { List } from "immutable";
-import Product from "types/product";
 import Category from "components/productCategory";
+import { ProductCategory } from "dataAccess/api";
 
 const BorderedContainer = styled(Container)({
     borderBottom: "1px solid black",
     marginBottom: 25
 });
 
-const defaultsProducts: Product[] = [
-    {
-        id: 1,
-        name: "Velo computer",
-        category: "Accessories",
-        iconUri: ""
-    },
-    {
-        id: 2,
-        name: "Velo computer",
-        category: "Accessories",
-        iconUri: ""
-    }
-]
-
 interface CategoryDetailsProps {
-    products: Product[];
+    initialCategories: ProductCategory[];
 }
 
 const CategoryDetailsForm = (props: CategoryDetailsProps) => {
-    const [products, setProducts] = React.useState(List<Partial<Product>>(props.products));
+    const [products, setProducts] = React.useState(List<Partial<ProductCategory>>(props.initialCategories));
 
     return (
         <Grid item md={12}>
@@ -49,7 +34,7 @@ const CategoryDetailsForm = (props: CategoryDetailsProps) => {
                             ? <AddCircle color="primary" onClick={() => setProducts(s => s.push({}))} />
                             : <>
                             {
-                                products.map((product: Partial<Product>, index: number) => (
+                                products.map((product: Partial<ProductCategory>, index: number) => (
                                     <Category
                                         product={product}
                                         addEnabled={products.count() < 6}
@@ -63,10 +48,6 @@ const CategoryDetailsForm = (props: CategoryDetailsProps) => {
             </Paper>
         </Grid>
     )
-}
-
-CategoryDetailsForm.defaultProps = {
-    products: defaultsProducts
 }
 
 export default CategoryDetailsForm;

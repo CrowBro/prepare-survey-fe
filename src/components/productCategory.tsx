@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { TextField, Container, Grid } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 import { AddCircle, RemoveCircle } from "@material-ui/icons";
-import Product from "types/product";
+import { ProductCategory } from "dataAccess/api";
 
 const BorderedContainer = styled(Container)({
     borderBottom: "1px solid black",
@@ -16,7 +16,7 @@ const SpacedTextField = styled(TextField)({
 })
 
 interface CategoryProps {
-    product: Partial<Product>;
+    product: Partial<ProductCategory>;
     addEnabled: boolean;
     onAdd: () => void;
     onRemove: () => void;
@@ -32,7 +32,7 @@ const Category = (props: CategoryProps) => {
                     <FormControl fullWidth>
                         <SpacedTextField label={"Name"} defaultValue={product.name}/>
                         <Typography>
-                            {product.category}
+                            {product.family && product.family.name}
                         </Typography>
                     </FormControl>
                 </BorderedContainer>

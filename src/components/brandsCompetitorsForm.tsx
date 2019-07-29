@@ -3,26 +3,15 @@ import { Typography, Toolbar, Grid, Paper } from "@material-ui/core";
 import { AddCircle } from "@material-ui/icons";
 import { List } from "immutable";
 import BorderedContainer from "components/borderedContainer";
-import Competitor from "types/competitor";
 import BrandsCompetitor from "components/brandsCompetitor";
-
-const defaultsProducts: Competitor[] = [
-    {
-        id: 1,
-        name: "Nike",
-    },
-    {
-        id: 2,
-        name: "Adidas",
-    }
-]
+import { BrandCompetitor } from "dataAccess/api";
 
 interface CategoryDetailsProps {
-    products: Competitor[];
+    initialCompetitors: BrandCompetitor[];
 }
 
 const CategoryDetailsForm = (props: CategoryDetailsProps) => {
-    const [products, setProducts] = React.useState(List<Partial<Competitor>>(props.products));
+    const [products, setProducts] = React.useState(List<Partial<BrandCompetitor>>(props.initialCompetitors));
 
     return (
         <Grid item md={12}>
@@ -40,7 +29,7 @@ const CategoryDetailsForm = (props: CategoryDetailsProps) => {
                             ? <AddCircle color="primary" onClick={() => setProducts(s => s.push({}))} />
                             : <>
                             {
-                                products.map((product: Partial<Competitor>, index: number) => (
+                                products.map((product: Partial<BrandCompetitor>, index: number) => (
                                     <BrandsCompetitor
                                         product={product}
                                         addEnabled={products.count() < 4}
@@ -55,10 +44,6 @@ const CategoryDetailsForm = (props: CategoryDetailsProps) => {
             </Paper>
         </Grid>
     )
-}
-
-CategoryDetailsForm.defaultProps = {
-    products: defaultsProducts
 }
 
 export default CategoryDetailsForm;

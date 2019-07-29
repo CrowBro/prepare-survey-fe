@@ -7,7 +7,14 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import CategoryDetailsForm from "components/productCategories";
 import ReactSelect, { OptionType } from "components/autoComplete";
 import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
-import { SportDetails, getSportDetails } from "dataAccess/api";
+import {
+    SportDetails,
+    getSportDetails,
+    ProductCategory,
+    getProductCategories,
+    BrandCompetitor,
+    getCompetitorBrands
+} from "dataAccess/api";
 
 const BorderedContainer = styled(Container)({
     borderBottom: "1px solid black",
@@ -87,10 +94,34 @@ const DetailsForm = ({ initialDetails }: DetailsFormProps) => {
 const SportsForm = (props: RouteComponentProps<{id: string}>) => {
     const id = Number(props.match.params.id);
     const [ details, setDetails ] = useState<SportDetails | null>(null);
+    const [ categories, setCategories ] = useState<ProductCategory[] | null>(null);
+    const [ competitors, setCompetitors ] = useState<BrandCompetitor[] | null>(null);
+    let isMounted = true;
 
     useEffect(() => {
         getSportDetails(id)
-            .then(resp => setDetails(resp));
+            .then(resp => {
+                if(isMounted) {
+                    setDetails(resp);
+                }
+            })
+
+        getProductCategories(id)
+            .then(resp => {
+                if(isMounted) {
+                    setCategories(resp);
+                }
+            })
+
+        getCompetitorBrands(id)
+            .then(resp => {
+                if(isMounted) {
+                    setCompetitors(resp);
+                }
+            })
+        return () => {
+            isMounted = false;
+        };
     }, [ id ])
 
     return (
@@ -105,8 +136,14 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
                     ? <DetailsForm initialDetails={details}/>
                     : <div> Loading... </div>
                 }
-                <CategoryDetailsForm />
-                <BrandsCompetitorsForm />
+                { categories
+                    ? <CategoryDetailsForm initialCategories={categories}/>
+                    : <div> Loading... </div>
+                }
+                { competitors
+                    ? <BrandsCompetitorsForm initialCompetitors={competitors}/>
+                    : <div> Loading... </div>
+                }
             </Grid>
         </Container>
     );
