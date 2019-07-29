@@ -1,5 +1,6 @@
 import * as React from "react";
 import FormControl from "@material-ui/core/FormControl";
+import Typography from "@material-ui/core/Typography";
 import { TextField, Container, Grid } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 import { AddCircle, RemoveCircle } from "@material-ui/icons";
@@ -30,7 +31,9 @@ const Category = (props: CategoryProps) => {
                 <BorderedContainer maxWidth={"md"}>
                     <FormControl fullWidth>
                         <SpacedTextField label={"Name"} defaultValue={product.name}/>
-                        <SpacedTextField label={"Product family"} defaultValue={product.category}/>
+                        <Typography>
+                            {product.category}
+                        </Typography>
                     </FormControl>
                 </BorderedContainer>
             </Grid>

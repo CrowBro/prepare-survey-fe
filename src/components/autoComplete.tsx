@@ -194,6 +194,7 @@ const components = {
 interface SelectProps<T> {
     label: string;
     placeholder?: string;
+    value?: OptionType<T>;
     options: OptionType<T>[];
 }
 
@@ -201,7 +202,7 @@ interface SelectProps<T> {
 const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [single, setSingle] = React.useState<ValueType<OptionType<T>>>(null);
+    const [single, setSingle] = React.useState<ValueType<OptionType<T>>>(props.value);
 
     function handleChangeSingle(value: ValueType<OptionType<T>>) {
         setSingle(value);

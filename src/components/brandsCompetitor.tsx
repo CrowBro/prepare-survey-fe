@@ -16,11 +16,11 @@ interface CategoryProps {
 const options: OptionType<number>[] = [
     {
         value: 1,
-        label: "Velo computer",
+        label: "Nike",
     },
     {
         value: 2,
-        label: "Velo computer",
+        label: "Adidas",
     }
 ]
 

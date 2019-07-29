@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography, Toolbar, Container, Grid, Paper } from "@material-ui/core";
+import { Typography, Toolbar, Grid, Paper } from "@material-ui/core";
 import { AddCircle } from "@material-ui/icons";
 import { List } from "immutable";
 import BorderedContainer from "components/borderedContainer";
@@ -9,11 +9,11 @@ import BrandsCompetitor from "components/brandsCompetitor";
 const defaultsProducts: Competitor[] = [
     {
         id: 1,
-        name: "Velo computer",
+        name: "Nike",
     },
     {
         id: 2,
-        name: "Velo computer",
+        name: "Adidas",
     }
 ]
 

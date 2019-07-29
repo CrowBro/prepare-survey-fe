@@ -20,3 +20,23 @@ export const getSports = async () => {
 
     return response.data;
 }
+
+export interface PassionBrand {
+    id: number;
+    name: string;
+}
+
+export interface SportDetails {
+    passionBrand: PassionBrand;
+    adultName: string;
+    juniorName: string;
+    fullName1: string;
+    fullName2: string;
+    shortName: string;
+}
+
+export const getSportDetails = async (id: number) => {
+    const response = await axios.get<SportDetails>(`http://217.182.158.166:4000/api/sports/${id}/details`);
+
+    return response.data;
+}
