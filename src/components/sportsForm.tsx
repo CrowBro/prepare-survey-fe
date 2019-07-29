@@ -23,42 +23,44 @@ const brands: OptionType<string>[] = [
 // TODO: parametrize
 const SportsForm = () => {
     return (
-    <>
-        <Paper>
-            <Container maxWidth={"md"}>
-                <Grid container spacing={0}>
-                    <Grid item md={12}>
-                        <BorderedContainer maxWidth={"md"}>
-                            <Toolbar>
-                                <Typography variant={"h5"}>Sport details</Typography>
-                            </Toolbar>
-                        </BorderedContainer>
-                    </Grid>
-                    <Grid item md={9}>
-                        <BorderedContainer maxWidth={"md"}>
-                            <FormControl fullWidth>
-                                <ReactSelect label="Sport passion brand" options={brands}/>
-                                <SpacedTextField label={"Sport Adult"} />
-                                <SpacedTextField label={"Sport Junior"} />
-                            </FormControl>
-                        </BorderedContainer>
-                        <BorderedContainer maxWidth={"md"}>
-                            <FormControl fullWidth>
-                                <SpacedTextField label={"Full name 1"} />
-                                <SpacedTextField label={"Full name 2"} />
-                                <SpacedTextField label={"Short name"} />
-                            </FormControl>
-                        </BorderedContainer>
-                    </Grid>
-                    <Grid item md={3}>
-                        <span>Test</span>
-                    </Grid>
+        <Container maxWidth={"md"}>
+            <Grid
+                justify="center"
+                direction="row"
+                container
+                spacing={2}
+            >
+                <Grid item md={12}>
+                    <Paper>
+                        <Grid item md={12}>
+                            <BorderedContainer maxWidth={"md"}>
+                                <Toolbar>
+                                    <Typography variant={"h5"}>Sport details</Typography>
+                                </Toolbar>
+                            </BorderedContainer>
+                        </Grid>
+                        <Grid item md={12}>
+                            <BorderedContainer maxWidth={"md"}>
+                                <FormControl fullWidth>
+                                    <ReactSelect label="Sport passion brand" options={brands}/>
+                                    <SpacedTextField label={"Sport Adult"} />
+                                    <SpacedTextField label={"Sport Junior"} />
+                                </FormControl>
+                            </BorderedContainer>
+                            <BorderedContainer maxWidth={"md"}>
+                                <FormControl fullWidth>
+                                    <SpacedTextField label={"Full name 1"} />
+                                    <SpacedTextField label={"Full name 2"} />
+                                    <SpacedTextField label={"Short name"} />
+                                </FormControl>
+                            </BorderedContainer>
+                        </Grid>
+                    </Paper>
                 </Grid>
-            </Container>
-        </Paper>
-        <CategoryDetailsForm />
-        <BrandsCompetitorsForm />
-    </>
+                <CategoryDetailsForm />
+                <BrandsCompetitorsForm />
+            </Grid>
+        </Container>
     );
 }
 

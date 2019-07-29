@@ -16,9 +16,11 @@ export interface Question {
     answerVariants: Answer[];
 }
 
+export type SurveyType = "intro" | "sport" | "end";
+
 export interface Survey {
     questions: Question[];
-    surveyType: "intro" | "sport" | "end";
+    surveyType: SurveyType;
 }
 
 export interface SurveyResponse {
@@ -26,10 +28,10 @@ export interface SurveyResponse {
     latestVersionSurvey: Survey;
 }
 
-export const getSurvey = async () => {
+export const getSurvey = async (surveyType: SurveyType) => {
     const params = {
         country: "dev",
-        surveyType: "intro"
+        surveyType
     }
 
     const response = await axios.get<SurveyResponse>("http://217.182.158.166:4000/api/Surveys", {
