@@ -53,7 +53,7 @@ const SurveyForm = () => {
                         id="simple-menu"
                         anchorEl={anchorEl}
                         keepMounted
-                        open={anchorEl}
+                        open={!!anchorEl}
                         onClose={handleClose}
                     >
                         <MenuItem onClick={() => handleChange("intro")}>Intro</MenuItem>

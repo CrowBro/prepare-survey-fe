@@ -1,7 +1,11 @@
 import * as React from "react";
-import { Typography, Toolbar, Container, Grid, Paper } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Toolbar from "@material-ui/core/Toolbar";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import { styled } from "@material-ui/styles";
-import { AddCircle } from "@material-ui/icons";
+import AddCircle from "@material-ui/icons/AddCircle";
 import { List } from "immutable";
 import Category from "components/productCategory";
 import { ProductCategory } from "dataAccess/api";

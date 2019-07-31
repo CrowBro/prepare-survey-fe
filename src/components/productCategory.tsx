@@ -1,9 +1,12 @@
 import * as React from "react";
 import FormControl from "@material-ui/core/FormControl";
 import Typography from "@material-ui/core/Typography";
-import { TextField, Container, Grid } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/styles";
-import { AddCircle, RemoveCircle } from "@material-ui/icons";
+import AddCircle from "@material-ui/icons/AddCircle";
+import RemoveCircle from "@material-ui/icons/RemoveCircle";
 import { ProductCategory } from "dataAccess/api";
 
 const BorderedContainer = styled(Container)({

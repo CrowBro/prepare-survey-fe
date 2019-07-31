@@ -1,6 +1,9 @@
 import * as React from "react";
-import { Typography, Toolbar, Grid, Paper } from "@material-ui/core";
-import { AddCircle } from "@material-ui/icons";
+import Typography from "@material-ui/core/Typography";
+import Toolbar from "@material-ui/core/Toolbar";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import AddCircle from "@material-ui/icons/AddCircle";
 import { List } from "immutable";
 import BorderedContainer from "components/borderedContainer";
 import BrandsCompetitor from "components/brandsCompetitor";

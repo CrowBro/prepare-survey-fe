@@ -1,8 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import { IconButton, Paper, InputBase } from "@material-ui/core";
-import { Check, Close } from "@material-ui/icons";
+import IconButton from "@material-ui/core/IconButton";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import Check from "@material-ui/icons/Check";
+import Close from "@material-ui/icons/Close";
 
 const useStyles = makeStyles({
     root: {

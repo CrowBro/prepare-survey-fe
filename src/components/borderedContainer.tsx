@@ -1,4 +1,4 @@
-import { Container } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 import { styled } from "@material-ui/styles";
 
 const BorderedContainer = styled(Container)({

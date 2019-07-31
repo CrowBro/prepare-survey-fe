@@ -1,9 +1,16 @@
 import * as React from "react";
 import clsx from "clsx";
 import { useState } from "react";
-import { Card, CardActions, CardHeader, Grid, IconButton, Collapse, Typography } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardHeader from "@material-ui/core/CardHeader";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import Collapse from "@material-ui/core/Collapse";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { Edit, ExpandMore } from "@material-ui/icons";
+import Edit from "@material-ui/icons/Edit";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 import { SurveyQuestion } from "types/surveyQuestion";
 import ConfirmableTextInput from "components/confirmableTextInput";
 import AnswerForm from "components/answerForm";

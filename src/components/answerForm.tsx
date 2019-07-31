@@ -1,6 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
-import { List, ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction } from "@material-ui/core";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Switch from "@material-ui/core/Switch";
 import Edit from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";

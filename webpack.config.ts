@@ -1,6 +1,8 @@
 import { resolve } from "path";
+import * as os from "os";
 import * as webpack from "webpack";
 import * as HtmlWebPackPlugin from "html-webpack-plugin";
+import * as ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 export default {
     mode: "development",
@@ -14,7 +16,10 @@ export default {
     },
     resolve: {
         modules: ["node_modules", "./src"],
-        extensions: [".js", ".ts", ".tsx", ".css",]
+        extensions: [".js", ".ts", ".tsx", ".css" ],
+        alias: {
+            "react-dom": "@hot-loader/react-dom"
+        }
     },
     module: {
         rules: [
@@ -23,15 +28,45 @@ export default {
                 exclude: [ 
                     /node_modules/,
                 ],
-                loaders: [
-                    "ts-loader?configFile=tsconfig.webpack.json",
-                    "eslint-loader",
-                ]
+                use: [
+                    {
+                        loader: "cache-loader",
+                    }, {
+                        loader: "thread-loader",
+                        options: {
+                            workers: os.cpus().length - 1,
+                        }
+                    }, 
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            cacheDirectory: true,
+                            babelrc: false,
+                            presets: [
+                                [
+                                    "@babel/preset-env",
+                                    { targets: { browsers: "defaults" } }
+                                ],
+                                "@babel/preset-typescript",
+                                "@babel/preset-react",
+                            ],
+                            plugins: [
+                                ["@babel/plugin-proposal-class-properties", { loose: true }],
+                                "@babel/plugin-proposal-object-rest-spread",
+                                "react-hot-loader/babel"
+                            ],
+                        }
+                    }
+                ],
             },
             {
                 test: /\.js$/,
                 use: ["source-map-loader"],
-                enforce: "pre"
+                enforce: "pre",
+                exclude: [
+                    /node_modules/,
+                    /dist/
+                ]
             },
             {
                 test: /\.html$/,
@@ -46,7 +81,13 @@ export default {
             template: "./src/index.html",
             filename: "./index.html"
         }),
-        new webpack.NamedModulesPlugin()
+        new webpack.NamedModulesPlugin(),
+        new ForkTsCheckerWebpackPlugin({
+            tsconfig: "./tsconfig.webpack.json",
+            useTypescriptIncrementalApi: true,
+            eslint: true,
+            memoryLimit: 2048
+        })
     ],
     devServer: {
         contentBase: resolve(__dirname, "dist"),

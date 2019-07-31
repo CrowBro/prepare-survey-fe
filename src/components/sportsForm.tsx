@@ -1,7 +1,12 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import FormControl from "@material-ui/core/FormControl";
-import { TextField, Typography, Toolbar, Container, Grid, Paper } from "@material-ui/core";
+import TextField  from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import Toolbar from "@material-ui/core/Toolbar";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import { styled } from "@material-ui/styles";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import CategoryDetailsForm from "components/productCategories";

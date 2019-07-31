@@ -1,8 +1,9 @@
 import * as React from "react";
 import FormControl from "@material-ui/core/FormControl";
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import ReactSelect, { OptionType } from "components/autoComplete";
-import { AddCircle, RemoveCircle } from "@material-ui/icons";
+import AddCircle from "@material-ui/icons/AddCircle";
+import RemoveCircle from "@material-ui/icons/RemoveCircle";
 import BorderedContainer from "components/borderedContainer";
 import { BrandCompetitor } from "dataAccess/api";
 
