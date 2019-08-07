@@ -5,8 +5,6 @@ import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/styles";
-import AddCircle from "@material-ui/icons/AddCircle";
-import RemoveCircle from "@material-ui/icons/RemoveCircle";
 import { ProductCategory } from "dataAccess/api";
 
 const BorderedContainer = styled(Container)({
@@ -19,34 +17,32 @@ const SpacedTextField = styled(TextField)({
 })
 
 interface CategoryProps {
-    product: Partial<ProductCategory>;
+    product: ProductCategory;
+    onChange: (category: ProductCategory) => void;
     addEnabled: boolean;
     onAdd: () => void;
     onRemove: () => void;
 }
 
 const Category = (props: CategoryProps) => {
-    const { product, addEnabled, onAdd, onRemove } = props;
+    const { product, onChange } = props;
+
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const value = event.currentTarget.value;
+        onChange({ ...product, name: value });
+    }
 
     return (
         <Grid container spacing={0} key={product.id}>
-            <Grid item md={9}>
+            <Grid item md={12}>
                 <BorderedContainer maxWidth={"md"}>
                     <FormControl fullWidth>
-                        <SpacedTextField label={"Name"} defaultValue={product.name}/>
+                        <SpacedTextField label={"Name"} value={product.name} onChange={handleNameChange}/>
                         <Typography>
                             {product.family && product.family.name}
                         </Typography>
                     </FormControl>
                 </BorderedContainer>
-            </Grid>
-            <Grid item md={3}>
-                {
-                    addEnabled
-                        ? <AddCircle color="primary" onClick={onAdd}/>
-                        : <AddCircle color="disabled" />
-                }
-                <RemoveCircle color="error" onClick={onRemove}/>
             </Grid>
         </Grid>
     )

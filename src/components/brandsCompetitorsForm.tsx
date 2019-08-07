@@ -9,13 +9,12 @@ import BorderedContainer from "components/borderedContainer";
 import BrandsCompetitor from "components/brandsCompetitor";
 import { BrandCompetitor } from "dataAccess/api";
 
-interface CategoryDetailsProps {
-    initialCompetitors: BrandCompetitor[];
+interface CompetitorBrandsFormProps {
+    competitors: List<BrandCompetitor>;
+    onChange: (action: (competitors: List<BrandCompetitor>) => List<BrandCompetitor>) => void;
 }
 
-const CategoryDetailsForm = (props: CategoryDetailsProps) => {
-    const [products, setProducts] = React.useState(List<Partial<BrandCompetitor>>(props.initialCompetitors));
-
+const CompetitorBrandsForm = ({ competitors, onChange }: CompetitorBrandsFormProps) => {
     return (
         <Grid item md={12}>
             <Paper>
@@ -28,16 +27,17 @@ const CategoryDetailsForm = (props: CategoryDetailsProps) => {
                 </Grid>
                 <Grid container spacing={0}>
                     {
-                        products.isEmpty()
-                            ? <AddCircle color="primary" onClick={() => setProducts(s => s.push({}))} />
+                        competitors.isEmpty()
+                            ? <AddCircle color="primary" onClick={() => onChange(s => s.push({ id: 0, name: "" }))} />
                             : <>
                             {
-                                products.map((product: Partial<BrandCompetitor>, index: number) => (
+                                competitors.map((product: BrandCompetitor, index: number) => (
                                     <BrandsCompetitor
                                         product={product}
-                                        addEnabled={products.count() < 4}
-                                        onAdd={() => setProducts(s => s.insert(index + 1, {}))}
-                                        onRemove={() => setProducts(s => s.remove(index))}
+                                        onChange={(value) => onChange(s => s.set(index, value))}
+                                        addEnabled={competitors.count() < 4}
+                                        onAdd={() => onChange(s => s.insert(index + 1, { id: 0, name: "" }))}
+                                        onRemove={() => onChange(s => s.remove(index))}
                                     />
                                 ))
                             }
@@ -49,4 +49,4 @@ const CategoryDetailsForm = (props: CategoryDetailsProps) => {
     )
 }
 
-export default CategoryDetailsForm;
+export default CompetitorBrandsForm;

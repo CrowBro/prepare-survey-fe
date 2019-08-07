@@ -41,6 +41,10 @@ export const getSportDetails = async (id: number) => {
     return response.data;
 }
 
+export const saveSportDetails = async (id: number, sportDetails: SportDetails) => {
+    await axios.put(`http://217.182.158.166:4000/api/sports/${id}/details`, sportDetails);
+}
+
 export interface ProductFamily {
     id: number;
     name: string;
@@ -64,6 +68,14 @@ export const getProductCategories = async (sportId: number) => {
     return response.data.productCategories;
 }
 
+export const saveProductCategories = async(sportId: number, categories: ProductCategory[]) => {
+    const body: ProductCategoryResponse = {
+        productCategories: categories
+    }
+
+    await axios.put(`http://217.182.158.166:4000/api/sports/${sportId}/productCategoryDetails`, body);
+}
+
 export interface BrandCompetitor {
     id: number;
     name: string;
@@ -77,4 +89,12 @@ export const getCompetitorBrands = async (sportId: number) => {
     const response = await axios.get<BrandCompetitorResponse>(`http://217.182.158.166:4000/api/sports/${sportId}/brandsCompetitorDetails`);
 
     return response.data.competitors;
+}
+
+export const saveCompetitorBrands = async (sportId: number, competitors: BrandCompetitor[]) => {
+    const body: BrandCompetitorResponse = {
+        competitors
+    }
+
+    await axios.put(`http://217.182.158.166:4000/api/sports/${sportId}/brandsCompetitorDetails`, body);
 }

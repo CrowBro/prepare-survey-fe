@@ -5,7 +5,6 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { styled } from "@material-ui/styles";
-import AddCircle from "@material-ui/icons/AddCircle";
 import { List } from "immutable";
 import Category from "components/productCategory";
 import { ProductCategory } from "dataAccess/api";
@@ -16,11 +15,11 @@ const BorderedContainer = styled(Container)({
 });
 
 interface CategoryDetailsProps {
-    initialCategories: ProductCategory[];
+    categories: List<ProductCategory>;
+    onChange: (action: (categories: List<ProductCategory>) => List<ProductCategory>) => void;
 }
 
-const CategoryDetailsForm = (props: CategoryDetailsProps) => {
-    const [products, setProducts] = React.useState(List<Partial<ProductCategory>>(props.initialCategories));
+const CategoryDetailsForm = ({ categories, onChange }: CategoryDetailsProps) => {
 
     return (
         <Grid item md={12}>
@@ -34,19 +33,15 @@ const CategoryDetailsForm = (props: CategoryDetailsProps) => {
                 </Grid>
                 <Grid container spacing={0}>
                     {
-                        products.isEmpty()
-                            ? <AddCircle color="primary" onClick={() => setProducts(s => s.push({}))} />
-                            : <>
-                            {
-                                products.map((product: Partial<ProductCategory>, index: number) => (
-                                    <Category
-                                        product={product}
-                                        addEnabled={products.count() < 6}
-                                        onAdd={() => setProducts(s => s.insert(index + 1, {}))}
-                                        onRemove={() => setProducts(s => s.remove(index))}
-                                    />
-                                ))}
-                        </>
+                        categories.map((product: ProductCategory, index: number) => (
+                            <Category
+                                product={product}
+                                onChange={(value) => onChange(s => s.set(index, value))}
+                                addEnabled={categories.count() < 6}
+                                onAdd={() => {}}
+                                onRemove={() => onChange(s => s.remove(index))}
+                            />
+                        ))
                     }
                 </Grid>
             </Paper>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,6 +9,17 @@ import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
+
+const useStyles = makeStyles({
+    appBar: {
+        width: "100%",
+        display: "flex",
+        zIndex: 1100,
+        boxSizing: "border-box",
+        flexShrink: 0,
+        flexDirection: "column",
+    }
+})
 
 const SportsList = (props: RouteComponentProps) => {
     const [ sports, setSports ] = useState<Sport[]>([])

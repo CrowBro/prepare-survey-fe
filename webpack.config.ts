@@ -34,7 +34,7 @@ export default {
                     }, {
                         loader: "thread-loader",
                         options: {
-                            workers: os.cpus().length - 1,
+                            workers: 1
                         }
                     }, 
                     {

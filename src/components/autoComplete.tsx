@@ -196,16 +196,16 @@ interface SelectProps<T> {
     placeholder?: string;
     value?: OptionType<T>;
     options: OptionType<T>[];
+    onChange: (value: OptionType<T>) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [single, setSingle] = React.useState<ValueType<OptionType<T>>>(props.value);
 
-    function handleChangeSingle(value: ValueType<OptionType<T>>) {
-        setSingle(value);
+    function handleChangeSingle(value: OptionType<T>) {
+        props.onChange(value);
     }
 
     const selectStyles = {
@@ -234,8 +234,9 @@ const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
                 }}
                 options={props.options}
                 components={components}
-                value={single}
+                value={props.value}
                 onChange={handleChangeSingle}
+                required
             />
         </div>
     );

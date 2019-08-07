@@ -8,7 +8,8 @@ import BorderedContainer from "components/borderedContainer";
 import { BrandCompetitor } from "dataAccess/api";
 
 interface CategoryProps {
-    product: Partial<BrandCompetitor>;
+    product: BrandCompetitor;
+    onChange: (value: BrandCompetitor) => void;
     addEnabled: boolean;
     onAdd: () => void;
     onRemove: () => void;
@@ -26,14 +27,19 @@ const options: OptionType<number>[] = [
 ]
 
 const Competitor = (props: CategoryProps) => {
-    const { product, addEnabled, onAdd, onRemove } = props;
+    const { product, addEnabled, onAdd, onRemove, onChange } = props;
 
     return (
         <Grid container spacing={0} key={product.id}>
             <Grid item md={9}>
                 <BorderedContainer maxWidth={"md"}>
                     <FormControl fullWidth>
-                        <ReactSelect label={"Name"} options={options} value={({ value: product.id, label: product.name || "Placeholder" })} />
+                        <ReactSelect
+                            label={"Name"}
+                            options={options}
+                            value={({ value: product.id, label: product.name || "Placeholder" })}
+                            onChange={(value) => onChange({ id: value.value, name: value.label })}
+                        />
                     </FormControl>
                 </BorderedContainer>
             </Grid>
@@ -47,14 +53,6 @@ const Competitor = (props: CategoryProps) => {
             </Grid>
         </Grid>
     )
-}
-
-// TODO: remove
-Competitor.defaultProps = {
-    product: {},
-    onRemove: () => {},
-    onAdd: () => {},
-    addEnabled: true
 }
 
 export default Competitor;
