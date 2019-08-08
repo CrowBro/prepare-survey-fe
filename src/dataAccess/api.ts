@@ -5,7 +5,7 @@ export interface Sport {
     sportDisplayId: number;
     sportName: string;
     products: string[];
-    status: number;
+    status: "Approved" | "Pending" | "To Review";
 }
 
 export const getSports = async () => {

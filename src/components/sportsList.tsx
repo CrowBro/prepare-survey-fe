@@ -8,8 +8,42 @@ import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
+import Chip from '@material-ui/core/Chip';
+import { makeStyles } from "@material-ui/styles";
+import Box from '@material-ui/core/Box';
+
+const useStyles = makeStyles({
+    orange: {
+        backgroundColor: "#FF6633",
+    }
+});
+
+const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) => {
+    const classes = useStyles();
+    switch(status){
+        case "Approved": return <Chip
+                                    size="small" 
+                                    color="primary" 
+                                    label={status}
+                                    />
+        case "Pending": return <Chip 
+                                  size="small" 
+                                  color="default" 
+                                  label={status} 
+                                  />
+        case "To Review": return <Chip 
+                                size="small" 
+                                color="secondary" 
+                                label={status} 
+                                className={classes.orange}/>
+
+    }
+}
+
+
 
 const SportsList = (props: RouteComponentProps) => {
+    
     const [ sports, setSports ] = useState<Sport[]>([])
     useEffect(() => {
         getSports()
@@ -43,7 +77,7 @@ const SportsList = (props: RouteComponentProps) => {
                             <TableCell>{sport.products[3]}</TableCell>
                             <TableCell>{sport.products[4]}</TableCell>
                             <TableCell>{sport.products[5]}</TableCell>
-                            <TableCell>{sport.status}</TableCell>
+                            <TableCell><StatusChip status={sport.status}/></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
