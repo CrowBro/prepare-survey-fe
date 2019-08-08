@@ -6,10 +6,35 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
+import { makeStyles } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
 
+const useStyles = makeStyles({
+    root: {
+        margin: "20px",
+        padding: "20px",
+        "& div": {
+            margin: "20px",
+            padding: "20px"
+        }
+    },
+    header: {
+        "& th": {
+            color: "rgba(0, 0, 0, 0.9)",
+            backgroundColor: "#F2F3F8 !important",
+            fontWeight: 700,
+            lineHeight: "3rem"
+        }
+    },
+    body: {
+        cursor: "pointer"
+    }
+})
+
 const SportsList = (props: RouteComponentProps) => {
+    const classes = useStyles();
+
     const [ sports, setSports ] = useState<Sport[]>([])
     useEffect(() => {
         getSports()
@@ -17,11 +42,11 @@ const SportsList = (props: RouteComponentProps) => {
     }, []);
 
     return (
-        <Paper>
+        <Paper className={classes.root}>
             <Table size="medium">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Sport ID</TableCell>
+                <TableHead className={classes.header}>
+                    <TableRow className={classes.header}>
+                        <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Product 1</TableCell>
                         <TableCell>Product 2</TableCell>
@@ -32,7 +57,7 @@ const SportsList = (props: RouteComponentProps) => {
                         <TableCell>Status</TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody className={classes.body}>
                     {sports.map(sport => (
                         <TableRow key={sport.sportId} onClick={event => props.history.push(`/sports/${sport.sportId}`)}>
                             <TableCell>{sport.sportDisplayId}</TableCell>
