@@ -7,7 +7,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { styled } from "@material-ui/styles";
-import ReactSelect, { OptionType } from "components/autoComplete";
+import IntegrationReactSelect, { OptionType } from "components/autoComplete";
 import { SportDetails } from "dataAccess/api";
 
 const BorderedContainer = styled(Container)({
@@ -52,7 +52,7 @@ const DetailsForm = ({ details, onChange }: DetailsFormProps) => {
                 <Grid item md={12}>
                     <BorderedContainer maxWidth={"md"}>
                         <FormControl fullWidth>
-                            <ReactSelect
+                            <IntegrationReactSelect
                                 label="Sport passion brand"
                                 options={brands}
                                 value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
