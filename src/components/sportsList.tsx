@@ -9,23 +9,15 @@ import TableBody from "@material-ui/core/TableBody";
 import { makeStyles } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
-import Chip from '@material-ui/core/Chip';
-import Box from '@material-ui/core/Box';
-
-
-
+import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles({
-    chipOrange: {
-        backgroundColor: "#FF6633",
-    },
     root: {
         margin: "20px",
         padding: "20px",
-        "& div": {
-            margin: "20px",
-            padding: "20px"
-        }
+    },
+    chipOrange: {
+        backgroundColor: "#FF6633",
     },
     header: {
         "& th": {
@@ -43,25 +35,35 @@ const useStyles = makeStyles({
 const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) => {
     const classes = useStyles();
     switch(status){
-        case "Approved": return <Chip
-                                    size="small" 
-                                    color="primary" 
-                                    label={status}
-                                    />
-        case "Pending": return <Chip 
-                                  size="small" 
-                                  color="default" 
-                                  label={status} 
-                                  />
-        case "To Review": return <Chip 
-                                size="small" 
-                                color="secondary" 
-                                label={status} 
-                                className={classes.chipOrange}/>
-
+        case "Approved":
+            return (
+                <Chip
+                    size="small"
+                    color="primary"
+                    label={status}
+                    className={classes.chipOrange}
+                />
+            )
+        case "Pending":
+            return (
+                <Chip 
+                    size="small"
+                    color="default"
+                    label={status}
+                    className={classes.chipOrange}
+                />
+            )
+        case "To Review":
+            return (
+                <Chip
+                    size="small"
+                    color="secondary"
+                    label={status}
+                    className={classes.chipOrange}
+                />
+            )
     }
 }
-
 
 const SportsList = (props: RouteComponentProps) => {
     const classes = useStyles();
@@ -74,7 +76,7 @@ const SportsList = (props: RouteComponentProps) => {
 
     return (
         <Paper className={classes.root}>
-            <Table size="medium">
+            <Table className={classes.root} size="medium">
                 <TableHead className={classes.header}>
                     <TableRow className={classes.header}>
                         <TableCell>ID</TableCell>
