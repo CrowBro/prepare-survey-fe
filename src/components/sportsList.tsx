@@ -33,7 +33,7 @@ const SportsList = (props: RouteComponentProps) => {
             <Table size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Id</TableCell>
+                        <TableCell>Sport ID</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell align="right">Product 1</TableCell>
                         <TableCell align="right">Product 2</TableCell>
