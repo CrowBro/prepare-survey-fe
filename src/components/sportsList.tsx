@@ -41,7 +41,6 @@ const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) =>
                     size="small"
                     color="primary"
                     label={status}
-                    className={classes.chipOrange}
                 />
             )
         case "Pending":
@@ -50,7 +49,6 @@ const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) =>
                     size="small"
                     color="default"
                     label={status}
-                    className={classes.chipOrange}
                 />
             )
         case "To Review":
