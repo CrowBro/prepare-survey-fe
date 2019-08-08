@@ -13,7 +13,7 @@ import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles({
     root: {
-        margin: "20px",
+        margin: "20px,20px",
         padding: "20px",
     },
     chipOrange: {
