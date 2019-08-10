@@ -1,4 +1,5 @@
 import axios from "axios";
+import {apiConfig} from "./apiConfig";
 
 export interface Country {
     id: number;
@@ -7,7 +8,7 @@ export interface Country {
 }
 
 export const getCountries = async () => {
-    const response = await axios.get<Country[]>("http://217.182.158.166:4000/index.html");
+    const response = await axios.get<Country[]>(apiConfig.baseUrl + "/index.html");
 
     return response.data;
 }

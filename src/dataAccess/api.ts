@@ -1,4 +1,5 @@
 import axios from "axios";
+import {apiConfig} from "./apiConfig";
 
 export interface Sport {
     sportId: number;
@@ -14,7 +15,7 @@ export const getSports = async () => {
         country: "fr"
     }
 
-    const response = await axios.get<Sport[]>("http://217.182.158.166:4000/api/sports", {
+    const response = await axios.get<Sport[]>(apiConfig.baseUrl + "/api/sports", {
         params
     })
 
@@ -36,13 +37,13 @@ export interface SportDetails {
 }
 
 export const getSportDetails = async (id: number) => {
-    const response = await axios.get<SportDetails>(`http://217.182.158.166:4000/api/sports/${id}/details`);
+    const response = await axios.get<SportDetails>(apiConfig.baseUrl + `/sports/${id}/details`);
 
     return response.data;
 }
 
 export const saveSportDetails = async (id: number, sportDetails: SportDetails) => {
-    await axios.put(`http://217.182.158.166:4000/api/sports/${id}/details`, sportDetails);
+    await axios.put(apiConfig.baseUrl + `/api/sports/${id}/details`, sportDetails);
 }
 
 export interface ProductFamily {
@@ -63,7 +64,7 @@ interface ProductCategoryResponse {
 }
 
 export const getProductCategories = async (sportId: number) => {
-    const response = await axios.get<ProductCategoryResponse>(`http://217.182.158.166:4000/api/sports/${sportId}/productCategoryDetails`);
+    const response = await axios.get<ProductCategoryResponse>(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`);
 
     return response.data.productCategories;
 }
@@ -73,7 +74,7 @@ export const saveProductCategories = async(sportId: number, categories: ProductC
         productCategories: categories
     }
 
-    await axios.put(`http://217.182.158.166:4000/api/sports/${sportId}/productCategoryDetails`, body);
+    await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, body);
 }
 
 export interface BrandCompetitor {
@@ -86,7 +87,7 @@ interface BrandCompetitorResponse {
 }
 
 export const getCompetitorBrands = async (sportId: number) => {
-    const response = await axios.get<BrandCompetitorResponse>(`http://217.182.158.166:4000/api/sports/${sportId}/brandsCompetitorDetails`);
+    const response = await axios.get<BrandCompetitorResponse>(apiConfig.baseUrl + `/api/sports/${sportId}/brandsCompetitorDetails`);
 
     return response.data.competitors;
 }
@@ -96,5 +97,5 @@ export const saveCompetitorBrands = async (sportId: number, competitors: BrandCo
         competitors
     }
 
-    await axios.put(`http://217.182.158.166:4000/api/sports/${sportId}/brandsCompetitorDetails`, body);
+    await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/brandsCompetitorDetails`, body);
 }

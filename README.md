@@ -17,7 +17,7 @@ yarn start
 ```bash
 yarn build
 docker build -t prepare-survey-fe .
-docer tag prepare-survey-fe benaaasaaas/prepare-survey
+docker tag prepare-survey-fe benaaasaaas/prepare-survey
 docker push benaaasaaas/prepare-survey
 ```
 
