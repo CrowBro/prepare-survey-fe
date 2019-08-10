@@ -9,7 +9,7 @@ import DetailsForm from "components/sportDetailsForm";
 import CategoryDetailsForm from "components/productCategories";
 import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
 import {
-    SportDetails,
+    SportDetailsCouple,
     getSportDetails,
     ProductCategory,
     getProductCategories,
@@ -23,7 +23,7 @@ import {
 // TODO: parametrize
 const SportsForm = (props: RouteComponentProps<{id: string}>) => {
     const id = Number(props.match.params.id);
-    const [ details, setDetails ] = useState<SportDetails | null>(null);
+    const [ details, setDetails ] = useState<SportDetailsCouple | null>(null);
     const [ categories, setCategories ] = useState<List<ProductCategory> | null>(null);
     const [ competitors, setCompetitors ] = useState<List<BrandCompetitor> | null>(null);
     let isMounted = true;

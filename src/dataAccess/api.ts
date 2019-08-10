@@ -36,13 +36,18 @@ export interface SportDetails {
     shortName: string;
 }
 
+export interface SportDetailsCouple {
+    TargetSport: SportDetails;
+    BenchmarkSport: SportDetails;
+}
+
 export const getSportDetails = async (id: number) => {
-    const response = await axios.get<SportDetails>(apiConfig.baseUrl + `/sports/${id}/details`);
+    const response = await axios.get<SportDetailsCouple>(apiConfig.baseUrl + `/sports/${id}/details`);
 
     return response.data;
 }
 
-export const saveSportDetails = async (id: number, sportDetails: SportDetails) => {
+export const saveSportDetails = async (id: number, sportDetails: SportDetailsCouple) => {
     await axios.put(apiConfig.baseUrl + `/api/sports/${id}/details`, sportDetails);
 }
 

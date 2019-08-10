@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { styled } from "@material-ui/styles";
 import IntegrationReactSelect, { OptionType } from "components/autoComplete";
-import { SportDetails } from "dataAccess/api";
+import { SportDetailsCouple } from "dataAccess/api";
 
 const BorderedContainer = styled(Container)({
     borderBottom: "1px solid black",
@@ -24,17 +24,17 @@ const brands: OptionType<number>[] = [
     "Van Rysel"
 ].map((brand, index) => { return { label: brand, value: index } });
 
-type SetDetails = (details: SportDetails) => SportDetails
+type SetDetailsCouple = (details: SportDetailsCouple) => SportDetailsCouple
 
 interface DetailsFormProps {
-    details: SportDetails;
-    onChange: (action: SetDetails) => void;
+    details: SportDetailsCouple;
+    onChange: (action: SetDetailsCouple) => void;
 }
 
 const DetailsForm = ({ details, onChange }: DetailsFormProps) => {
     const onChangeSync = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
-        action: (value: string) => (details: SportDetails) => SportDetails
+        action: (value: string) => (details: SportDetailsCouple) => SportDetailsCouple
     ) => {
         const value = event.currentTarget.value;
         onChange(s => action(value)(s));
@@ -55,17 +55,17 @@ const DetailsForm = ({ details, onChange }: DetailsFormProps) => {
                             <IntegrationReactSelect
                                 label="Sport passion brand"
                                 options={brands}
-                                value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
+                                value={({ label: details.TargetSport.passionBrand.name, value: details.TargetSport.passionBrand.id })}
                                 onChange={(value) => onChange(s => ({...s, passionBrand: {id: value.value, name: value.label}}))}
                             />
                             <SpacedTextField 
                                 label={"Sport Adult"}
-                                value={details.adultName}
+                                value={details.TargetSport.adultName}
                                 onChange={(event) => onChangeSync(event, val => s => ({ ...s, adultName: val }))}
                             />
                             <SpacedTextField 
                                 label={"Sport Junior"} 
-                                value={details.juniorName}
+                                value={details.TargetSport.juniorName}
                                 onChange={(event) => onChangeSync(event, val => s => ({ ...s, juniorName: val }))}
                             />
                         </FormControl>
@@ -76,17 +76,17 @@ const DetailsForm = ({ details, onChange }: DetailsFormProps) => {
                         <FormControl fullWidth>
                             <SpacedTextField 
                                 label={"Full name 1"} 
-                                value={details.fullName1}
+                                value={details.TargetSport.fullName1}
                                 onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName1: val }))}
                             />
                             <SpacedTextField 
                                 label={"Full name 2"} 
-                                value={details.fullName2}
+                                value={details.TargetSport.fullName2}
                                 onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName2: val }))}
                             />
                             <SpacedTextField 
                                 label={"Short name"} 
-                                value={details.shortName}
+                                value={details.TargetSport.shortName}
                                 onChange={(event) => onChangeSync(event, val => s => ({ ...s, shortName: val }))}
                             />
                         </FormControl>
