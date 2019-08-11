@@ -12,7 +12,7 @@ export interface Sport {
 export const getSports = async () => {
     const params = {
         year: 2019,
-        country: "fr"
+        country: apiConfig.countrySpace
     }
 
     const response = await axios.get<Sport[]>(apiConfig.baseUrl + "/api/sports", {
