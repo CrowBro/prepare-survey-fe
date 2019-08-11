@@ -1,5 +1,5 @@
 import axios from "axios";
-import {apiConfig} from "./apiConfig";
+import { apiConfig } from "./apiConfig";
 
 export interface Sport {
     sportId: number;
@@ -79,7 +79,7 @@ export const getProductCategories = async (sportId: number) => {
     return response.data;
 }
 
-export const saveProductCategories = async(sportId: number, categories: ProductsPair) => {
+export const saveProductCategories = async (sportId: number, categories: ProductsPair) => {
     const body: ProductsPair = categories;
 
     await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, body);
@@ -88,6 +88,8 @@ export const saveProductCategories = async(sportId: number, categories: Products
 export interface BrandCompetitor {
     id: number;
     name: string;
+    history: string;
+    order: number;
 }
 
 interface BrandCompetitorResponse {

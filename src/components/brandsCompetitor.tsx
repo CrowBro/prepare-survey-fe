@@ -50,18 +50,19 @@ const Competitor = (props: CategoryProps) => {
                             label={"Name"}
                             options={options}
                             value={({ value: product.id, label: product.name || "Placeholder" })}
-                            onChange={(value) => onChange({ id: value.value, name: value.label })}
+                            onChange={(value) => onChange({ id: value.value, name: value.label, order: 0, history: "" })}
                         />
+                        <label>{"Previously:" + product.history}</label>
                     </FormControl>
                 </Container>
             </Grid>
             <Grid item md={3}>
                 {
                     addEnabled
-                        ? <AddCircle color="primary" onClick={onAdd}/>
+                        ? <AddCircle color="primary" onClick={onAdd} />
                         : <AddCircle color="disabled" />
                 }
-                <RemoveCircle color="error" onClick={onRemove}/>
+                <RemoveCircle color="error" onClick={onRemove} />
             </Grid>
             <Grid className={classes.textFieldSpacing} item md={12}>
                 <Divider />

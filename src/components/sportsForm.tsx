@@ -8,7 +8,7 @@ import { List } from "immutable";
 import DetailsForm from "components/sportDetailsForm";
 import CategoryDetailsForm from "components/productCategories";
 import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
-import { makeStyles, createStyles, Theme  } from "@material-ui/core/styles";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
 import {
     SportDetails,
@@ -71,7 +71,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
         getCompetitorBrands(id)
             .then(resp => {
                 if (isMounted) {
-                    setCompetitors(List(resp));
+                    setCompetitors(List(resp.sort((n1, n2) => n1.order - n2.order)));
                 }
             })
         return () => {
@@ -82,9 +82,12 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
     const handleSave = () => {
         if (details && benchmarkDetails && categories && competitors) {
             Promise.all([
-                saveSportDetails(id, { targetSport: details, benchmarkSport: benchmarkDetails}),
+                saveSportDetails(id, { targetSport: details, benchmarkSport: benchmarkDetails }),
                 saveProductCategories(id, { targetDetails: { productCategories: categories.toArray() }, benchmarkDetails: { productCategories: categories.toArray() } }),
-                saveCompetitorBrands(id, competitors.toArray())
+                saveCompetitorBrands(id, competitors.toArray().map((el: BrandCompetitor, index: number) => {
+                    el.order = index + 1;
+                    return el;
+                }))
             ])
                 .then(() => props.history.push("/sports"));
         }
