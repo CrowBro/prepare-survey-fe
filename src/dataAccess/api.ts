@@ -64,20 +64,23 @@ export interface ProductCategory {
     order: number;
 }
 
-interface ProductCategoryResponse {
+interface ProductCategoryDetails {
     productCategories: ProductCategory[];
 }
 
-export const getProductCategories = async (sportId: number) => {
-    const response = await axios.get<ProductCategoryResponse>(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`);
-
-    return response.data.productCategories;
+interface ProductsPair {
+    targetDetails: ProductCategoryDetails;
+    benchmarkDetails: ProductCategoryDetails;
 }
 
-export const saveProductCategories = async(sportId: number, categories: ProductCategory[]) => {
-    const body: ProductCategoryResponse = {
-        productCategories: categories
-    }
+export const getProductCategories = async (sportId: number) => {
+    const response = await axios.get<ProductsPair>(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`);
+
+    return response.data;
+}
+
+export const saveProductCategories = async(sportId: number, categories: ProductsPair) => {
+    const body: ProductsPair = categories;
 
     await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, body);
 }
