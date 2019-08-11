@@ -8,7 +8,6 @@ import Paper from "@material-ui/core/Paper";
 import { List } from "immutable";
 import Category from "components/productCategory";
 import { ProductCategory } from "dataAccess/api";
-import * as uuid from "uuid";
 
 interface CategoryDetailsProps {
     categories: List<ProductCategory>;
@@ -33,7 +32,7 @@ const CategoryDetailsForm = ({ categories, sportId, onChange }: CategoryDetailsP
                     {
                         categories.map((product: ProductCategory, index: number) => (
                             <Category
-                                key={uuid()}
+                                key={index}
                                 product={product}
                                 sportId={sportId}
                                 onChange={(value) => onChange(s => s.set(index, value))}
