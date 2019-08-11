@@ -8,6 +8,7 @@ import { List } from "immutable";
 import DetailsForm from "components/sportDetailsForm";
 import CategoryDetailsForm from "components/productCategories";
 import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
+import { makeStyles } from '@material-ui/styles';
 import {
     SportDetails,
     getSportDetails,
@@ -21,7 +22,16 @@ import {
 } from "dataAccess/api";
 
 // TODO: parametrize
+
+const useStyles = makeStyles({
+    gridMargin: {
+        margin: "10px",        
+    }
+})
+
+
 const SportsForm = (props: RouteComponentProps<{id: string}>) => {
+    const classes = useStyles();
     const id = Number(props.match.params.id);
     const [ details, setDetails ] = useState<SportDetails | null>(null);
     const [ benchmarkDetails, setBenchmarkDetails ] = useState<SportDetails | null>(null);
@@ -74,6 +84,7 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
                 direction="row"
                 container
                 spacing={2}
+                className={classes.gridMargin}
             >
                 { details && benchmarkDetails
                     ? <DetailsForm details={details} benchmarkDetails={benchmarkDetails} onChange={setDetails}/>
