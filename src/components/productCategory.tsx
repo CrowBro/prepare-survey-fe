@@ -49,7 +49,7 @@ const Category = (props: CategoryProps) => {
                 </Container>
             </Grid>
             <Grid item md={3}>
-                <img src={`${apiConfig.baseUrl}/api/sports/${sportId}/productCategories/${product.id}/icon`} alt={""}/>
+                <img src={`${apiConfig.baseUrl}/api/sports/${sportId}/productCategories/${product.id}/icon`} alt={""} width="90" height="90"/>
             </Grid>
             <Grid className={classes.textFieldSpacing} item md={12}>
                 <Divider />
