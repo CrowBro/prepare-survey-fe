@@ -42,7 +42,7 @@ export interface SportDetailsCouple {
 }
 
 export const getSportDetails = async (id: number) => {
-    const response = await axios.get<SportDetailsCouple>(apiConfig.baseUrl + `/sports/${id}/details`);
+    const response = await axios.get<SportDetailsCouple>(apiConfig.baseUrl + `/api/sports/${id}/details`);
 
     return response.data;
 }
