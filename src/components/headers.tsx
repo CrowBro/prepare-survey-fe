@@ -11,7 +11,7 @@ const AntTabs = withStyles({
     root: {
     },
     indicator: {
-      backgroundColor: '#1890ff',
+      backgroundColor: '#404CC1',
     },
   })(Tabs);
   
@@ -22,15 +22,15 @@ const AntTabs = withStyles({
         fontSize: "18px",
         marginRight: theme.spacing(4),
         verticalAlign: 'middle',
-        color: '#888',
+        color: '#000',
         '&:hover': {
-          color: '#40a9ff',
+          color: '#404CC1',
         },
         '&$selected': {
-          color: 'primary',
+          color: '#404CC1',
         },
         '&:focus': {
-          color: '#40a9ff',
+          color: '#404CC1',
         },
       },
       selected: {},
