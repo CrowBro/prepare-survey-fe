@@ -10,7 +10,6 @@ import CategoryDetailsForm from "components/productCategories";
 import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
 import { makeStyles, createStyles, Theme  } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
-
 import {
     SportDetails,
     getSportDetails,
