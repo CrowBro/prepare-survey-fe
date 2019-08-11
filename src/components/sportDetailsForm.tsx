@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         lastTextField: {
             marginBottom: theme.spacing(1)
+        },
+        marginTop:{
+            marginTop: '55px'
         }
     }),
 );
@@ -54,7 +57,7 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
         <Grid item md={12}>
             <Paper>
                 <Grid item md={12}>
-                    <Container maxWidth={"md"}>
+                    <Container maxWidth={"md"} className={classes.marginTop}>
                         <Toolbar>
                             <Typography variant={"h5"} color={"primary"}>Sport details</Typography>
                         </Toolbar>

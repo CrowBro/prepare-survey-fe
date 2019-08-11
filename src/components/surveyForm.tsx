@@ -37,7 +37,7 @@ const SurveyForm = () => {
     const benchmarkQuestions = benchmarkSurvey || [];
 
     return (
-        <div style={{ padding: 20,  marginTop: 82}}>
+        <div style={{ padding: 20,  marginTop: 72}}>
             <Grid
                 container
                 direction={"row"}

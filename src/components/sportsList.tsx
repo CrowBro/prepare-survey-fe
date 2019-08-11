@@ -31,7 +31,7 @@ const useStyles = makeStyles({
         cursor: "pointer"
     },
     marginTop: {
-        marginTop: '82px',
+        marginTop: '72px',
     },
 })
 

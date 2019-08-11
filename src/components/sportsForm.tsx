@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme: Theme) =>
     fab: {
         margin: theme.spacing(1),
         top: 'auto',
-        right: 30,
-        bottom: 30,
+        right: 20,
+        bottom: 20,
         left: 'auto',
         position: 'fixed',
 
@@ -112,7 +112,7 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
                     ? <BrandsCompetitorsForm competitors={competitors} onChange={setCompetitors}/>
                     : <div> Loading... </div>
                 }
-                <Button size={"large"} className={classes.fab} color={"primary"} onClick={handleSave}>
+                <Button variant={"contained"} size={"large"} className={classes.fab} color={"primary"} onClick={handleSave}>
                     <SaveIcon className={classes.extendedIcon} /> Save
                 </Button>
             </Grid>

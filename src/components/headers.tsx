@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },      
         floatOnTop: {
                 margin: theme.spacing(1),
+                marginTop:0,
                 top: 0,
                 right: 0,
                 bottom: 'auto',
