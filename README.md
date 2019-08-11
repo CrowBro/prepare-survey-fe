@@ -16,15 +16,15 @@ yarn start
 ## Build and push to docker
 ```bash
 yarn build
-docker build -t prepare-survey-fe .
-docker tag prepare-survey-fe benaaasaaas/prepare-survey
-docker push benaaasaaas/prepare-survey
+sudo docker build -t prepare-survey-fe . &&
+sudo docker tag prepare-survey-fe benaaasaaas/prepare-survey &&
+sudo docker push benaaasaaas/prepare-survey
 ```
 
 ## Deploy in remote
 ```bash
-docker stop fe
-docker rm fe
-docker pull benaaasaaas/prepare-survey
-docker run -d -p 5000:5000 --name fe benaaasaaas/prepare-survey
+sudo docker stop fe &&
+sudo docker rm fe &&
+sudo docker pull benaaasaaas/prepare-survey &&
+sudo docker run -d -p 5000:5000 --name fe benaaasaaas/prepare-survey
 ```
