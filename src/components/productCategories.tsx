@@ -2,18 +2,13 @@ import * as React from "react";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Container from "@material-ui/core/Container";
+import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { styled } from "@material-ui/styles";
 import { List } from "immutable";
 import Category from "components/productCategory";
 import { ProductCategory } from "dataAccess/api";
 import * as uuid from "uuid";
-
-const BorderedContainer = styled(Container)({
-    borderBottom: "1px solid black",
-    marginBottom: 25
-});
 
 interface CategoryDetailsProps {
     categories: List<ProductCategory>;
@@ -27,11 +22,12 @@ const CategoryDetailsForm = ({ categories, sportId, onChange }: CategoryDetailsP
         <Grid item md={12}>
             <Paper>
                 <Grid item md={12}>
-                    <BorderedContainer maxWidth={"md"}>
+                    <Container maxWidth={"md"}>
                         <Toolbar>
                             <Typography variant={"h5"}>Product category details</Typography>
                         </Toolbar>
-                    </BorderedContainer>
+                    </Container>
+                    <Divider />
                 </Grid>
                 <Grid container spacing={0}>
                     {

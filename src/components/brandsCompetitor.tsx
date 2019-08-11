@@ -4,8 +4,18 @@ import Grid from "@material-ui/core/Grid";
 import ReactSelect, { OptionType } from "components/autoComplete";
 import AddCircle from "@material-ui/icons/AddCircle";
 import RemoveCircle from "@material-ui/icons/RemoveCircle";
-import BorderedContainer from "components/borderedContainer";
+import Container from "@material-ui/core/Container";
+import Divider from "@material-ui/core/Divider";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { BrandCompetitor } from "dataAccess/api";
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        textFieldSpacing: {
+            marginTop: theme.spacing(3),
+        },
+    }),
+);
 
 interface CategoryProps {
     product: BrandCompetitor;
@@ -29,10 +39,12 @@ const options: OptionType<number>[] = [
 const Competitor = (props: CategoryProps) => {
     const { product, addEnabled, onAdd, onRemove, onChange } = props;
 
+    const classes = useStyles();
+
     return (
-        <Grid container spacing={0} key={product.id}>
+        <Grid className={classes.textFieldSpacing} container spacing={0} key={product.id}>
             <Grid item md={9}>
-                <BorderedContainer maxWidth={"md"}>
+                <Container maxWidth={"md"}>
                     <FormControl fullWidth>
                         <ReactSelect
                             label={"Name"}
@@ -41,7 +53,7 @@ const Competitor = (props: CategoryProps) => {
                             onChange={(value) => onChange({ id: value.value, name: value.label })}
                         />
                     </FormControl>
-                </BorderedContainer>
+                </Container>
             </Grid>
             <Grid item md={3}>
                 {
@@ -50,6 +62,9 @@ const Competitor = (props: CategoryProps) => {
                         : <AddCircle color="disabled" />
                 }
                 <RemoveCircle color="error" onClick={onRemove}/>
+            </Grid>
+            <Grid className={classes.textFieldSpacing} item md={12}>
+                <Divider />
             </Grid>
         </Grid>
     )

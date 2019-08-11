@@ -4,18 +4,14 @@ import TextField  from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Container from "@material-ui/core/Container";
+import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import { styled, makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import IntegrationReactSelect, { OptionType } from "components/autoComplete";
 import { SportDetails } from "dataAccess/api";
 import clsx from "clsx";
-
-const BorderedContainer = styled(Container)({
-    borderBottom: "1px solid black",
-    marginBottom: 25
-});
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -58,16 +54,17 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
         <Grid item md={12}>
             <Paper>
                 <Grid item md={12}>
-                    <BorderedContainer maxWidth={"md"}>
+                    <Container maxWidth={"md"}>
                         <Toolbar>
                             <Typography variant={"h5"}>Sport details</Typography>
                         </Toolbar>
-                    </BorderedContainer>
+                    </Container>
+                    <Divider />
                 </Grid>
                 <Grid item md={12}>
-                    <BorderedContainer maxWidth={"md"}>
+                    <Container maxWidth={"md"}>
                         <FormControl fullWidth>
-                            <FormControl>
+                            <FormControl className={classes.textFieldSpacing}>
                                 <IntegrationReactSelect
                                     label="Sport passion brand"
                                     options={brands}
@@ -93,10 +90,11 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
                                 <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.juniorName}`}</FormHelperText>
                             </FormControl>
                         </FormControl>
-                    </BorderedContainer>
+                    </Container>
+                    <Divider />
                 </Grid>
                 <Grid item md={12}>
-                    <BorderedContainer maxWidth={"md"}>
+                    <Container maxWidth={"md"}>
                         <FormControl fullWidth>
                             <FormControl className={classes.textFieldSpacing}>
                                 <TextField
@@ -123,7 +121,7 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
                                 <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.shortName}`}</FormHelperText>
                             </FormControl>
                         </FormControl>
-                    </BorderedContainer>
+                    </Container>
                 </Grid>
             </Paper>
         </Grid>

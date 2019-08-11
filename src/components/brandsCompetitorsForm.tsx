@@ -4,8 +4,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import AddCircle from "@material-ui/icons/AddCircle";
+import Container from "@material-ui/core/Container";
+import Divider from "@material-ui/core/Divider";
 import { List } from "immutable";
-import BorderedContainer from "components/borderedContainer";
 import BrandsCompetitor from "components/brandsCompetitor";
 import { BrandCompetitor } from "dataAccess/api";
 import * as uuid from "uuid";
@@ -20,11 +21,12 @@ const CompetitorBrandsForm = ({ competitors, onChange }: CompetitorBrandsFormPro
         <Grid item md={12}>
             <Paper>
                 <Grid item md={12}>
-                    <BorderedContainer maxWidth={"md"}>
+                    <Container maxWidth={"md"}>
                         <Toolbar>
                             <Typography variant={"h5"}>Brand's Competitor Details</Typography>
                         </Toolbar>
-                    </BorderedContainer>
+                    </Container>
+                    <Divider />
                 </Grid>
                 <Grid container spacing={0}>
                     {
