@@ -17,10 +17,11 @@ const BorderedContainer = styled(Container)({
 
 interface CategoryDetailsProps {
     categories: List<ProductCategory>;
+    sportId: number;
     onChange: (action: (categories: List<ProductCategory>) => List<ProductCategory>) => void;
 }
 
-const CategoryDetailsForm = ({ categories, onChange }: CategoryDetailsProps) => {
+const CategoryDetailsForm = ({ categories, sportId, onChange }: CategoryDetailsProps) => {
 
     return (
         <Grid item md={12}>
@@ -38,6 +39,7 @@ const CategoryDetailsForm = ({ categories, onChange }: CategoryDetailsProps) => 
                             <Category
                                 key={uuid()}
                                 product={product}
+                                sportId={sportId}
                                 onChange={(value) => onChange(s => s.set(index, value))}
                                 addEnabled={categories.count() < 6}
                                 onAdd={() => {}}

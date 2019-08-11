@@ -80,7 +80,7 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
                     : <div> Loading... </div>
                 }
                 { categories
-                    ? <CategoryDetailsForm categories={categories} onChange={setCategories}/>
+                    ? <CategoryDetailsForm categories={categories} sportId={id} onChange={setCategories}/>
                     : <div> Loading... </div>
                 }
                 { competitors

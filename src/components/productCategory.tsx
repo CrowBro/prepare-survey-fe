@@ -6,6 +6,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/styles";
 import { ProductCategory } from "dataAccess/api";
+import { apiConfig } from "dataAccess/apiConfig";
 
 const BorderedContainer = styled(Container)({
     borderBottom: "1px solid black",
@@ -18,6 +19,7 @@ const SpacedTextField = styled(TextField)({
 
 interface CategoryProps {
     product: ProductCategory;
+    sportId: number;
     onChange: (category: ProductCategory) => void;
     addEnabled: boolean;
     onAdd: () => void;
@@ -25,7 +27,7 @@ interface CategoryProps {
 }
 
 const Category = (props: CategoryProps) => {
-    const { product, onChange } = props;
+    const { product, sportId, onChange } = props;
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const value = event.currentTarget.value;
@@ -34,7 +36,7 @@ const Category = (props: CategoryProps) => {
 
     return (
         <Grid container spacing={0} key={product.id}>
-            <Grid item md={12}>
+            <Grid item md={9}>
                 <BorderedContainer maxWidth={"md"}>
                     <FormControl fullWidth>
                         <SpacedTextField label={"Name"} value={product.name} onChange={handleNameChange}/>
@@ -43,6 +45,9 @@ const Category = (props: CategoryProps) => {
                         </Typography>
                     </FormControl>
                 </BorderedContainer>
+            </Grid>
+            <Grid item md={3}>
+                <img src={`${apiConfig.baseUrl}/api/sports/${sportId}/productCategories/${product.id}/icon`} alt={""}/>
             </Grid>
         </Grid>
     )
