@@ -13,7 +13,7 @@ import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles({
     root: {
-        margin: "20px,20px",
+        margin: "20px",        
         padding: "20px",
     },
     chipOrange: {
@@ -74,7 +74,7 @@ const SportsList = (props: RouteComponentProps) => {
 
     return (
         <Paper className={classes.root}>
-            <Table className={classes.root} size="medium">
+            <Table size="medium">
                 <TableHead className={classes.header}>
                     <TableRow className={classes.header}>
                         <TableCell>ID</TableCell>
