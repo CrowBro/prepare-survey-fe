@@ -14,6 +14,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import { SurveyQuestion } from "types/surveyQuestion";
 import ConfirmableTextInput from "components/confirmableTextInput";
 import AnswerForm from "components/answerForm";
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme: Theme) => ({
     card: {
@@ -33,8 +34,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         visibility: "hidden"
     },
     questionHeadermargin: {
-        marginTop: "5px",
-        verticalAlign: "middle",
+        
+        verticalAlign: "bottom",
         
     },
 }));
@@ -79,6 +80,7 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable }: SurveyQu
                         </>
                     }
                 />
+                
                 <CardActions>
                     <Typography>
                         List {question.category}
