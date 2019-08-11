@@ -11,7 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Edit from "@material-ui/icons/Edit";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import { SurveyQuestion } from "types/surveyQuestion";
+import { Question } from "dataAccess/surveyApi";
+import { QuestionChange, AnswersAction } from "types/survey";
 import ConfirmableTextInput from "components/confirmableTextInput";
 import AnswerForm from "components/answerForm";
 import Hidden from '@material-ui/core/Hidden';
@@ -41,16 +42,32 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface SurveyQuestionFormProps {
-    question: SurveyQuestion;
+    question: Question;
     expanded: boolean;
     onExpand: () => void;
     editable: boolean;
+    onChange: QuestionChange;
 }
 
-const SurveyQuestionForm = ({ question, expanded, onExpand, editable }: SurveyQuestionFormProps) => {
+const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }: SurveyQuestionFormProps) => {
     const classes = useStyles();
 
     const [ editing, setEditing ] = useState(false);
+
+    const handleTitleChange = (text: string) => {
+        onChange((question: Question) => ({
+            ...question,
+            questionText: text
+        }));
+        setEditing(false);
+    }
+
+    const handleAnswersChange = (action: AnswersAction) => {
+        onChange((question: Question) => ({
+            ...question,
+            answerVariants: action(question.answerVariants)
+        }));
+    }
 
     return (
         <Grid container>
@@ -60,11 +77,11 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable }: SurveyQu
                         <>
                             { editing
                                 ? <ConfirmableTextInput
-                                    value={question.text}
-                                    onConfirm={(text) => { console.log(text) }}
+                                    value={question.questionText}
+                                    onConfirm={handleTitleChange}
                                     onCancel={() => setEditing(false)}
                                 />
-                                : question.text
+                                : question.questionText
                             }
                         </>
                     }
@@ -83,12 +100,12 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable }: SurveyQu
                 
                 <CardActions>
                     <Typography>
-                        List {question.category}
+                        List {question.answerCategory}
                     </Typography>
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,
-                            [classes.invisible]: question.answers.length === 0
+                            [classes.invisible]: question.answerVariants.length === 0
                         })}
                         edge="end"
                         onClick={onExpand}
@@ -97,7 +114,7 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable }: SurveyQu
                     </IconButton>
                 </CardActions>
                 <Collapse in={expanded} timeout={"auto"}>
-                    <AnswerForm answers={question.answers} editable={editable}/>
+                    <AnswerForm answers={question.answerVariants} editable={editable} onChange={handleAnswersChange}/>
                 </Collapse>
             </Card>
         </Grid>

@@ -4,10 +4,12 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { getSurvey, SurveyResponse, SurveyType } from "dataAccess/surveyApi";
+import { getSurvey, saveSurvey, SurveyResponse, SurveyType } from "dataAccess/surveyApi";
+import { QuestionsAction } from "types/survey";
 import SurveyQuestionList from "components/surveyQuestionList";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-const SurveyForm = () => {
+const SurveyForm = ({ history }: RouteComponentProps) => {
     const [ surveys, setSurveys ] = useState<SurveyResponse | null>(null)
     const [ surveyType, setSurveyType ] = useState<SurveyType>("intro");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,6 +38,22 @@ const SurveyForm = () => {
     const benchmarkSurvey = surveys && surveys.benchmarkSurvey && surveys.benchmarkSurvey.questions;
     const benchmarkQuestions = benchmarkSurvey || [];
 
+    const onChange = (onChange: QuestionsAction) => {
+        setSurveys((s: SurveyResponse) => ({
+            ...s,
+            latestVersionSurvey: {
+                ...s.latestVersionSurvey,
+                questions: onChange(s.latestVersionSurvey.questions)
+            }
+        }));
+    }
+
+    const handleSave = () => {
+        if(surveys) {
+            saveSurvey(surveyType, surveys).then(() => console.log("Works!"));
+        }
+    }
+
     return (
         <div style={{ padding: 20,  marginTop: 72}}>
             <Grid
@@ -63,11 +81,17 @@ const SurveyForm = () => {
                 </Grid>
                 <SurveyQuestionList
                     questions={currentQuestions}
+                    onChange={onChange}
                     baseQuestions={benchmarkQuestions}
                 />
+                <Grid item xs={12}>
+                    <Button onClick={handleSave}>
+                        Save
+                    </Button>
+                </Grid>
             </Grid>
         </div>
     )
 }
 
-export default SurveyForm;
+export default withRouter(SurveyForm);

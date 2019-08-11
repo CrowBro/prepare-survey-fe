@@ -3,49 +3,41 @@ import { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import SurveyQuestionForm from "components/surveyQuestionForm";
 import { Question } from "dataAccess/surveyApi";
-import { SurveyQuestion } from "types/surveyQuestion";
-import * as uuid from "uuid";
-
-const questionMap = (question: Question): SurveyQuestion => {
-    return {
-        id: question.id,
-        text: question.questionText,
-        category: question.answerCategory,
-        answers: question.answerVariants.map(answer => ({
-            id: answer.id,
-            text: answer.answerText,
-            isEnabled: answer.isEnabled
-        }))
-    };
-}
+import { QuestionsChange, QuestionAction, QuestionChange } from "types/survey";
 
 interface SurveyQuestionListItemProps {
     question: Question;
+    onChange: QuestionChange;
     baseQuestion: Question;
 }
 
 const SurveyQuestionListItem = (props: SurveyQuestionListItemProps) => {
-    const { question, baseQuestion } = props;
+    const { question, onChange, baseQuestion } = props;
 
     const [ expanded, setExpanded ] = useState(false);
+    const handleExpand = () => {
+        setExpanded(s => !s);
+    }
 
     return (
         <>
             <Grid item xs={6}>
                 <SurveyQuestionForm
                     key={question.id}
-                    question={questionMap(question)}
+                    question={question}
                     expanded={expanded}
-                    onExpand={() => setExpanded(s => !s)}
+                    onExpand={handleExpand}
+                    onChange={onChange}
                     editable={true}
                 />
             </Grid>
             <Grid item xs={6}>
                 <SurveyQuestionForm
                     key={baseQuestion.id}
-                    question={questionMap(baseQuestion)}
+                    question={baseQuestion}
                     expanded={expanded}
-                    onExpand={() => setExpanded(s => !s)}
+                    onChange={() => { }}
+                    onExpand={handleExpand}
                     editable={false}
                 />
             </Grid>
@@ -55,16 +47,25 @@ const SurveyQuestionListItem = (props: SurveyQuestionListItemProps) => {
 
 interface QuestionsListProps {
     questions: Question[];
+    onChange: QuestionsChange;
     baseQuestions: Question[];
 }
 
-const SurveyQuestionList = ({ questions, baseQuestions }: QuestionsListProps) => {
+const SurveyQuestionList = ({ questions, onChange, baseQuestions }: QuestionsListProps) => {
+    const handleQuestionChange = (questionAction: QuestionAction, index: number) => {
+        onChange(questions => {
+            questions[index] = questionAction(questions[index]);
+            return questions;
+        })
+    }
+
     return (
         <>
             { questions.map((question, index) => (
                 <SurveyQuestionListItem
-                    key={uuid()}
+                    key={index}
                     question={question}
+                    onChange={(action) => handleQuestionChange(action, index)}
                     baseQuestion={baseQuestions[index]}
                 />
             )) }
