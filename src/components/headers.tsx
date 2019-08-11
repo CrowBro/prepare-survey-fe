@@ -6,12 +6,14 @@ import Tab from "@material-ui/core/Tab";
 import TimerIcon from '@material-ui/icons/Timer';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { makeStyles, withStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { ThemeProvider } from '@material-ui/styles';
+import { DeTheme } from "components/deTheme";
 
 const AntTabs = withStyles({
     root: {
     },
     indicator: {
-      backgroundColor: '#404CC1',
+      backgroundColor: DeTheme.palette.primary.main,
     },
   })(Tabs);
   
@@ -24,13 +26,13 @@ const AntTabs = withStyles({
         verticalAlign: 'middle',
         color: '#000',
         '&:hover': {
-          color: '#404CC1',
+          color: DeTheme.palette.primary.main,
         },
         '&$selected': {
-          color: '#404CC1',
+          color: DeTheme.palette.primary.main,
         },
         '&:focus': {
-          color: '#404CC1',
+          color: DeTheme.palette.primary.main,
         },
       },
       selected: {},
@@ -67,6 +69,7 @@ const Header = (props: RouteComponentProps) => {
     }
 
     return (
+        <ThemeProvider theme={DeTheme}>
             <div className={classes.root}>
                 <AppBar position="static">
                 <div className={classes.whiteBackground}>
@@ -77,6 +80,7 @@ const Header = (props: RouteComponentProps) => {
                 </div>
                 </AppBar>
             </div>
+        </ThemeProvider>
     );
 }
 export default withRouter(Header);

@@ -6,10 +6,11 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
 import Chip from "@material-ui/core/Chip";
+import DeTheme from "components/deTheme";
 
 const useStyles = makeStyles({
     root: {
@@ -73,6 +74,7 @@ const SportsList = (props: RouteComponentProps) => {
     }, []);
 
     return (
+        <ThemeProvider theme={DeTheme}>
         <Paper className={classes.root}>
             <Table size="medium">
                 <TableHead className={classes.header}>
@@ -105,6 +107,7 @@ const SportsList = (props: RouteComponentProps) => {
                 </TableBody>
             </Table>
         </Paper>
+        </ThemeProvider>
     )
 }
 
