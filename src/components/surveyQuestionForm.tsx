@@ -34,9 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         visibility: "hidden"
     },
     questionHeadermargin: {
-
         verticalAlign: "bottom",
-
     },
 }));
 
