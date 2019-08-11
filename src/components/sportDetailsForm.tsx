@@ -24,8 +24,18 @@ const useStyles = makeStyles((theme: Theme) =>
         lastTextField: {
             marginBottom: theme.spacing(1)
         },
-        marginTop:{
+        marginTop: {
             marginTop: "55px"
+        },
+        titleGridForDropdown: {
+            marginTop: 50,
+            textAlign: "right",
+            paddingRight: 20
+        },
+        titleGrid: {
+            marginTop: 47,
+            textAlign: "right",
+            paddingRight: 20
         }
     }),
 );
@@ -43,6 +53,30 @@ interface DetailsFormProps {
     onChange: (action: SetDetails) => void;
 }
 
+interface ItemProps {
+    label: string;
+    element: JSX.Element;
+}
+
+const Item = (props: ItemProps) => {
+    const classes = useStyles();
+
+    const { label, element } = props;
+
+    return (
+        <Grid container>
+            <Grid item xs={2} className={clsx(classes.titleGrid)}>
+                <Typography>
+                    {label}
+                </Typography>
+            </Grid>
+            <Grid item lg={9}>
+                {element}
+            </Grid>
+        </Grid>
+    )
+}
+
 const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) => {
     const onChangeSync = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -54,75 +88,91 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
     const classes = useStyles();
 
     return (
-        <Grid item md={12}>
+        <Grid item lg={12}>
             <Paper>
-                <Grid item md={12}>
-                    <Container maxWidth={"md"} className={classes.marginTop}>
+                <Grid item lg={12}>
+                    <Container maxWidth={"lg"} className={classes.marginTop}>
                         <Toolbar>
                             <Typography variant={"h5"} color={"primary"}>Sport details</Typography>
                         </Toolbar>
                     </Container>
                     <Divider />
                 </Grid>
-                <Grid item md={12}>
-                    <Container maxWidth={"md"}>
+                <Grid item lg={12}>
+                    <Container maxWidth={"lg"}>
                         <FormControl fullWidth>
-                            <FormControl className={classes.textFieldSpacing}>
-                                <IntegrationReactSelect
-                                    label="Sport passion brand"
-                                    options={brands}
-                                    value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
-                                    onChange={(value) => onChange(s => ({...s, passionBrand: {id: value.value, name: value.label}}))}
-                                />
-                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.passionBrand.name}`}</FormHelperText>
-                            </FormControl>
-                            <FormControl className={classes.textFieldSpacing}>
-                                <TextField
-                                    label={"Sport Adult"}
-                                    value={details.adultName}
-                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, adultName: val }))}
-                                />
-                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.adultName}`}</FormHelperText>
-                            </FormControl>
-                            <FormControl className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
-                                <TextField 
-                                    label={"Sport Junior"} 
-                                    value={details.juniorName}
-                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, juniorName: val }))}
-                                />
-                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.juniorName}`}</FormHelperText>
-                            </FormControl>
+                            <Grid container>
+                                <Grid item xs={2} className={clsx(classes.titleGridForDropdown)}>
+                                    <Typography>
+                                        Passion Brand
+                                    </Typography>
+                                </Grid>
+                                <Grid item lg={9}>
+                                    <FormControl fullWidth className={classes.textFieldSpacing}>
+                                        <FormHelperText id="weight-helper-text">{benchmarkDetails.passionBrand.name}</FormHelperText>
+                                        <IntegrationReactSelect
+                                            label={""}
+                                            options={brands}
+                                            value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
+                                            onChange={(value) => onChange(s => ({...s, passionBrand: {id: value.value, name: value.label}}))}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                            <Item label={"Sport Adult"} element={
+                                <FormControl fullWidth className={classes.textFieldSpacing}>
+                                    <FormHelperText id="weight-helper-text">{benchmarkDetails.adultName}</FormHelperText>
+                                    <TextField
+                                        value={details.adultName}
+                                        onChange={(event) => onChangeSync(event, val => s => ({ ...s, adultName: val }))}
+                                    />
+                                </FormControl>
+                            } />
+                            <Item label={"Sport Junior"} element={
+                                <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                    <FormHelperText id="weight-helper-text">{benchmarkDetails.juniorName}</FormHelperText>
+                                    <TextField 
+                                        value={details.juniorName}
+                                        onChange={(event) => onChangeSync(event, val => s => ({ ...s, juniorName: val }))}
+                                    />
+                                </FormControl>
+                            } />
                         </FormControl>
                     </Container>
                     <Divider />
                 </Grid>
-                <Grid item md={12}>
-                    <Container maxWidth={"md"}>
+                <Grid item lg={12}>
+                    <Container maxWidth={"lg"}>
                         <FormControl fullWidth>
-                            <FormControl className={classes.textFieldSpacing}>
-                                <TextField
-                                    label={"Full name 1"} 
-                                    value={details.fullName1}
-                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName1: val }))}
-                                />
-                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.fullName1}`}</FormHelperText>
-                            </FormControl>
-                            <FormControl className={classes.textFieldSpacing}>
-                                <TextField
-                                    label={"Full name 2"}
-                                    value={details.fullName2}
-                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName2: val }))}
-                                />
-                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.fullName2}`}</FormHelperText>
-                            </FormControl>
-                            <FormControl className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
-                                <TextField
-                                    label={"Short name"} 
-                                    value={details.shortName}
-                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, shortName: val }))}
-                                />
-                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.shortName}`}</FormHelperText>
-                            </FormControl>
+                            <Item label={"Full name 1"} element={
+                                <FormControl fullWidth className={classes.textFieldSpacing}>
+                                    <FormHelperText id="weight-helper-text">{benchmarkDetails.fullName1}</FormHelperText>
+                                    <TextField
+                                        value={details.fullName1}
+                                        onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName1: val }))}
+                                    />
+                                    <FormHelperText id="weight-helper-text">Exemple : pour pratiquer “la balade à vélo”</FormHelperText>
+                                </FormControl>
+                            } />
+                            <Item label={"Full name 2"} element={
+                                <FormControl fullWidth className={classes.textFieldSpacing}>
+                                    <FormHelperText id="weight-helper-text">{benchmarkDetails.fullName1}</FormHelperText>
+                                    <TextField
+                                        value={details.fullName2}
+                                        onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName2: val }))}
+                                    />
+                                    <FormHelperText id="weight-helper-text">Exemple : parlons de votre pratique “de la balade à vélo”</FormHelperText>
+                                </FormControl>
+                            } />
+                            <Item label={"Short name"} element={
+                                <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                    <FormHelperText id="weight-helper-text">{benchmarkDetails.shortName}</FormHelperText>
+                                    <TextField
+                                        value={details.shortName}
+                                        onChange={(event) => onChangeSync(event, val => s => ({ ...s, shortName: val }))}
+                                    />
+                                </FormControl>
+                            } />
                         </FormControl>
                     </Container>
                 </Grid>

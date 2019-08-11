@@ -94,7 +94,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
     }
 
     return (
-        <Container maxWidth={"md"}>
+        <Container maxWidth={"lg"}>
             <Grid
                 justify="center"
                 direction="row"
