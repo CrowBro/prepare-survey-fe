@@ -31,7 +31,7 @@ const useStyles = makeStyles({
         cursor: "pointer"
     },
     marginTop: {
-        marginTop: '72px',
+        marginTop: "72px",
     },
 })
 
@@ -48,7 +48,7 @@ const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) =>
             )
         case "Pending":
             return (
-                <Chip 
+                <Chip
                     size="small"
                     color="default"
                     label={status}

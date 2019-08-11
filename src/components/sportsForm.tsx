@@ -8,8 +8,8 @@ import { List } from "immutable";
 import DetailsForm from "components/sportDetailsForm";
 import CategoryDetailsForm from "components/productCategories";
 import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
-import { makeStyles, createStyles, useTheme, Theme  } from "@material-ui/styles";
-import SaveIcon from '@material-ui/icons/Save';
+import { makeStyles, createStyles, Theme  } from "@material-ui/core/styles";
+import SaveIcon from "@material-ui/icons/Save";
 
 import {
     SportDetails,
@@ -25,23 +25,23 @@ import {
 
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    fab: {
-        margin: theme.spacing(1),
-        top: 'auto',
-        right: 20,
-        bottom: 20,
-        left: 'auto',
-        position: 'fixed',
+    createStyles({
+        fab: {
+            margin: theme.spacing(1),
+            top: "auto",
+            right: 20,
+            bottom: 20,
+            left: "auto",
+            position: "fixed",
 
-    },
-    extendedIcon: {
-      marginRight: theme.spacing(1),
-    },
-    gridMargin: {
-        margin: "10px",
-    },
-  }),
+        },
+        extendedIcon: {
+            marginRight: theme.spacing(1),
+        },
+        gridMargin: {
+            margin: "10px",
+        },
+    }),
 );
 
 const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
