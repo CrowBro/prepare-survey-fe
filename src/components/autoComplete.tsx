@@ -16,7 +16,6 @@ import { MultiValueProps } from "react-select/src/components/MultiValue";
 import { OptionProps } from "react-select/src/components/Option";
 import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
-import { ValueType } from "react-select/src/types";
 
 export interface OptionType<TKey> {
     label: string;
