@@ -31,7 +31,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     invisible: {
         visibility: "hidden"
-    }
+    },
+    questionHeadermargin: {
+        marginTop: "5px",
+        verticalAlign: "middle",
+        
+    },
 }));
 
 interface SurveyQuestionFormProps {

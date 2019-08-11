@@ -29,7 +29,10 @@ const useStyles = makeStyles({
     },
     body: {
         cursor: "pointer"
-    }
+    },
+    marginTop: {
+        marginTop: '82px',
+    },
 })
 
 const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) => {
@@ -73,7 +76,7 @@ const SportsList = (props: RouteComponentProps) => {
     }, []);
 
     return (
-        <Paper className={classes.root}>
+        <Paper className={`${classes.root} ${classes.marginTop}`}>
             <Table size="medium">
                 <TableHead className={classes.header}>
                     <TableRow className={classes.header}>

@@ -8,7 +8,9 @@ import { List } from "immutable";
 import DetailsForm from "components/sportDetailsForm";
 import CategoryDetailsForm from "components/productCategories";
 import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, createStyles, useTheme, Theme  } from "@material-ui/styles";
+import SaveIcon from '@material-ui/icons/Save';
+
 import {
     SportDetails,
     getSportDetails,
@@ -21,11 +23,26 @@ import {
     saveCompetitorBrands
 } from "dataAccess/api";
 
-const useStyles = makeStyles({
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    fab: {
+        margin: theme.spacing(1),
+        top: 'auto',
+        right: 30,
+        bottom: 30,
+        left: 'auto',
+        position: 'fixed',
+
+    },
+    extendedIcon: {
+      marginRight: theme.spacing(1),
+    },
     gridMargin: {
         margin: "10px",
-    }
-})
+    },
+  }),
+);
 
 const SportsForm = (props: RouteComponentProps<{id: string}>) => {
     const classes = useStyles();
@@ -95,8 +112,8 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
                     ? <BrandsCompetitorsForm competitors={competitors} onChange={setCompetitors}/>
                     : <div> Loading... </div>
                 }
-                <Button size={"large"} color={"primary"} onClick={handleSave}>
-                    Save
+                <Button size={"large"} className={classes.fab} color={"primary"} onClick={handleSave}>
+                    <SaveIcon className={classes.extendedIcon} /> Save
                 </Button>
             </Grid>
         </Container>
