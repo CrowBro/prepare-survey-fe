@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Divider from "@material-ui/core/Divider";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import Grid from "@material-ui/core/Grid";
 import { ProductCategory } from "dataAccess/api";
 import { apiConfig } from "dataAccess/apiConfig";
@@ -15,12 +16,12 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(3),
         },
         titleGrid: {
-            marginTop: 19,
+            marginTop: 22,
             textAlign: "right",
             paddingRight: 20
         },
         secondTitle: {
-            marginTop: 29
+            marginTop: 50
         },
         iconMargin: {
             marginLeft: 20
@@ -39,7 +40,7 @@ interface CategoryProps {
 }
 
 const Category = (props: CategoryProps) => {
-    const { product, sportId, onChange } = props;
+    const { product, benchmarkProduct, sportId, onChange } = props;
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const value = event.currentTarget.value;
@@ -63,11 +64,17 @@ const Category = (props: CategoryProps) => {
                         </Grid>
                         <Grid item lg={7}>
                             <FormControl fullWidth>
-                                <TextField label={"Name"} value={product.name} onChange={handleNameChange}/>
-                                <Typography className={classes.textFieldSpacing}>
-                                    {product.family && product.family.name}
-                                </Typography>
+                                <FormHelperText id="weight-helper-text">{benchmarkProduct && benchmarkProduct.name}</FormHelperText>
+                                <TextField
+                                    value={product.name}
+                                    onChange={handleNameChange}
+                                />
+                                <FormHelperText id="weight-helper-text">name of the product to survey. Example “Gants” [et non “Gants de ski”]</FormHelperText>
+
                             </FormControl>
+                            <Typography className={classes.textFieldSpacing}>
+                                {product.family && product.family.name}
+                            </Typography>
                         </Grid>
                         <Grid item lg={3}>
                             <img

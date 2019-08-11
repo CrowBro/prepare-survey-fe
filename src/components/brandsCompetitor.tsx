@@ -6,6 +6,8 @@ import AddCircle from "@material-ui/icons/AddCircle";
 import RemoveCircle from "@material-ui/icons/RemoveCircle";
 import Container from "@material-ui/core/Container";
 import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { BrandCompetitor } from "dataAccess/api";
 
@@ -14,6 +16,14 @@ const useStyles = makeStyles((theme: Theme) =>
         textFieldSpacing: {
             marginTop: theme.spacing(3),
         },
+        titleGrid: {
+            marginTop: 6,
+            textAlign: "right",
+            paddingRight: 20
+        },
+        iconMargin: {
+            marginLeft: 20
+        }
     }),
 );
 
@@ -43,28 +53,41 @@ const Competitor = (props: CategoryProps) => {
 
     return (
         <Grid className={classes.textFieldSpacing} container spacing={0} key={product.id}>
-            <Grid item md={9}>
-                <Container maxWidth={"md"}>
-                    <FormControl fullWidth>
-                        <ReactSelect
-                            label={"Name"}
-                            options={options}
-                            value={({ value: product.id, label: product.name || "Placeholder" })}
-                            onChange={(value) => onChange({ id: value.value, name: value.label, order: 0, history: "" })}
-                        />
-                        <label>{"Previously:" + product.history}</label>
-                    </FormControl>
-                </Container>
-            </Grid>
-            <Grid item md={3}>
-                {
-                    addEnabled
-                        ? <AddCircle color="primary" onClick={onAdd} />
-                        : <AddCircle color="disabled" />
-                }
-                <RemoveCircle color="error" onClick={onRemove} />
-            </Grid>
-            <Grid className={classes.textFieldSpacing} item md={12}>
+            <Container maxWidth={"lg"}>
+                <Grid container>
+                    <Grid item xs={2} className={classes.titleGrid}>
+                        <Typography>
+                            Name
+                        </Typography>
+                    </Grid>
+                    <Grid item lg={7}>
+                        <FormControl fullWidth>
+                            <FormControl fullWidth>
+                                <ReactSelect
+                                    label={""}
+                                    options={options}
+                                    value={({ value: product.id, label: product.name || "Placeholder" })}
+                                    onChange={(value) => onChange({ id: value.value, name: value.label, order: 0, history: "" })}
+                                />
+                                { product.history &&
+                                    <FormHelperText id="weight-helper-text">{`Previously: ${product.history}`}</FormHelperText>
+                                }
+                            </FormControl>
+                        </FormControl>
+                    </Grid>
+                    <Grid item lg={3}>
+                        <div className={classes.iconMargin}>
+                            {
+                                addEnabled
+                                    ? <AddCircle color="primary" onClick={onAdd} />
+                                    : <AddCircle color="disabled" />
+                            }
+                            <RemoveCircle color="error" onClick={onRemove} />
+                        </div>
+                    </Grid>
+                </Grid>
+            </Container>
+            <Grid className={classes.textFieldSpacing} item lg={12}>
                 <Divider />
             </Grid>
         </Grid>
