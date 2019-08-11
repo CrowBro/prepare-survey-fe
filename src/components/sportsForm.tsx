@@ -8,7 +8,7 @@ import { List } from "immutable";
 import DetailsForm from "components/sportDetailsForm";
 import CategoryDetailsForm from "components/productCategories";
 import BrandsCompetitorsForm from "components/brandsCompetitorsForm";
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from "@material-ui/styles";
 import {
     SportDetails,
     getSportDetails,
@@ -25,7 +25,7 @@ import {
 
 const useStyles = makeStyles({
     gridMargin: {
-        margin: "10px",        
+        margin: "10px",
     }
 })
 
