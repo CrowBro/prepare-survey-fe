@@ -23,7 +23,7 @@ const CompetitorBrandsForm = ({ competitors, onChange }: CompetitorBrandsFormPro
                 <Grid item md={12}>
                     <Container maxWidth={"md"}>
                         <Toolbar>
-                            <Typography variant={"h5"}>Brand's Competitor Details</Typography>
+                            <Typography variant={"h5"} color="primary">Brand's Competitor Details</Typography>
                         </Toolbar>
                     </Container>
                     <Divider />

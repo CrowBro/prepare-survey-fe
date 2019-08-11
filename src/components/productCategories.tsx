@@ -24,7 +24,7 @@ const CategoryDetailsForm = ({ categories, sportId, onChange }: CategoryDetailsP
                 <Grid item md={12}>
                     <Container maxWidth={"md"}>
                         <Toolbar>
-                            <Typography variant={"h5"}>Product category details</Typography>
+                            <Typography variant={"h5"} color="primary">Product category details</Typography>
                         </Toolbar>
                     </Container>
                     <Divider />
