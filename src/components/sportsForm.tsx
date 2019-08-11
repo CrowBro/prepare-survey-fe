@@ -32,7 +32,7 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
         getSportDetails(id)
             .then(resp => {
                 if(isMounted) {
-                    setDetails(resp);
+                    setDetails(resp.targetSport);
                 }
             })
 

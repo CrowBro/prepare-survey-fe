@@ -36,8 +36,13 @@ export interface SportDetails {
     shortName: string;
 }
 
+export interface SportPair {
+    targetSport: SportDetails;
+    benchmarkSport: SportDetails;
+}
+
 export const getSportDetails = async (id: number) => {
-    const response = await axios.get<SportDetails>(apiConfig.baseUrl + `/sports/${id}/details`);
+    const response = await axios.get<SportPair>(apiConfig.baseUrl + `/api/sports/${id}/details`);
 
     return response.data;
 }
