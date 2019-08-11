@@ -42,6 +42,8 @@ interface StyledTabProps {
     label: JSX.Element;
 }
 
+
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -53,6 +55,17 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: {
             margin: theme.spacing(1),
             marginRight: theme.spacing(3),
+        },      
+        floatOnTop: {
+            margin: theme.spacing(1),
+            marginTop:0,
+            top: 0,
+            right: 0,
+            bottom: "auto",
+            left: 0,
+            position: "fixed",
+            backgroundColor: theme.palette.background.paper,
+            zIndex: 10000,
         },
 
     }),
@@ -68,7 +81,7 @@ const Header = (props: RouteComponentProps) => {
     return (
         <div className={classes.root}>
             <AppBar position="static">
-                <div className={classes.whiteBackground}>
+                <div className={classes.floatOnTop}>
                     <AntTabs value={props.location.pathname} onChange={handleChange}>
                         <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize ="inherit"  />&nbsp;&nbsp;&nbsp;Sports</div></>} />
                         <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize ="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />

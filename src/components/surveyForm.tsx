@@ -55,7 +55,7 @@ const SurveyForm = ({ history }: RouteComponentProps) => {
     }
 
     return (
-        <div style={{ padding: 20 }}>
+        <div style={{ padding: 20,  marginTop: 72}}>
             <Grid
                 container
                 direction={"row"}

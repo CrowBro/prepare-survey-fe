@@ -32,7 +32,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     invisible: {
         visibility: "hidden"
-    }
+    },
+    questionHeadermargin: {
+        verticalAlign: "bottom",
+    },
 }));
 
 interface SurveyQuestionFormProps {
@@ -91,6 +94,7 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }
                         </>
                     }
                 />
+
                 <CardActions>
                     <Typography>
                         List {question.answerCategory}
