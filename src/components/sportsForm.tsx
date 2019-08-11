@@ -49,6 +49,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
     const [details, setDetails] = useState<SportDetails | null>(null);
     const [benchmarkDetails, setBenchmarkDetails] = useState<SportDetails | null>(null);
     const [categories, setCategories] = useState<List<ProductCategory> | null>(null);
+    const [benchmarkCategories, setBenchmarkCategories] = useState<ProductCategory[]>([]);
     const [competitors, setCompetitors] = useState<List<BrandCompetitor> | null>(null);
     let isMounted = true;
 
@@ -65,6 +66,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
             .then(resp => {
                 if (isMounted) {
                     setCategories(List(resp.targetDetails.productCategories));
+                    setBenchmarkCategories(resp.benchmarkDetails.productCategories)
                 }
             })
 
@@ -83,7 +85,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
         if (details && benchmarkDetails && categories && competitors) {
             Promise.all([
                 saveSportDetails(id, { targetSport: details, benchmarkSport: benchmarkDetails }),
-                saveProductCategories(id, { targetDetails: { productCategories: categories.toArray() }, benchmarkDetails: { productCategories: categories.toArray() } }),
+                saveProductCategories(id, { targetDetails: { productCategories: categories.toArray() }, benchmarkDetails: { productCategories: benchmarkCategories } }),
                 saveCompetitorBrands(id, competitors.toArray().map((el: BrandCompetitor, index: number) => {
                     el.order = index + 1;
                     return el;
@@ -107,7 +109,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
                     : <div> Loading... </div>
                 }
                 {categories
-                    ? <CategoryDetailsForm categories={categories} sportId={id} onChange={setCategories} />
+                    ? <CategoryDetailsForm categories={categories} benchmarkCategories={benchmarkCategories} sportId={id} onChange={setCategories} />
                     : <div> Loading... </div>
                 }
                 {competitors

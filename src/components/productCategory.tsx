@@ -14,11 +14,23 @@ const useStyles = makeStyles((theme: Theme) =>
         textFieldSpacing: {
             marginTop: theme.spacing(3),
         },
+        titleGrid: {
+            marginTop: 19,
+            textAlign: "right",
+            paddingRight: 20
+        },
+        secondTitle: {
+            marginTop: 29
+        },
+        iconMargin: {
+            marginLeft: 20
+        }
     }),
 );
 
 interface CategoryProps {
     product: ProductCategory;
+    benchmarkProduct: ProductCategory;
     sportId: number;
     onChange: (category: ProductCategory) => void;
     addEnabled: boolean;
@@ -37,19 +49,37 @@ const Category = (props: CategoryProps) => {
     const classes = useStyles();
 
     return (
-        <Grid className={classes.textFieldSpacing} container spacing={0} key={product.id}>
-            <Grid item md={9}>
-                <Container maxWidth={"md"}>
-                    <FormControl fullWidth>
-                        <TextField label={"Name"} value={product.name} onChange={handleNameChange}/>
-                        <Typography className={classes.textFieldSpacing}>
-                            {product.family && product.family.name}
-                        </Typography>
-                    </FormControl>
+        <Grid className={classes.textFieldSpacing} container key={product.id}>
+            <Grid item lg={12}>
+                <Container maxWidth={"lg"}>
+                    <Grid container>
+                        <Grid item lg={2} className={classes.titleGrid}>
+                            <Typography>
+                                Name
+                            </Typography>
+                            <Typography className={classes.secondTitle}>
+                                Product Family
+                            </Typography>
+                        </Grid>
+                        <Grid item lg={7}>
+                            <FormControl fullWidth>
+                                <TextField label={"Name"} value={product.name} onChange={handleNameChange}/>
+                                <Typography className={classes.textFieldSpacing}>
+                                    {product.family && product.family.name}
+                                </Typography>
+                            </FormControl>
+                        </Grid>
+                        <Grid item lg={3}>
+                            <img
+                                className={classes.iconMargin}
+                                src={`${apiConfig.baseUrl}/api/sports/${sportId}/productCategories/${product.id}/icon`}
+                                alt={""}
+                                width="90"
+                                height="90"
+                            />
+                        </Grid>
+                    </Grid>
                 </Container>
-            </Grid>
-            <Grid item md={3}>
-                <img src={`${apiConfig.baseUrl}/api/sports/${sportId}/productCategories/${product.id}/icon`} alt={""} width="90" height="90"/>
             </Grid>
             <Grid className={classes.textFieldSpacing} item md={12}>
                 <Divider />

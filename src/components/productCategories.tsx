@@ -11,38 +11,38 @@ import { ProductCategory } from "dataAccess/api";
 
 interface CategoryDetailsProps {
     categories: List<ProductCategory>;
+    benchmarkCategories: ProductCategory[];
     sportId: number;
     onChange: (action: (categories: List<ProductCategory>) => List<ProductCategory>) => void;
 }
 
-const CategoryDetailsForm = ({ categories, sportId, onChange }: CategoryDetailsProps) => {
+const CategoryDetailsForm = ({ categories, benchmarkCategories, sportId, onChange }: CategoryDetailsProps) => {
 
     return (
-        <Grid item md={12}>
+        <Grid item lg={12}>
             <Paper>
-                <Grid item md={12}>
-                    <Container maxWidth={"md"}>
+                <Grid item lg={12}>
+                    <Container maxWidth={"lg"}>
                         <Toolbar>
                             <Typography variant={"h5"} color="primary">Product category details</Typography>
                         </Toolbar>
                     </Container>
                     <Divider />
                 </Grid>
-                <Grid container spacing={0}>
-                    {
-                        categories.map((product: ProductCategory, index: number) => (
-                            <Category
-                                key={index}
-                                product={product}
-                                sportId={sportId}
-                                onChange={(value) => onChange(s => s.set(index, value))}
-                                addEnabled={categories.count() < 6}
-                                onAdd={() => {}}
-                                onRemove={() => onChange(s => s.remove(index))}
-                            />
-                        ))
-                    }
-                </Grid>
+                {
+                    categories.map((product: ProductCategory, index: number) => (
+                        <Category
+                            key={index}
+                            product={product}
+                            benchmarkProduct={benchmarkCategories[index]}
+                            sportId={sportId}
+                            onChange={(value) => onChange(s => s.set(index, value))}
+                            addEnabled={categories.count() < 6}
+                            onAdd={() => {}}
+                            onRemove={() => onChange(s => s.remove(index))}
+                        />
+                    ))
+                }
             </Paper>
         </Grid>
     )

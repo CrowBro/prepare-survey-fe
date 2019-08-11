@@ -70,7 +70,7 @@ const Item = (props: ItemProps) => {
                     {label}
                 </Typography>
             </Grid>
-            <Grid item lg={9}>
+            <Grid item lg={10}>
                 {element}
             </Grid>
         </Grid>
@@ -107,7 +107,7 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
                                         Passion Brand
                                     </Typography>
                                 </Grid>
-                                <Grid item lg={9}>
+                                <Grid item lg={10}>
                                     <FormControl fullWidth className={classes.textFieldSpacing}>
                                         <FormHelperText id="weight-helper-text">{benchmarkDetails.passionBrand.name}</FormHelperText>
                                         <IntegrationReactSelect
