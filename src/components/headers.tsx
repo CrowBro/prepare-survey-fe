@@ -18,7 +18,7 @@ const AntTabs = withStyles({
   const AntTab = withStyles((theme: Theme) =>
     createStyles({
       root: {
-        minWidth: 120,
+        minWidth: 100,
         fontSize: "18px",
         marginRight: theme.spacing(4),
         verticalAlign: 'middle',
