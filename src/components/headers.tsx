@@ -22,12 +22,12 @@ const AntTabs = withStyles({
         fontSize: "18px",
         marginRight: theme.spacing(4),
         verticalAlign: 'middle',
-        color: '#000',
+        color: '#888',
         '&:hover': {
           color: '#40a9ff',
         },
         '&$selected': {
-          color: '#1890ff',
+          color: 'primary',
         },
         '&:focus': {
           color: '#40a9ff',
