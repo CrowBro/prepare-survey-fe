@@ -44,19 +44,19 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const SportsForm = (props: RouteComponentProps<{id: string}>) => {
+const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
     const classes = useStyles();
     const id = Number(props.match.params.id);
-    const [ details, setDetails ] = useState<SportDetails | null>(null);
-    const [ benchmarkDetails, setBenchmarkDetails ] = useState<SportDetails | null>(null);
-    const [ categories, setCategories ] = useState<List<ProductCategory> | null>(null);
-    const [ competitors, setCompetitors ] = useState<List<BrandCompetitor> | null>(null);
+    const [details, setDetails] = useState<SportDetails | null>(null);
+    const [benchmarkDetails, setBenchmarkDetails] = useState<SportDetails | null>(null);
+    const [categories, setCategories] = useState<List<ProductCategory> | null>(null);
+    const [competitors, setCompetitors] = useState<List<BrandCompetitor> | null>(null);
     let isMounted = true;
 
     useEffect(() => {
         getSportDetails(id)
             .then(resp => {
-                if(isMounted) {
+                if (isMounted) {
                     setDetails(resp.targetSport);
                     setBenchmarkDetails(resp.benchmarkSport);
                 }
@@ -64,27 +64,27 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
 
         getProductCategories(id)
             .then(resp => {
-                if(isMounted) {
-                    setCategories(List(resp));
+                if (isMounted) {
+                    setCategories(List(resp.targetDetails.productCategories));
                 }
             })
 
         getCompetitorBrands(id)
             .then(resp => {
-                if(isMounted) {
+                if (isMounted) {
                     setCompetitors(List(resp));
                 }
             })
         return () => {
             isMounted = false;
         };
-    }, [ id ])
+    }, [id])
 
     const handleSave = () => {
-        if(details && categories && competitors) {
+        if (details && categories && competitors) {
             Promise.all([
                 saveSportDetails(id, details),
-                saveProductCategories(id, categories.toArray()),
+                saveProductCategories(id, { targetDetails: { productCategories: categories.toArray() }, benchmarkDetails: { productCategories: categories.toArray() } }),
                 saveCompetitorBrands(id, competitors.toArray())
             ])
                 .then(() => props.history.push("/sports"));
@@ -100,16 +100,16 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
                 spacing={2}
                 className={classes.gridMargin}
             >
-                { details && benchmarkDetails
-                    ? <DetailsForm details={details} benchmarkDetails={benchmarkDetails} onChange={setDetails}/>
+                {details && benchmarkDetails
+                    ? <DetailsForm details={details} benchmarkDetails={benchmarkDetails} onChange={setDetails} />
                     : <div> Loading... </div>
                 }
-                { categories
-                    ? <CategoryDetailsForm categories={categories} sportId={id} onChange={setCategories}/>
+                {categories
+                    ? <CategoryDetailsForm categories={categories} sportId={id} onChange={setCategories} />
                     : <div> Loading... </div>
                 }
-                { competitors
-                    ? <BrandsCompetitorsForm competitors={competitors} onChange={setCompetitors}/>
+                {competitors
+                    ? <BrandsCompetitorsForm competitors={competitors} onChange={setCompetitors} />
                     : <div> Loading... </div>
                 }
                 <Button variant={"contained"} size={"large"} className={classes.fab} color={"primary"} onClick={handleSave}>
