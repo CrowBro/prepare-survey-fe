@@ -48,7 +48,7 @@ export const getSportDetails = async (id: number) => {
 }
 
 export const saveSportDetails = async (id: number, sportDetails: SportDetails) => {
-    await axios.put(apiConfig.baseUrl + `/api/sports/${id}/details`, sportDetails);
+    await axios.put(apiConfig.baseUrl + `/api/sports/${id}/details`, { targetSport: sportDetails });
 }
 
 export interface ProductFamily {

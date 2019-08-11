@@ -21,14 +21,11 @@ import {
     saveCompetitorBrands
 } from "dataAccess/api";
 
-// TODO: parametrize
-
 const useStyles = makeStyles({
     gridMargin: {
         margin: "10px",
     }
 })
-
 
 const SportsForm = (props: RouteComponentProps<{id: string}>) => {
     const classes = useStyles();
