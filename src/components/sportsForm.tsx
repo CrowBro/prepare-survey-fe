@@ -24,6 +24,7 @@ import {
 const SportsForm = (props: RouteComponentProps<{id: string}>) => {
     const id = Number(props.match.params.id);
     const [ details, setDetails ] = useState<SportDetails | null>(null);
+    const [ benchmarkDetails, setBenchmarkDetails ] = useState<SportDetails | null>(null);
     const [ categories, setCategories ] = useState<List<ProductCategory> | null>(null);
     const [ competitors, setCompetitors ] = useState<List<BrandCompetitor> | null>(null);
     let isMounted = true;
@@ -33,6 +34,7 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
             .then(resp => {
                 if(isMounted) {
                     setDetails(resp.targetSport);
+                    setBenchmarkDetails(resp.benchmarkSport);
                 }
             })
 
@@ -73,8 +75,8 @@ const SportsForm = (props: RouteComponentProps<{id: string}>) => {
                 container
                 spacing={2}
             >
-                { details
-                    ? <DetailsForm details={details} onChange={setDetails}/>
+                { details && benchmarkDetails
+                    ? <DetailsForm details={details} benchmarkDetails={benchmarkDetails} onChange={setDetails}/>
                     : <div> Loading... </div>
                 }
                 { categories

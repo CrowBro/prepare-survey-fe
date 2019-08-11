@@ -8,6 +8,7 @@ import { styled } from "@material-ui/styles";
 import { List } from "immutable";
 import Category from "components/productCategory";
 import { ProductCategory } from "dataAccess/api";
+import * as uuid from "uuid";
 
 const BorderedContainer = styled(Container)({
     borderBottom: "1px solid black",
@@ -35,6 +36,7 @@ const CategoryDetailsForm = ({ categories, onChange }: CategoryDetailsProps) => 
                     {
                         categories.map((product: ProductCategory, index: number) => (
                             <Category
+                                key={uuid()}
                                 product={product}
                                 onChange={(value) => onChange(s => s.set(index, value))}
                                 addEnabled={categories.count() < 6}

@@ -6,18 +6,30 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { styled } from "@material-ui/styles";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import { styled, makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import IntegrationReactSelect, { OptionType } from "components/autoComplete";
 import { SportDetails } from "dataAccess/api";
+import clsx from "clsx";
 
 const BorderedContainer = styled(Container)({
     borderBottom: "1px solid black",
     marginBottom: 25
 });
 
-const SpacedTextField = styled(TextField)({
-    marginBottom: 25
-})
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        textFieldSpacing: {
+            marginTop: theme.spacing(3),
+        },
+        secondaryHelperText: {
+            marginTop: theme.spacing(1)
+        },
+        lastTextField: {
+            marginBottom: theme.spacing(1)
+        }
+    }),
+);
 
 const brands: OptionType<number>[] = [
     "Triban",
@@ -28,10 +40,11 @@ type SetDetails = (details: SportDetails) => SportDetails
 
 interface DetailsFormProps {
     details: SportDetails;
+    benchmarkDetails: SportDetails;
     onChange: (action: SetDetails) => void;
 }
 
-const DetailsForm = ({ details, onChange }: DetailsFormProps) => {
+const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) => {
     const onChangeSync = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
         action: (value: string) => (details: SportDetails) => SportDetails
@@ -39,6 +52,8 @@ const DetailsForm = ({ details, onChange }: DetailsFormProps) => {
         const value = event.currentTarget.value;
         onChange(s => action(value)(s));
     }
+    const classes = useStyles();
+
     return (
         <Grid item md={12}>
             <Paper>
@@ -52,43 +67,61 @@ const DetailsForm = ({ details, onChange }: DetailsFormProps) => {
                 <Grid item md={12}>
                     <BorderedContainer maxWidth={"md"}>
                         <FormControl fullWidth>
-                            <IntegrationReactSelect
-                                label="Sport passion brand"
-                                options={brands}
-                                value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
-                                onChange={(value) => onChange(s => ({...s, passionBrand: {id: value.value, name: value.label}}))}
-                            />
-                            <SpacedTextField 
-                                label={"Sport Adult"}
-                                value={details.adultName}
-                                onChange={(event) => onChangeSync(event, val => s => ({ ...s, adultName: val }))}
-                            />
-                            <SpacedTextField 
-                                label={"Sport Junior"} 
-                                value={details.juniorName}
-                                onChange={(event) => onChangeSync(event, val => s => ({ ...s, juniorName: val }))}
-                            />
+                            <FormControl>
+                                <IntegrationReactSelect
+                                    label="Sport passion brand"
+                                    options={brands}
+                                    value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
+                                    onChange={(value) => onChange(s => ({...s, passionBrand: {id: value.value, name: value.label}}))}
+                                />
+                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.passionBrand.name}`}</FormHelperText>
+                            </FormControl>
+                            <FormControl className={classes.textFieldSpacing}>
+                                <TextField
+                                    label={"Sport Adult"}
+                                    value={details.adultName}
+                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, adultName: val }))}
+                                />
+                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.adultName}`}</FormHelperText>
+                            </FormControl>
+                            <FormControl className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                <TextField 
+                                    label={"Sport Junior"} 
+                                    value={details.juniorName}
+                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, juniorName: val }))}
+                                />
+                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.juniorName}`}</FormHelperText>
+                            </FormControl>
                         </FormControl>
                     </BorderedContainer>
                 </Grid>
                 <Grid item md={12}>
                     <BorderedContainer maxWidth={"md"}>
                         <FormControl fullWidth>
-                            <SpacedTextField 
-                                label={"Full name 1"} 
-                                value={details.fullName1}
-                                onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName1: val }))}
-                            />
-                            <SpacedTextField 
-                                label={"Full name 2"} 
-                                value={details.fullName2}
-                                onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName2: val }))}
-                            />
-                            <SpacedTextField 
-                                label={"Short name"} 
-                                value={details.shortName}
-                                onChange={(event) => onChangeSync(event, val => s => ({ ...s, shortName: val }))}
-                            />
+                            <FormControl className={classes.textFieldSpacing}>
+                                <TextField
+                                    label={"Full name 1"} 
+                                    value={details.fullName1}
+                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName1: val }))}
+                                />
+                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.fullName1}`}</FormHelperText>
+                            </FormControl>
+                            <FormControl className={classes.textFieldSpacing}>
+                                <TextField
+                                    label={"Full name 2"}
+                                    value={details.fullName2}
+                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, fullName2: val }))}
+                                />
+                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.fullName2}`}</FormHelperText>
+                            </FormControl>
+                            <FormControl className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                <TextField
+                                    label={"Short name"} 
+                                    value={details.shortName}
+                                    onChange={(event) => onChangeSync(event, val => s => ({ ...s, shortName: val }))}
+                                />
+                                <FormHelperText id="weight-helper-text">{`French: ${benchmarkDetails.shortName}`}</FormHelperText>
+                            </FormControl>
                         </FormControl>
                     </BorderedContainer>
                 </Grid>

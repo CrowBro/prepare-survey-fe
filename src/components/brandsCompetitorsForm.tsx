@@ -8,6 +8,7 @@ import { List } from "immutable";
 import BorderedContainer from "components/borderedContainer";
 import BrandsCompetitor from "components/brandsCompetitor";
 import { BrandCompetitor } from "dataAccess/api";
+import * as uuid from "uuid";
 
 interface CompetitorBrandsFormProps {
     competitors: List<BrandCompetitor>;
@@ -33,6 +34,7 @@ const CompetitorBrandsForm = ({ competitors, onChange }: CompetitorBrandsFormPro
                             {
                                 competitors.map((product: BrandCompetitor, index: number) => (
                                     <BrandsCompetitor
+                                        key={uuid()}
                                         product={product}
                                         onChange={(value) => onChange(s => s.set(index, value))}
                                         addEnabled={competitors.count() < 4}

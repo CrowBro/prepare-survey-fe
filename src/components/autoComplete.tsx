@@ -25,8 +25,7 @@ export interface OptionType<TKey> {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            flexGrow: 1,
-            marginBottom: 25
+            flexGrow: 1
         },
         input: {
             display: "flex",
