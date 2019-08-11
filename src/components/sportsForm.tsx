@@ -64,9 +64,9 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
     }, [id])
 
     const handleSave = () => {
-        if (details && categories && competitors) {
+        if (details && benchmarkDetails && categories && competitors) {
             Promise.all([
-                saveSportDetails(id, details),
+                saveSportDetails(id, { targetSport: details, benchmarkSport: benchmarkDetails}),
                 saveProductCategories(id, { targetDetails: { productCategories: categories.toArray() }, benchmarkDetails: { productCategories: categories.toArray() } }),
                 saveCompetitorBrands(id, competitors.toArray())
             ])
