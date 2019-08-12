@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react"
 import FormControl from "@material-ui/core/FormControl";
 import TextField  from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -12,6 +13,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import ReactSelect, { OptionType } from "components/autoComplete";
+import { getBrands } from "dataAccess/brandsApi";
 import { SportDetails } from "dataAccess/api";
 import clsx from "clsx";
 
@@ -47,26 +49,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const brands: OptionType<number>[] = [
-    "Triban",
-    "Van Rysel"
-].map((brand, index) => { return { label: brand, value: index } });
-
-const statusOptions: OptionType<string>[] = [
-    {
-        label: "Pending",
-        value: "Pending"
-    },
-    {
-        label: "Approved",
-        value: "Approved"
-    },
-    {
-        label: "To Review",
-        value: "To Review"
-    }
-]
-
 type SetDetails = (details: SportDetails) => SportDetails
 
 interface DetailsFormProps {
@@ -100,6 +82,11 @@ const Item = (props: ItemProps) => {
 }
 
 const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) => {
+    const [ brands, setBrands ] = useState<OptionType<number>[]>([]);
+    useEffect(() => {
+        getBrands()
+            .then(resp => setBrands(resp.map(brand => ({ value: brand.id, label: brand.name }))));
+    }, [])
     const onChangeSync = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
         action: (value: string) => (details: SportDetails) => SportDetails

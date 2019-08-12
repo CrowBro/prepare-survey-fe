@@ -215,10 +215,13 @@ const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
             },
         }),
     };
-
+    const resultLimit = 20
+    let i = 0
     return (
         <div className={classes.root}>
             <Select
+                filterOption={({label}, query) => label.toLowerCase().indexOf(query.toLowerCase()) >= 0 && i++ < resultLimit}
+                onInputChange={() => { i = 0 }}
                 classes={classes}
                 styles={selectStyles}
                 inputId="react-select-single"

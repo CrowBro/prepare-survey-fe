@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import ReactSelect, { OptionType } from "components/autoComplete";
@@ -10,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { BrandCompetitor } from "dataAccess/api";
+import { getBrands } from "dataAccess/brandsApi";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -35,19 +37,13 @@ interface CategoryProps {
     onRemove: () => void;
 }
 
-const options: OptionType<number>[] = [
-    {
-        value: 1,
-        label: "Nike",
-    },
-    {
-        value: 2,
-        label: "Adidas",
-    }
-]
-
 const Competitor = (props: CategoryProps) => {
     const { product, addEnabled, onAdd, onRemove, onChange } = props;
+    const [ options, setOptions ] = useState<OptionType<number>[]>([]);
+    useEffect(() => {
+        getBrands()
+            .then(resp => setOptions(resp.map(brand => ({ value: brand.id, label: brand.name }))))
+    }, [])
 
     const classes = useStyles();
 
@@ -66,7 +62,7 @@ const Competitor = (props: CategoryProps) => {
                                 <ReactSelect
                                     label={""}
                                     options={options}
-                                    value={({ value: product.id, label: product.name || "Placeholder" })}
+                                    value={({ value: product.id, label: product.name })}
                                     onChange={(value) => onChange({ id: value.value, name: value.label, order: 0, history: "" })}
                                 />
                                 { product.history &&
