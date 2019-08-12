@@ -17,10 +17,14 @@ export interface Sport {
     status: "Approved" | "Pending" | "To Review";
 }
 
-export const getSports = async () => {
+export type CountrySpace = string;
+export type CountrySpaces = CountrySpace[];
+
+
+export const getSports = async (countrySpace: CountrySpace) => {
     const params = {
         year: 2019,
-        country: apiConfig.countrySpace
+        country: countrySpace
     }
 
     const response = await axios.get<Sport[]>(apiConfig.baseUrl + "/api/sports", {

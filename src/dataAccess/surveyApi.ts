@@ -31,7 +31,7 @@ export interface SurveyResponse {
 
 export const getSurvey = async (surveyType: SurveyType) => {
     const params = {
-        country: apiConfig.countrySpace,
+        country: apiConfig.defaultCountrySpace,
         surveyType
     }
 
@@ -45,7 +45,7 @@ export const getSurvey = async (surveyType: SurveyType) => {
 export const saveSurvey = async (surveyType: SurveyType, survey: SurveyResponse) => {
     const response = await axios.put<SurveyResponse>(`${apiConfig.baseUrl}/api/Surveys`, survey, {
         params: {
-            country: apiConfig.countrySpace,
+            country: apiConfig.defaultCountrySpace,
             surveyType
         }
     });

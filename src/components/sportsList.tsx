@@ -11,8 +11,9 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { getSports, Sport } from "dataAccess/api";
+import { getSports, Sport, CountrySpace, CountrySpaces } from "dataAccess/api";
 import Chip from "@material-ui/core/Chip";
+import { apiConfig } from "dataAccess/apiConfig";
 
 const useStyles = makeStyles({
     root: {
@@ -38,9 +39,9 @@ const useStyles = makeStyles({
     },
 })
 
-const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) => {
+const StatusChip = ({ status }: { status: "Approved" | "Pending" | "To Review" }) => {
     const classes = useStyles();
-    switch(status){
+    switch (status) {
         case "Approved":
             return (
                 <Chip
@@ -72,7 +73,7 @@ const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) =>
 type ListType = "categories" | "brands" | "misc";
 
 const HeaderTitles = ({ listType }: { listType: ListType }) => {
-    switch(listType) {
+    switch (listType) {
         case "categories": {
             return (
                 <>
@@ -113,7 +114,7 @@ const HeaderTitles = ({ listType }: { listType: ListType }) => {
 }
 
 const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) => {
-    switch(listType) {
+    switch (listType) {
         case "categories": {
             return (
                 <>
@@ -155,12 +156,20 @@ const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) 
 
 const SportsList = (props: RouteComponentProps) => {
     const classes = useStyles();
-    const [ listType, setListType ] = useState<ListType>("categories");
+    const [sports, setSports] = useState<Sport[]>([])
+    const [listType, setListType] = useState<ListType>("categories");
+    const [currentCountry, setCountrySpace] = useState<CountrySpace>(apiConfig.defaultCountrySpace);
+    const [currentCountrySpaces, setCountrySpaces] = useState<CountrySpaces>([apiConfig.defaultCountrySpace]);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [ anchorEl, setAnchorEl ] = useState<any>(null);
+    const [anchorEl, setAnchorEl] = useState<any>(null);
+    const [anchorElCountrySpace, setAnchorElCountrySpace] = useState<any>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
+    }
+
+    const handleClickCountrySpace = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorElCountrySpace(event.currentTarget);
     }
 
     const handleChange = (value: ListType) => {
@@ -168,21 +177,47 @@ const SportsList = (props: RouteComponentProps) => {
         setAnchorEl(null);
     }
 
+    const handleChangeCountrySpace = (value: CountrySpace) => {
+        setCountrySpace(value);
+        setAnchorElCountrySpace(null);
+        getSports(value)
+            .then((resp) => setSports(resp));
+    }
+
     const handleClose = (value: ListType) => {
         setAnchorEl(null);
     }
 
-    const [ sports, setSports ] = useState<Sport[]>([])
+    const handleCloseCountrySpaceSelector = (value: CountrySpace) => {
+        setAnchorElCountrySpace(null);
+    }
+
     useEffect(() => {
-        getSports()
+        getSports(currentCountry)
             .then((resp) => setSports(resp));
     }, []);
 
     return (
         <Paper className={`${classes.root} ${classes.marginTop}`}>
+            <Button onClick={handleClickCountrySpace}>
+                Choose country
+            </Button>
             <Button onClick={handleClick}>
                 Choose sport list
             </Button>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorElCountrySpace}
+                keepMounted
+                open={!!anchorElCountrySpace}
+                onClose={handleCloseCountrySpaceSelector}
+            >
+                <MenuItem onClick={() => handleChangeCountrySpace("fr")}>France</MenuItem>
+                <MenuItem onClick={() => handleChangeCountrySpace("dev")}>Dev Island</MenuItem>
+                <MenuItem onClick={() => handleChangeCountrySpace("es")}>Spain</MenuItem>
+                <MenuItem onClick={() => handleChangeCountrySpace("ch")}>China</MenuItem>
+            </Menu>
+
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -194,12 +229,13 @@ const SportsList = (props: RouteComponentProps) => {
                 <MenuItem onClick={() => handleChange("brands")}>Brands</MenuItem>
                 <MenuItem onClick={() => handleChange("misc")}>Miscelanious</MenuItem>
             </Menu>
+
             <Table size="medium">
                 <TableHead className={classes.header}>
                     <TableRow className={classes.header}>
                         <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
-                        <HeaderTitles listType={listType}/>
+                        <HeaderTitles listType={listType} />
                         <TableCell>Status</TableCell>
                     </TableRow>
                 </TableHead>
@@ -209,7 +245,7 @@ const SportsList = (props: RouteComponentProps) => {
                             <TableCell>{sport.sportDisplayId}</TableCell>
                             <TableCell>{sport.sportName}</TableCell>
                             <TableValues listType={listType} sport={sport} />
-                            <TableCell><StatusChip status={sport.status}/></TableCell>
+                            <TableCell><StatusChip status={sport.status} /></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
