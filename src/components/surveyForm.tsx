@@ -50,7 +50,8 @@ const SurveyForm = ({ history }: RouteComponentProps) => {
 
     const handleSave = () => {
         if(surveys) {
-            saveSurvey(surveyType, surveys).then(() => console.log("Works!"));
+            saveSurvey(surveyType, surveys)
+                .then(resp => setSurveys(resp));
         }
     }
 

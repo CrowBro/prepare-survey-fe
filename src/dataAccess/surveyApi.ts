@@ -43,10 +43,12 @@ export const getSurvey = async (surveyType: SurveyType) => {
 }
 
 export const saveSurvey = async (surveyType: SurveyType, survey: SurveyResponse) => {
-    await axios.put(`${apiConfig.baseUrl}/api/Surveys`, survey, {
+    const response = await axios.put<SurveyResponse>(`${apiConfig.baseUrl}/api/Surveys`, survey, {
         params: {
             country: apiConfig.countrySpace,
             surveyType
         }
     });
+
+    return response.data;
 }
