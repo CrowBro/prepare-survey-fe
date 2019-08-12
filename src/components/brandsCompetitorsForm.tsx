@@ -17,10 +17,10 @@ interface CompetitorBrandsFormProps {
 
 const CompetitorBrandsForm = ({ competitors, onChange }: CompetitorBrandsFormProps) => {
     return (
-        <Grid item md={12}>
+        <Grid item lg={12}>
             <Paper>
-                <Grid item md={12}>
-                    <Container maxWidth={"md"}>
+                <Grid item lg={12}>
+                    <Container maxWidth={"lg"}>
                         <Toolbar>
                             <Typography variant={"h5"} color="primary">Brand's Competitor Details</Typography>
                         </Toolbar>

@@ -34,6 +34,7 @@ export interface SportDetails {
     fullName1: string;
     fullName2: string;
     shortName: string;
+    status: "Approved" | "Pending" | "To Review";
 }
 
 export interface SportPair {

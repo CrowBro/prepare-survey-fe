@@ -8,8 +8,10 @@ import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import IntegrationReactSelect, { OptionType } from "components/autoComplete";
+import ReactSelect, { OptionType } from "components/autoComplete";
 import { SportDetails } from "dataAccess/api";
 import clsx from "clsx";
 
@@ -36,6 +38,11 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: 47,
             textAlign: "right",
             paddingRight: 20
+        },
+        statusTitle: {
+            marginTop: 27,
+            textAlign: "right",
+            paddingRight: 20
         }
     }),
 );
@@ -44,6 +51,21 @@ const brands: OptionType<number>[] = [
     "Triban",
     "Van Rysel"
 ].map((brand, index) => { return { label: brand, value: index } });
+
+const statusOptions: OptionType<string>[] = [
+    {
+        label: "Pending",
+        value: "Pending"
+    },
+    {
+        label: "Approved",
+        value: "Approved"
+    },
+    {
+        label: "To Review",
+        value: "To Review"
+    }
+]
 
 type SetDetails = (details: SportDetails) => SportDetails
 
@@ -87,6 +109,14 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
     }
     const classes = useStyles();
 
+    const handleStatusChange = (event: React.ChangeEvent<{ name: string; value: "Approved" | "Pending" | "To Review" }>) => {
+        const value = event.target.value;
+        onChange(details => ({
+            ...details,
+            status: value
+        }))
+    }
+
     return (
         <Grid item lg={12}>
             <Paper>
@@ -110,7 +140,7 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
                                 <Grid item lg={10}>
                                     <FormControl fullWidth className={classes.textFieldSpacing}>
                                         <FormHelperText id="weight-helper-text">{benchmarkDetails.passionBrand.name}</FormHelperText>
-                                        <IntegrationReactSelect
+                                        <ReactSelect
                                             label={""}
                                             options={brands}
                                             value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
@@ -175,6 +205,33 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
                             } />
                         </FormControl>
                     </Container>
+                    <Divider />
+                </Grid>
+                <Grid item lg={12}>
+                    <Container maxWidth={"lg"}>
+                        <Grid container>
+                            <Grid item xs={2} className={clsx(classes.statusTitle)}>
+                                <Typography>
+                                    Status
+                                </Typography>
+                            </Grid>
+                            <Grid item lg={10}>
+                                <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                    <Select
+                                        value={details.status}
+                                        onChange={handleStatusChange}
+                                    >
+                                        { statusOptions.map(option => {
+                                            return(
+                                                <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                    <Divider />
                 </Grid>
             </Paper>
         </Grid>
