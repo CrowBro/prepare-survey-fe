@@ -6,6 +6,14 @@ export interface Sport {
     sportDisplayId: number;
     sportName: string;
     products: string[];
+    passionBrand: string;
+    brands: string[];
+    nps2018: string;
+    nps2017: string;
+    noRespondents2018: number;
+    noRespondents2017: number;
+    videoNote: boolean;
+    sportLeader: string;
     status: "Approved" | "Pending" | "To Review";
 }
 

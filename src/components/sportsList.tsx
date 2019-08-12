@@ -6,6 +6,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
@@ -66,8 +69,108 @@ const StatusChip = ({status}: {status: "Approved" | "Pending" | "To Review"}) =>
     }
 }
 
+type ListType = "categories" | "brands" | "misc";
+
+const HeaderTitles = ({ listType }: { listType: ListType }) => {
+    switch(listType) {
+        case "categories": {
+            return (
+                <>
+                    <TableCell>Product 1</TableCell>
+                    <TableCell>Product 2</TableCell>
+                    <TableCell>Product 3</TableCell>
+                    <TableCell>Product 4</TableCell>
+                    <TableCell>Product 5</TableCell>
+                    <TableCell>Product 6</TableCell>
+                </>
+            )
+        }
+        case "brands": {
+            return (
+                <>
+                    <TableCell>Brand Passion</TableCell>
+                    <TableCell>Competitor 1</TableCell>
+                    <TableCell>Competitor 2</TableCell>
+                    <TableCell>Competitor 3</TableCell>
+                    <TableCell>Competitor 4</TableCell>
+                </>
+            )
+        }
+        case "misc": {
+            return (
+                <>
+                    <TableCell>NPS 2017</TableCell>
+                    <TableCell>№ Respondents</TableCell>
+                    <TableCell>Leader Sport</TableCell>
+                    <TableCell>Video Note</TableCell>
+                    <TableCell>NPS 2018</TableCell>
+                    <TableCell>№ Respondents</TableCell>
+                </>
+            )
+        }
+    }
+    return <></>
+}
+
+const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) => {
+    switch(listType) {
+        case "categories": {
+            return (
+                <>
+                    <TableCell>{sport.products[0]}</TableCell>
+                    <TableCell>{sport.products[1]}</TableCell>
+                    <TableCell>{sport.products[2]}</TableCell>
+                    <TableCell>{sport.products[3]}</TableCell>
+                    <TableCell>{sport.products[4]}</TableCell>
+                    <TableCell>{sport.products[5]}</TableCell>
+                </>
+            )
+        }
+        case "brands": {
+            return (
+                <>
+                    <TableCell>{sport.passionBrand}</TableCell>
+                    <TableCell>{sport.brands[0]}</TableCell>
+                    <TableCell>{sport.brands[1]}</TableCell>
+                    <TableCell>{sport.brands[2]}</TableCell>
+                    <TableCell>{sport.brands[3]}</TableCell>
+                </>
+            )
+        }
+        case "misc": {
+            return (
+                <>
+                    <TableCell>{sport.nps2017}</TableCell>
+                    <TableCell>{sport.noRespondents2017}</TableCell>
+                    <TableCell>{sport.sportLeader}</TableCell>
+                    <TableCell>{sport.videoNote ? "OUI" : "NON"}</TableCell>
+                    <TableCell>{sport.nps2018}</TableCell>
+                    <TableCell>{sport.noRespondents2018}</TableCell>
+                </>
+            )
+        }
+    }
+    return <></>
+}
+
 const SportsList = (props: RouteComponentProps) => {
     const classes = useStyles();
+    const [ listType, setListType ] = useState<ListType>("categories");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [ anchorEl, setAnchorEl ] = useState<any>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    }
+
+    const handleChange = (value: ListType) => {
+        setListType(value);
+        setAnchorEl(null);
+    }
+
+    const handleClose = (value: ListType) => {
+        setAnchorEl(null);
+    }
 
     const [ sports, setSports ] = useState<Sport[]>([])
     useEffect(() => {
@@ -77,17 +180,26 @@ const SportsList = (props: RouteComponentProps) => {
 
     return (
         <Paper className={`${classes.root} ${classes.marginTop}`}>
+            <Button onClick={handleClick}>
+                Choose sport list
+            </Button>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={!!anchorEl}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={() => handleChange("categories")}>Product Categories</MenuItem>
+                <MenuItem onClick={() => handleChange("brands")}>Brands</MenuItem>
+                <MenuItem onClick={() => handleChange("misc")}>Miscelanious</MenuItem>
+            </Menu>
             <Table size="medium">
                 <TableHead className={classes.header}>
                     <TableRow className={classes.header}>
                         <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
-                        <TableCell>Product 1</TableCell>
-                        <TableCell>Product 2</TableCell>
-                        <TableCell>Product 3</TableCell>
-                        <TableCell>Product 4</TableCell>
-                        <TableCell>Product 5</TableCell>
-                        <TableCell>Product 6</TableCell>
+                        <HeaderTitles listType={listType}/>
                         <TableCell>Status</TableCell>
                     </TableRow>
                 </TableHead>
@@ -96,12 +208,7 @@ const SportsList = (props: RouteComponentProps) => {
                         <TableRow key={sport.sportId} onClick={event => props.history.push(`/sports/${sport.sportId}`)}>
                             <TableCell>{sport.sportDisplayId}</TableCell>
                             <TableCell>{sport.sportName}</TableCell>
-                            <TableCell>{sport.products[0]}</TableCell>
-                            <TableCell>{sport.products[1]}</TableCell>
-                            <TableCell>{sport.products[2]}</TableCell>
-                            <TableCell>{sport.products[3]}</TableCell>
-                            <TableCell>{sport.products[4]}</TableCell>
-                            <TableCell>{sport.products[5]}</TableCell>
+                            <TableValues listType={listType} sport={sport} />
                             <TableCell><StatusChip status={sport.status}/></TableCell>
                         </TableRow>
                     ))}

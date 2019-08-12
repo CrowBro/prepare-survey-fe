@@ -49,6 +49,21 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+const statusOptions: OptionType<string>[] = [
+    {
+        label: "Pending",
+        value: "Pending"
+    },
+    {
+        label: "Approved",
+        value: "Approved"
+    },
+    {
+        label: "To Review",
+        value: "To Review"
+    }
+]
+
 type SetDetails = (details: SportDetails) => SportDetails
 
 interface DetailsFormProps {
