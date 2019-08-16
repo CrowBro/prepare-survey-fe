@@ -213,8 +213,8 @@ const SportsList = (props: RouteComponentProps) => {
                 onClose={handleCloseCountrySpaceSelector}
             >
                 <MenuItem onClick={() => handleChangeCountrySpace("fr")}>France</MenuItem>
-                <MenuItem onClick={() => handleChangeCountrySpace("dev")}>Dev Island</MenuItem>
                 <MenuItem onClick={() => handleChangeCountrySpace("es")}>Spain</MenuItem>
+                <MenuItem onClick={() => handleChangeCountrySpace("it")}>Italy</MenuItem>
                 <MenuItem onClick={() => handleChangeCountrySpace("ch")}>China</MenuItem>
             </Menu>
 
