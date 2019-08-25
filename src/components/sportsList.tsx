@@ -159,7 +159,6 @@ const SportsList = (props: RouteComponentProps) => {
     const [sports, setSports] = useState<Sport[]>([])
     const [listType, setListType] = useState<ListType>("categories");
     const [currentCountry, setCountrySpace] = useState<CountrySpace>(apiConfig.defaultCountrySpace);
-    const [currentCountrySpaces, setCountrySpaces] = useState<CountrySpaces>([apiConfig.defaultCountrySpace]);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [anchorEl, setAnchorEl] = useState<any>(null);
     const [anchorElCountrySpace, setAnchorElCountrySpace] = useState<any>(null);
