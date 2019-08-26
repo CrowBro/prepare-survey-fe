@@ -26,5 +26,5 @@ sudo docker push benaaasaaas/prepare-survey
 sudo docker stop fe &&
 sudo docker rm fe &&
 sudo docker pull benaaasaaas/prepare-survey &&
-sudo docker run -d -p 5000:5000 --name fe benaaasaaas/prepare-survey
+sudo docker run -d -p 80:80 --name fe benaaasaaas/prepare-survey
 ```

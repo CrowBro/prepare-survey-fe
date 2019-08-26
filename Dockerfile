@@ -14,6 +14,6 @@ ADD dist /var/www/html/
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
-EXPOSE 5000
+EXPOSE 80
 
 CMD service nginx start
