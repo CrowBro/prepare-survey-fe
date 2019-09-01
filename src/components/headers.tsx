@@ -106,7 +106,7 @@ const Header = (props: RouteComponentProps) => {
                     <AntTabs value={props.location.pathname} onChange={handleChange}>
                         <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize ="inherit"  />&nbsp;&nbsp;&nbsp;Sports</div></>} />
                         <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize ="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
-                        <AntTab value={"Country"} label={<div>
+                        <AntTab value={""} label={<div>
                         <Button onClick={handleClickCountrySpace}>Choose country</Button>    
                         <Menu
                             id="simple-menu"
