@@ -110,12 +110,6 @@ export default {
             publicPath: true
         },
         port: 10001,
-        proxy: {
-            "/api": {
-                changeOrigin: true,
-                target: "http://localhost:3000"
-            }
-        },
     },
     devtool: "source-map"
 };
