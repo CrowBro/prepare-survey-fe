@@ -11,7 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { getSports, Sport, CountrySpace, CountrySpaces } from "dataAccess/api";
+import { getSports, Sport } from "dataAccess/api";
 import Chip from "@material-ui/core/Chip";
 import { apiConfig } from "dataAccess/apiConfig";
 
@@ -154,21 +154,26 @@ const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) 
     return <></>
 }
 
+type LoaderVisibity = Boolean;
+
 const SportsList = (props: RouteComponentProps) => {
+    let currentCountry = "";
+    if (props.location.state != null) {
+        currentCountry = props.location.state.countrySpace
+        console.log("sportslist chose state:", currentCountry);
+    } else {
+        currentCountry = apiConfig.defaultCountrySpace;
+        console.log("sportslist chose default:", currentCountry)
+    }
     const classes = useStyles();
+    const [isLoaderVisible, setLoaderVisibility] = useState<LoaderVisibity>(false)
     const [sports, setSports] = useState<Sport[]>([])
     const [listType, setListType] = useState<ListType>("categories");
-    const [currentCountry, setCountrySpace] = useState<CountrySpace>(apiConfig.defaultCountrySpace);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [anchorEl, setAnchorEl] = useState<any>(null);
-    const [anchorElCountrySpace, setAnchorElCountrySpace] = useState<any>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
-    }
-
-    const handleClickCountrySpace = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorElCountrySpace(event.currentTarget);
     }
 
     const handleChange = (value: ListType) => {
@@ -176,47 +181,20 @@ const SportsList = (props: RouteComponentProps) => {
         setAnchorEl(null);
     }
 
-    const handleChangeCountrySpace = (value: CountrySpace) => {
-        setCountrySpace(value);
-        setAnchorElCountrySpace(null);
-        getSports(value)
-            .then((resp) => setSports(resp));
-    }
-
     const handleClose = (value: ListType) => {
         setAnchorEl(null);
-    }
-
-    const handleCloseCountrySpaceSelector = (value: CountrySpace) => {
-        setAnchorElCountrySpace(null);
     }
 
     useEffect(() => {
         getSports(currentCountry)
             .then((resp) => setSports(resp));
-    }, []);
+    }, [currentCountry]);
 
     return (
         <Paper className={`${classes.root} ${classes.marginTop}`}>
-            <Button onClick={handleClickCountrySpace}>
-                Choose country
-            </Button>
             <Button onClick={handleClick}>
                 Choose sport list
             </Button>
-            <Menu
-                id="simple-menu"
-                anchorEl={anchorElCountrySpace}
-                keepMounted
-                open={!!anchorElCountrySpace}
-                onClose={handleCloseCountrySpaceSelector}
-            >
-                <MenuItem onClick={() => handleChangeCountrySpace("fr")}>France</MenuItem>
-                <MenuItem onClick={() => handleChangeCountrySpace("es")}>Spain</MenuItem>
-                <MenuItem onClick={() => handleChangeCountrySpace("it")}>Italy</MenuItem>
-                <MenuItem onClick={() => handleChangeCountrySpace("ch")}>China</MenuItem>
-            </Menu>
-
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -240,7 +218,11 @@ const SportsList = (props: RouteComponentProps) => {
                 </TableHead>
                 <TableBody className={classes.body}>
                     {sports.map(sport => (
-                        <TableRow key={sport.sportId} onClick={event => props.history.push(`/sports/${sport.sportId}`)}>
+                        <TableRow key={sport.sportId} onClick={event =>
+                            props.history.push({
+                                pathname: `/sports/${sport.sportId}`,
+                                state: { countrySpace: currentCountry }
+                            })}>
                             <TableCell>{sport.sportDisplayId}</TableCell>
                             <TableCell>{sport.sportName}</TableCell>
                             <TableValues listType={listType} sport={sport} />

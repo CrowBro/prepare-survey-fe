@@ -18,14 +18,14 @@ export interface Sport {
 }
 
 export type CountrySpace = string;
-export type CountrySpaces = CountrySpace[];
-
 
 export const getSports = async (countrySpace: CountrySpace) => {
     const params = {
         year: 2019,
         country: countrySpace
     }
+
+    console.log("getting country space")
 
     const response = await axios.get<Sport[]>(apiConfig.baseUrl + "/api/sports", {
         params

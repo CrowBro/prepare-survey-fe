@@ -8,12 +8,22 @@ import { getSurvey, saveSurvey, SurveyResponse, SurveyType } from "dataAccess/su
 import { QuestionsAction } from "types/survey";
 import SurveyQuestionList from "components/surveyQuestionList";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { apiConfig } from "dataAccess/apiConfig";
 
-const SurveyForm = ({ history }: RouteComponentProps) => {
-    const [ surveys, setSurveys ] = useState<SurveyResponse | null>(null)
-    const [ surveyType, setSurveyType ] = useState<SurveyType>("intro");
+const SurveyForm = (props: RouteComponentProps) => {
+    let currentCountry = "";
+    if (props.location.state != null) {
+        currentCountry = props.location.state.countrySpace
+        console.log("surveyform chose state:", currentCountry);
+    } else {
+        currentCountry = apiConfig.defaultCountrySpace;
+        console.log("surveyform chose default:", currentCountry)
+    }
+    
+    const [surveys, setSurveys] = useState<SurveyResponse | null>(null)
+    const [surveyType, setSurveyType] = useState<SurveyType>("intro");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [ anchorEl, setAnchorEl ] = useState<any>(null);
+    const [anchorEl, setAnchorEl] = useState<any>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -49,14 +59,14 @@ const SurveyForm = ({ history }: RouteComponentProps) => {
     }
 
     const handleSave = () => {
-        if(surveys) {
+        if (surveys) {
             saveSurvey(surveyType, surveys)
                 .then(resp => setSurveys(resp));
         }
     }
 
     return (
-        <div style={{ padding: 20,  marginTop: 72}}>
+        <div style={{ padding: 20, marginTop: 72 }}>
             <Grid
                 container
                 direction={"row"}

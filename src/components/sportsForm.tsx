@@ -21,6 +21,7 @@ import {
     saveProductCategories,
     saveCompetitorBrands
 } from "dataAccess/api";
+import { apiConfig } from "dataAccess/apiConfig";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,6 +45,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
+    let currentCountry = "";
+    if (props.location.state != null) {
+        currentCountry = props.location.state.countrySpace
+        console.log("sportsform chose state:", currentCountry);
+    } else {
+        currentCountry = apiConfig.defaultCountrySpace;
+        console.log("sportsform chose default:", currentCountry)
+    }
+
     const classes = useStyles();
     const id = Number(props.match.params.id);
     const [details, setDetails] = useState<SportDetails | null>(null);
@@ -91,7 +101,10 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
                     return el;
                 }))
             ])
-                .then(() => props.history.push("/sports"));
+                .then(() => props.history.push({
+                    pathname: "/sports",
+                    state: { countrySpace: currentCountry }
+                }));
         }
     }
 
