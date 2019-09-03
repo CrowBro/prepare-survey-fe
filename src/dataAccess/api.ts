@@ -25,8 +25,6 @@ export const getSports = async (countrySpace: CountrySpace) => {
         country: countrySpace
     }
 
-    console.log("getting country space")
-
     const response = await axios.get<Sport[]>(apiConfig.baseUrl + "/api/sports", {
         params
     })

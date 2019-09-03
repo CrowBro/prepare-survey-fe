@@ -14,10 +14,8 @@ const SurveyForm = (props: RouteComponentProps) => {
     let currentCountry = "";
     if (props.location.state != null) {
         currentCountry = props.location.state.countrySpace
-        console.log("surveyform chose state:", currentCountry);
     } else {
         currentCountry = apiConfig.defaultCountrySpace;
-        console.log("surveyform chose default:", currentCountry)
     }
     
     const [surveys, setSurveys] = useState<SurveyResponse | null>(null)

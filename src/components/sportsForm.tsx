@@ -48,10 +48,8 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
     let currentCountry = "";
     if (props.location.state != null) {
         currentCountry = props.location.state.countrySpace
-        console.log("sportsform chose state:", currentCountry);
     } else {
         currentCountry = apiConfig.defaultCountrySpace;
-        console.log("sportsform chose default:", currentCountry)
     }
 
     const classes = useStyles();

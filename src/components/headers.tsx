@@ -88,10 +88,8 @@ const Header = (props: RouteComponentProps) => {
     let currentCountry = "";
     if (props.location.state != null) {
         currentCountry = props.location.state.countrySpace
-        console.log("headers chose state:", currentCountry);
     } else {
         currentCountry = apiConfig.defaultCountrySpace;
-        console.log("headers chose default:", currentCountry)
     }
     // const currentCountry = props.location.state != null ? props.location.state.countrySpace : apiConfig.defaultCountrySpace;
     const classes = useStyles();
@@ -106,12 +104,10 @@ const Header = (props: RouteComponentProps) => {
     }
 
     const handleClickCountrySpace = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log("handleClickCountrySpace");
         setAnchorElCountrySpace(event.currentTarget);
     }
 
     const handleChangeCountrySpace = (value: CountrySpace) => {
-        console.log("handleChangeCountrySpace");
         setCountrySpace(value);
         setAnchorElCountrySpace(null);
         props.history.push({
@@ -121,7 +117,6 @@ const Header = (props: RouteComponentProps) => {
     }
 
     const handleCloseCountrySpaceSelector = (value: CountrySpace) => {
-        console.log("handleCloseCountrySpaceSelector");
         setAnchorElCountrySpace(null);
     }
 
