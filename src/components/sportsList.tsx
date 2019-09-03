@@ -14,8 +14,13 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
 import Chip from "@material-ui/core/Chip";
 import { apiConfig } from "dataAccess/apiConfig";
+// import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles({
+    // loaderStyle: {
+    //     flexGrow: 1,
+    //     marginTop: "0px"
+    // },
     root: {
         margin: "20px",
         padding: "20px",
@@ -38,6 +43,17 @@ const useStyles = makeStyles({
         marginTop: "72px",
     },
 })
+
+// const Loader = function LinearIndeterminate() {
+//     const classes = useStyles();
+
+//     return (
+//         <div className={classes.loaderStyle}>
+//             <LinearProgress />
+//         </div>
+//     );
+// }
+
 
 const StatusChip = ({ status }: { status: "Approved" | "Pending" | "To Review" }) => {
     const classes = useStyles();
@@ -154,7 +170,7 @@ const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) 
     return <></>
 }
 
-type LoaderVisibity = Boolean;
+// type LoaderVisibity = boolean;
 
 const SportsList = (props: RouteComponentProps) => {
     let currentCountry = "";
@@ -166,7 +182,8 @@ const SportsList = (props: RouteComponentProps) => {
         console.log("sportslist chose default:", currentCountry)
     }
     const classes = useStyles();
-    const [isLoaderVisible, setLoaderVisibility] = useState<LoaderVisibity>(false)
+    //let isLoaderVisible = true;
+    // const [isLoaderVisible, setLoaderVisibility] = useState<LoaderVisibity>(false)
     const [sports, setSports] = useState<Sport[]>([])
     const [listType, setListType] = useState<ListType>("categories");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -186,12 +203,19 @@ const SportsList = (props: RouteComponentProps) => {
     }
 
     useEffect(() => {
+        console.log("on country change?");
         getSports(currentCountry)
             .then((resp) => setSports(resp));
     }, [currentCountry]);
 
+    // useEffect(() => {
+    //     console.log("on sport change?");
+    //     setLoaderVisibility(false);
+    // }, [sports]);
+
     return (
         <Paper className={`${classes.root} ${classes.marginTop}`}>
+            {/* <>{isLoaderVisible ? Loader() : null}</> */}
             <Button onClick={handleClick}>
                 Choose sport list
             </Button>

@@ -115,7 +115,7 @@ const Header = (props: RouteComponentProps) => {
         setCountrySpace(value);
         setAnchorElCountrySpace(null);
         props.history.push({
-            pathname: '/sports',
+            pathname: "/sports",
             state: { countrySpace: value }
         });
     }
