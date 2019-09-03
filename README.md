@@ -21,6 +21,7 @@ sudo docker tag prepare-survey-fe benaaasaaas/prepare-survey &&
 sudo docker push benaaasaaas/prepare-survey
 ```
 
+## dont use this. Use docker-compose which is in BE project dir.
 ## Deploy in remote
 ```bash
 sudo docker stop fe &&
