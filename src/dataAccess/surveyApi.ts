@@ -29,9 +29,9 @@ export interface SurveyResponse {
     latestVersionSurvey: Survey;
 }
 
-export const getSurvey = async (surveyType: SurveyType) => {
+export const getSurvey = async (surveyType: SurveyType, countrySpace: string) => {
     const params = {
-        country: apiConfig.defaultCountrySpace,
+        country: countrySpace,
         surveyType
     }
 
@@ -42,10 +42,10 @@ export const getSurvey = async (surveyType: SurveyType) => {
     return response.data;
 }
 
-export const saveSurvey = async (surveyType: SurveyType, survey: SurveyResponse) => {
+export const saveSurvey = async (surveyType: SurveyType, survey: SurveyResponse, countrySpace: string) => {
     const response = await axios.put<SurveyResponse>(`${apiConfig.baseUrl}/api/Surveys`, survey, {
         params: {
-            country: apiConfig.defaultCountrySpace,
+            country: countrySpace,
             surveyType
         }
     });

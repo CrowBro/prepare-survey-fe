@@ -37,7 +37,7 @@ const SurveyForm = (props: RouteComponentProps) => {
     }
 
     useEffect(() => {
-        getSurvey(surveyType)
+        getSurvey(surveyType ,currentCountry)
             .then(resp => setSurveys(resp));
     }, [surveyType]);
 
@@ -58,7 +58,7 @@ const SurveyForm = (props: RouteComponentProps) => {
 
     const handleSave = () => {
         if (surveys) {
-            saveSurvey(surveyType, surveys)
+            saveSurvey(surveyType, surveys, currentCountry)
                 .then(resp => setSurveys(resp));
         }
     }
