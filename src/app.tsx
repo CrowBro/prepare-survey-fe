@@ -9,6 +9,9 @@ import SurveyForm from "components/surveyForm";
 import { Provider } from "react-redux";
 import store from "store/store";
 import DeTheme from "components/deTheme";
+import { apiConfig } from "dataAccess/apiConfig";
+import CallbackComponent from "components/callbackComponent";
+
 
 const GlobalCss = withStyles({
     "@global": {
@@ -32,10 +35,21 @@ export default () => (
             <BrowserRouter>
                 <Header />
                 <Switch>
-                    <Route path="/sports/:id" component={SportsForm}/>
-                    <Route path="/sports" component={SportsList}/>
-                    <Route path="/survey" component={SurveyForm}/>
-                    <Route path="/" component={SportsList}/>
+                    <Route path="/auth" component={() => {
+                        window.location.href =
+                            `${apiConfig.authAuthUrl}?`
+                            + `client_id=${apiConfig.authClientId}&`
+                            + `response_type=token&`
+                            + `state=ThisWillBeCountrySpace&`
+                            + `redirect_uri=${apiConfig.authCallbackUrl}&`
+                            + `scope=openid%20profile`;
+                        return null;
+                    }} />
+                    <Route path="/sports/:id" component={SportsForm} />
+                    <Route path="/sports" component={SportsList} />
+                    <Route path="/survey" component={SurveyForm} />
+                    <Route path="/api/login/callback" component={CallbackComponent} />
+                    <Route path="/" component={SportsList} />
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

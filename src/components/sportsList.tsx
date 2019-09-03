@@ -155,9 +155,12 @@ const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) 
 }
 
 const SportsList = (props: RouteComponentProps) => {
+
     let currentCountry = "";
+    let authHeader = "";
     if (props.location.state != null) {
-        currentCountry = props.location.state.countrySpace
+        currentCountry = props.location.state.countrySpace;
+        authHeader = props.location.state.authHeader;
     } else {
         currentCountry = apiConfig.defaultCountrySpace;
     }
@@ -181,8 +184,23 @@ const SportsList = (props: RouteComponentProps) => {
     }
 
     useEffect(() => {
-        getSports(currentCountry)
-            .then((resp) => setSports(resp));
+        getSports(authHeader, currentCountry)
+            .then((resp) => setSports(resp))
+            .catch(err => {
+                // for (var prop in err) {
+                //     if (Object.prototype.hasOwnProperty.call(err, prop)) {
+                //         console.log(prop, "::", err[prop]);
+                //     }
+                // }
+
+                if (err.response != null && err.response.status == 401) {
+                    props.history.push({
+                        pathname: "/auth",
+                        state: { countrySpace: currentCountry, authHeader: authHeader }
+                    })
+                }
+
+            });
     }, [currentCountry]);
 
     return (

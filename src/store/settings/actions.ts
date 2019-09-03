@@ -1,4 +1,9 @@
-import { Country } from "dataAccess/countriesApi";
+interface Country {
+    id: number;
+    name: string;
+    shortName: string;
+}
+
 
 export interface SetCountry {
     type: "SetCountry";

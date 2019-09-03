@@ -11,11 +11,12 @@ import BrandsCompetitor from "components/brandsCompetitor";
 import { BrandCompetitor } from "dataAccess/api";
 
 interface CompetitorBrandsFormProps {
+    authHeader: string;
     competitors: List<BrandCompetitor>;
     onChange: (action: (competitors: List<BrandCompetitor>) => List<BrandCompetitor>) => void;
 }
 
-const CompetitorBrandsForm = ({ competitors, onChange }: CompetitorBrandsFormProps) => {
+const CompetitorBrandsForm = ({authHeader, competitors, onChange }: CompetitorBrandsFormProps) => {
     return (
         <Grid item lg={12}>
             <Paper>
@@ -35,6 +36,7 @@ const CompetitorBrandsForm = ({ competitors, onChange }: CompetitorBrandsFormPro
                                 {
                                     competitors.map((product: BrandCompetitor, index: number) => (
                                         <BrandsCompetitor
+                                            authHeader={authHeader}
                                             key={index}
                                             product={product}
                                             onChange={(value) => onChange(s => s.set(index, value))}

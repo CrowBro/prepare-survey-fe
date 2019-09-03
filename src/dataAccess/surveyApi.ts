@@ -1,5 +1,5 @@
 import axios from "axios";
-import {apiConfig} from "./apiConfig";
+import { apiConfig } from "./apiConfig";
 
 export interface Answer {
     id: number;
@@ -29,26 +29,35 @@ export interface SurveyResponse {
     latestVersionSurvey: Survey;
 }
 
-export const getSurvey = async (surveyType: SurveyType, countrySpace: string) => {
+export const getSurvey = async (authHeader: string, surveyType: SurveyType, countrySpace: string) => {
     const params = {
         country: countrySpace,
         surveyType
     }
 
-    const response = await axios.get<SurveyResponse>(apiConfig.baseUrl + "/api/Surveys", {
-        params
-    })
+    const response = await axios.get<SurveyResponse>(apiConfig.baseUrl + "/api/Surveys",
+        {
+            headers: {
+                "Authorization": authHeader
+            },
+            params: params
+        }
+    )
 
     return response.data;
 }
 
-export const saveSurvey = async (surveyType: SurveyType, survey: SurveyResponse, countrySpace: string) => {
-    const response = await axios.put<SurveyResponse>(`${apiConfig.baseUrl}/api/Surveys`, survey, {
-        params: {
-            country: countrySpace,
-            surveyType
-        }
-    });
+export const saveSurvey = async (authHeader: string, surveyType: SurveyType, survey: SurveyResponse, countrySpace: string) => {
+    const response = await axios.put<SurveyResponse>(`${apiConfig.baseUrl}/api/Surveys`, survey,
+        {
+            headers: {
+                "Authorization": authHeader
+            },
+            params: {
+                country: countrySpace,
+                surveyType
+            }
+        });
 
     return response.data;
 }

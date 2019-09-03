@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react"
 import FormControl from "@material-ui/core/FormControl";
-import TextField  from "@material-ui/core/TextField";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Container from "@material-ui/core/Container";
@@ -67,6 +67,7 @@ const statusOptions: OptionType<string>[] = [
 type SetDetails = (details: SportDetails) => SportDetails
 
 interface DetailsFormProps {
+    authHeader: string;
     details: SportDetails;
     benchmarkDetails: SportDetails;
     onChange: (action: SetDetails) => void;
@@ -96,10 +97,10 @@ const Item = (props: ItemProps) => {
     )
 }
 
-const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) => {
-    const [ brands, setBrands ] = useState<OptionType<number>[]>([]);
+const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: DetailsFormProps) => {
+    const [brands, setBrands] = useState<OptionType<number>[]>([]);
     useEffect(() => {
-        getBrands()
+        getBrands(authHeader)
             .then(resp => setBrands(resp.map(brand => ({ value: brand.id, label: brand.name }))));
     }, [])
     const onChangeSync = (
@@ -146,7 +147,7 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
                                             label={""}
                                             options={brands}
                                             value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
-                                            onChange={(value) => onChange(s => ({...s, passionBrand: {id: value.value, name: value.label}}))}
+                                            onChange={(value) => onChange(s => ({ ...s, passionBrand: { id: value.value, name: value.label } }))}
                                         />
                                     </FormControl>
                                 </Grid>
@@ -163,7 +164,7 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
                             <Item label={"Sport Junior"} element={
                                 <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
                                     <FormHelperText id="weight-helper-text">{benchmarkDetails.juniorName}</FormHelperText>
-                                    <TextField 
+                                    <TextField
                                         value={details.juniorName}
                                         onChange={(event) => onChangeSync(event, val => s => ({ ...s, juniorName: val }))}
                                     />
@@ -223,8 +224,8 @@ const DetailsForm = ({ details, benchmarkDetails, onChange }: DetailsFormProps) 
                                         value={details.status}
                                         onChange={handleStatusChange}
                                     >
-                                        { statusOptions.map(option => {
-                                            return(
+                                        {statusOptions.map(option => {
+                                            return (
                                                 <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
                                             )
                                         })}

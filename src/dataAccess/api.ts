@@ -19,15 +19,20 @@ export interface Sport {
 
 export type CountrySpace = string;
 
-export const getSports = async (countrySpace: CountrySpace) => {
+export const getSports = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
         year: 2019,
         country: countrySpace
     }
 
     const response = await axios.get<Sport[]>(apiConfig.baseUrl + "/api/sports", {
-        params
+        headers: {
+            "Authorization": authHeader
+        },
+        params: params
     })
+
+    console.log(response);
 
     return response.data;
 }
@@ -52,14 +57,25 @@ export interface SportPair {
     benchmarkSport: SportDetails;
 }
 
-export const getSportDetails = async (id: number) => {
-    const response = await axios.get<SportPair>(apiConfig.baseUrl + `/api/sports/${id}/details`);
+export const getSportDetails = async (authHeader: string, id: number) => {
+    const response = await axios.get<SportPair>(apiConfig.baseUrl + `/api/sports/${id}/details`,
+        {
+            headers: {
+                "Authorization": authHeader
+            },
+        }
+    );
 
     return response.data;
 }
 
-export const saveSportDetails = async (id: number, sportDetails: SportPair) => {
-    await axios.put(apiConfig.baseUrl + `/api/sports/${id}/details`, sportDetails);
+export const saveSportDetails = async (authHeader: string, id: number, sportDetails: SportPair) => {
+    await axios.put(apiConfig.baseUrl + `/api/sports/${id}/details`, sportDetails, {
+        headers: {
+            "Authorization": authHeader
+        },
+    }
+    );
 }
 
 export interface ProductFamily {
@@ -84,16 +100,26 @@ interface ProductsPair {
     benchmarkDetails: ProductCategoryDetails;
 }
 
-export const getProductCategories = async (sportId: number) => {
-    const response = await axios.get<ProductsPair>(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`);
+export const getProductCategories = async (authHeader: string, sportId: number) => {
+    const response = await axios.get<ProductsPair>(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, {
+        headers: {
+            "Authorization": authHeader
+        },
+    }
+    );
 
     return response.data;
 }
 
-export const saveProductCategories = async (sportId: number, categories: ProductsPair) => {
+export const saveProductCategories = async (authHeader: string, sportId: number, categories: ProductsPair) => {
     const body: ProductsPair = categories;
 
-    await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, body);
+    await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, body, {
+        headers: {
+            "Authorization": authHeader
+        },
+    }
+    );
 }
 
 export interface BrandCompetitor {
@@ -107,16 +133,27 @@ interface BrandCompetitorResponse {
     competitors: BrandCompetitor[];
 }
 
-export const getCompetitorBrands = async (sportId: number) => {
-    const response = await axios.get<BrandCompetitorResponse>(apiConfig.baseUrl + `/api/sports/${sportId}/brandsCompetitorDetails`);
+export const getCompetitorBrands = async (authHeader: string, sportId: number) => {
+    const response = await axios.get<BrandCompetitorResponse>(apiConfig.baseUrl + `/api/sports/${sportId}/brandsCompetitorDetails`,
+        {
+            headers: {
+                "Authorization": authHeader
+            },
+        }
+    );
 
     return response.data.competitors;
 }
 
-export const saveCompetitorBrands = async (sportId: number, competitors: BrandCompetitor[]) => {
+export const saveCompetitorBrands = async (authHeader: string, sportId: number, competitors: BrandCompetitor[]) => {
     const body: BrandCompetitorResponse = {
         competitors
     }
 
-    await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/brandsCompetitorDetails`, body);
+    await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/brandsCompetitorDetails`, body, {
+        headers: {
+            "Authorization": authHeader
+        },
+    }
+    );
 }

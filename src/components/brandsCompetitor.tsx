@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface CategoryProps {
+    authHeader: string;
     product: BrandCompetitor;
     onChange: (value: BrandCompetitor) => void;
     addEnabled: boolean;
@@ -38,10 +39,10 @@ interface CategoryProps {
 }
 
 const Competitor = (props: CategoryProps) => {
-    const { product, addEnabled, onAdd, onRemove, onChange } = props;
-    const [ options, setOptions ] = useState<OptionType<number>[]>([]);
+    const { authHeader, product, addEnabled, onAdd, onRemove, onChange } = props;
+    const [options, setOptions] = useState<OptionType<number>[]>([]);
     useEffect(() => {
-        getBrands()
+        getBrands(authHeader)
             .then(resp => setOptions(resp.map(brand => ({ value: brand.id, label: brand.name }))))
     }, [])
 
@@ -65,7 +66,7 @@ const Competitor = (props: CategoryProps) => {
                                     value={({ value: product.id, label: product.name })}
                                     onChange={(value) => onChange({ id: value.value, name: value.label, order: 0, history: "" })}
                                 />
-                                { product.history &&
+                                {product.history &&
                                     <FormHelperText id="weight-helper-text">{`Previously: ${product.history}`}</FormHelperText>
                                 }
                             </FormControl>

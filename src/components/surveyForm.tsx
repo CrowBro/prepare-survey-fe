@@ -12,12 +12,14 @@ import { apiConfig } from "dataAccess/apiConfig";
 
 const SurveyForm = (props: RouteComponentProps) => {
     let currentCountry = "";
+    let authHeader = "";
     if (props.location.state != null) {
-        currentCountry = props.location.state.countrySpace
+        currentCountry = props.location.state.countrySpace;
+        authHeader = props.location.state.authHeader;
     } else {
         currentCountry = apiConfig.defaultCountrySpace;
     }
-    
+
     const [surveys, setSurveys] = useState<SurveyResponse | null>(null)
     const [surveyType, setSurveyType] = useState<SurveyType>("intro");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,7 +39,7 @@ const SurveyForm = (props: RouteComponentProps) => {
     }
 
     useEffect(() => {
-        getSurvey(surveyType ,currentCountry)
+        getSurvey(authHeader, surveyType, currentCountry)
             .then(resp => setSurveys(resp));
     }, [surveyType]);
 
@@ -58,7 +60,7 @@ const SurveyForm = (props: RouteComponentProps) => {
 
     const handleSave = () => {
         if (surveys) {
-            saveSurvey(surveyType, surveys, currentCountry)
+            saveSurvey(authHeader, surveyType, surveys, currentCountry)
                 .then(resp => setSurveys(resp));
         }
     }

@@ -7,8 +7,14 @@ export interface Brand {
     name: string;
 }
 
-const getBrandsApi = async () => {
-    const response = await axios.get<Brand[]>(`${apiConfig.baseUrl}/api/Sports/lookupBrand`);
+const getBrandsApi = async (authHeader: string) => {
+    const response = await axios.get<Brand[]>(`${apiConfig.baseUrl}/api/Sports/lookupBrand`,
+        {
+            headers: {
+                "Authorization": authHeader
+            },
+        }
+    );
 
     return response.data;
 }
