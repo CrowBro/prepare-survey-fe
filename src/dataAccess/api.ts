@@ -19,6 +19,26 @@ export interface Sport {
 
 export type CountrySpace = string;
 
+export const checkValidity = async (authHeader: string) => {
+
+    try {
+        const response = await axios.get<string>(apiConfig.baseUrl + "/api/heartBeat/auth", {
+            headers: {
+                "Authorization": authHeader
+            }
+        })
+
+        return response.status;
+
+    } catch (err) {
+        if (err.response != null && err.response.status === 401) {
+            return err.response.status;
+        }
+        throw err;
+    }
+
+}
+
 export const getSports = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
         year: 2019,
@@ -32,7 +52,7 @@ export const getSports = async (authHeader: string, countrySpace: CountrySpace) 
         params: params
     })
 
-    console.log(response);
+    console.debug(response);
 
     return response.data;
 }
