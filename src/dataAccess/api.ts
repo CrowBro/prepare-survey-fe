@@ -1,5 +1,7 @@
 import axios from "axios";
 import { apiConfig } from "./apiConfig";
+import * as QueryString from "query-string";
+
 
 export interface Sport {
     sportId: number;
@@ -17,6 +19,16 @@ export interface Sport {
     status: "Approved" | "Pending" | "To Review";
 }
 
+function parseJwt(token: string) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(atob(base64).split("").map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(""));
+
+    return JSON.parse(jsonPayload);
+};
+
 export type CountrySpace = string;
 
 export const checkValidity = async (authHeader: string) => {
@@ -28,11 +40,23 @@ export const checkValidity = async (authHeader: string) => {
             }
         })
 
-        return response.status;
+
+
+        var token = authHeader.replace(/Bearer /, "");
+
+        var decoded = parseJwt(token);
+        console.log(decoded.sub);
+
+        // const result = { status: response.status, user: response.headers["X-User"] };
+        const result = { status: response.status, user: decoded.sub };
+
+        console.log(response);
+
+        return result;
 
     } catch (err) {
         if (err.response != null && err.response.status === 401) {
-            return err.response.status;
+            return { status: err.response.status, user: "" };
         }
         throw err;
     }

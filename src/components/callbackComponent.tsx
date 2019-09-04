@@ -21,7 +21,7 @@ const CallbackComponent = (props: RouteComponentProps) => {
     currentCountry = "fr"; //todo kb: make this work.
 
     const redirectOnValid = async (authHeader: string) => {
-        if (await checkValidity(authHeader) === 200) {
+        if ((await checkValidity(authHeader)).status === 200) {
             setIsRedirecting(true);
             moveToSports({ countrySpace: currentCountry, authHeader: authHeader });
         } else {
