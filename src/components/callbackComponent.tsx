@@ -17,6 +17,9 @@ const CallbackComponent = (props: RouteComponentProps) => {
         state: state
     });
 
+    let currentCountry = String(parsed.state);
+    currentCountry = "fr"; //todo kb: make this work.
+
     const redirectOnValid = async (authHeader: string) => {
         if (await checkValidity(authHeader) === 200) {
             setIsRedirecting(true);
@@ -26,11 +29,6 @@ const CallbackComponent = (props: RouteComponentProps) => {
         }
 
     };
-
-
-    let currentCountry = String(parsed.state);
-
-    currentCountry = "fr"; //todo kb: make this work.
 
     useEffect(() => {
         redirectOnValid(authHeader);
