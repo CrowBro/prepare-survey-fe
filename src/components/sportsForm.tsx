@@ -103,7 +103,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
             ])
                 .then(() => props.history.push({
                     pathname: "/sports",
-                    state: { countrySpace: currentCountry }
+                    state: { countrySpace: currentCountry, authHeader: authHeader }
                 }));
         }
     }

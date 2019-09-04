@@ -86,12 +86,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Header = (props: RouteComponentProps) => {
     let currentCountry = "";
+    let authHeader = "";
     if (props.location.state != null) {
-        currentCountry = props.location.state.countrySpace
+        currentCountry = props.location.state.countrySpace;
+        authHeader = props.location.state.authHeader;
     } else {
         currentCountry = apiConfig.defaultCountrySpace;
     }
-    // const currentCountry = props.location.state != null ? props.location.state.countrySpace : apiConfig.defaultCountrySpace;
+
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState<any>(null);
     const [anchorElCountrySpace, setAnchorElCountrySpace] = useState<any>(null);
@@ -99,7 +101,7 @@ const Header = (props: RouteComponentProps) => {
     const handleChange = (event: React.ChangeEvent<{}>, value: string) => {
         props.history.push({
             pathname: value,
-            state: { countrySpace: currentCountry }
+            state: { countrySpace: currentCountry, authHeader: authHeader }
         });
     }
 
@@ -112,7 +114,7 @@ const Header = (props: RouteComponentProps) => {
         setAnchorElCountrySpace(null);
         props.history.push({
             pathname: "/sports",
-            state: { countrySpace: value }
+            state: { countrySpace: value, authHeader: authHeader }
         });
     }
 

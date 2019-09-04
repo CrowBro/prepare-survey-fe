@@ -235,7 +235,7 @@ const SportsList = (props: RouteComponentProps) => {
                         <TableRow key={sport.sportId} onClick={event =>
                             props.history.push({
                                 pathname: `/sports/${sport.sportId}`,
-                                state: { countrySpace: currentCountry }
+                                state: { countrySpace: currentCountry, authHeader: authHeader }
                             })}>
                             <TableCell>{sport.sportDisplayId}</TableCell>
                             <TableCell>{sport.sportName}</TableCell>
