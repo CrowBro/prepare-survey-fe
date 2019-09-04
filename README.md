@@ -15,6 +15,7 @@ yarn start
 
 ## Build and push to docker
 ```bash
+sudo ls &&
 yarn build &&
 sudo docker build -t prepare-survey-fe . &&
 sudo docker tag prepare-survey-fe benaaasaaas/prepare-survey &&
