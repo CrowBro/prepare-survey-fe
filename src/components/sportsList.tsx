@@ -198,6 +198,8 @@ const SportsList = (props: RouteComponentProps) => {
                         pathname: "/auth",
                         state: { countrySpace: currentCountry, authHeader: authHeader }
                     })
+                } else {
+                    throw err;
                 }
 
             });
