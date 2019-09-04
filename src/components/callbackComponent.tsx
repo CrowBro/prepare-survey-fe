@@ -14,7 +14,7 @@ const CallbackComponent = (props: RouteComponentProps) => {
     console.log("DDDDD:", parsed)
     const authHeader = `${parsed.token_type} ${parsed.access_token}`;
 
-    const moveToSports = (state: { countrySpace: string, authHeader: string }) => props.history.push({
+    const moveToSports = (state: { countrySpace: string; authHeader: string }) => props.history.push({
         pathname: "/sports",
         state: state
     });
@@ -25,7 +25,7 @@ const CallbackComponent = (props: RouteComponentProps) => {
 
     useEffect(() => {
         moveToSports({ countrySpace: currentCountry, authHeader: authHeader });
-    }, [currentCountry, authHeader]);
+    }, []);
 
 
     return (

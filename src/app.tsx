@@ -39,10 +39,10 @@ export default () => (
                         window.location.href =
                             `${apiConfig.authAuthUrl}?`
                             + `client_id=${apiConfig.authClientId}&`
-                            + `response_type=token&`
-                            + `state=ThisWillBeCountrySpace&`
+                            + "response_type=token&"
+                            + "state=ThisWillBeCountrySpace&"
                             + `redirect_uri=${apiConfig.authCallbackUrl}&`
-                            + `scope=openid%20profile`;
+                            + "scope=openid%20profile";
                         return null;
                     }} />
                     <Route path="/sports/:id" component={SportsForm} />
