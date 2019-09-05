@@ -49,6 +49,7 @@ export const checkValidity = async (authHeader: string) => {
         // const result = { status: response.status, user: response.headers["X-User"] };
         const result = { status: response.status, user: decoded.sub };
 
+        // console.log(response);
         return result;
 
     } catch (err) {
