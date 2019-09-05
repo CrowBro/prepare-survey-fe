@@ -56,7 +56,7 @@ export const checkValidity = async (authHeader: string) => {
 
     } catch (err) {
         if (err.response != null && err.response.status === 401) {
-            return { status: err.response.status, user: "" };
+            return { status: err.response.status, user: null };
         }
         throw err;
     }

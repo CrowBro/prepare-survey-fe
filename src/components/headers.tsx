@@ -144,7 +144,35 @@ const Header = (props: RouteComponentProps) => {
 
 
     const getUserSet = async (authHeader: string) => {
-        setUser((await checkValidity(authHeader)).user);
+        console.log(111111);
+        checkValidity(authHeader)
+            .then((resp) => {
+                console.log(2222222);
+                if (resp.status === 401) {
+                    console.log(333333333);
+
+                    console.log(props.location.pathname);
+                    if (props.location.pathname != "/api/login/callback") {
+                        console.log(props.location.pathname);
+                        console.log(44444444444);
+
+                        props.history.push({
+                            pathname: "/auth",
+                            state: { countrySpace: currentCountry, authHeader: authHeader }
+                        });
+
+                    }else{
+                        console.log(5555555555);
+
+                    }
+
+                }
+                else {
+                    console.log(666666666666);
+                    setUser(resp.user);
+                }
+            });
+
     };
 
     useEffect(() => {
