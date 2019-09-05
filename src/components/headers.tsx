@@ -116,7 +116,7 @@ const Header = (props: RouteComponentProps) => {
 
     const classes = useStyles();
     const [anchorElCountrySpace, setAnchorElCountrySpace] = useState<any>(null);
-    const [user, setUser] = useState<string>("Anonymous");
+    const [user, setUser] = useState<string>("");
     const [_, setCountrySpace] = useState<CountrySpace>(apiConfig.defaultCountrySpace);
     const handleChange = (event: React.ChangeEvent<{}>, value: string) => {
         props.history.push({
