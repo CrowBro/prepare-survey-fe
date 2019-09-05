@@ -19,6 +19,8 @@ const countryDict: { [countrySpace: string]: string } = {
     "ch": "China",
     "it": "Italy",
     "es": "Spain",
+    "cz": "Czech Republic",
+    "de": "Germany",
 }
 
 const AntTabs = withStyles(theme => ({
@@ -142,7 +144,35 @@ const Header = (props: RouteComponentProps) => {
 
 
     const getUserSet = async (authHeader: string) => {
-        setUser((await checkValidity(authHeader)).user);
+        console.log(111111);
+        checkValidity(authHeader)
+            .then((resp) => {
+                console.log(2222222);
+                if (resp.status === 401) {
+                    console.log(333333333);
+
+                    console.log(props.location.pathname);
+                    if (props.location.pathname != "/api/login/callback") {
+                        console.log(props.location.pathname);
+                        console.log(44444444444);
+
+                        props.history.push({
+                            pathname: "/auth",
+                            state: { countrySpace: currentCountry, authHeader: authHeader }
+                        });
+
+                    }else{
+                        console.log(5555555555);
+
+                    }
+
+                }
+                else {
+                    console.log(666666666666);
+                    setUser(resp.user);
+                }
+            });
+
     };
 
     useEffect(() => {
@@ -174,6 +204,8 @@ const Header = (props: RouteComponentProps) => {
                                 <MenuItem onClick={() => handleChangeCountrySpace("es")}>{countryDict["es"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("it")}>{countryDict["it"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("ch")}>{countryDict["ch"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("cz")}>{countryDict["cz"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("de")}>{countryDict["de"]}</MenuItem>
                             </Menu>
                         </div>
                         <div className={classes.moveToTheRight}>
