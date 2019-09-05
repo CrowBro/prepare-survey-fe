@@ -7,17 +7,20 @@ import Tab from "@material-ui/core/Tab";
 import TimerIcon from "@material-ui/icons/Timer";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { makeStyles, withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { CountrySpace } from "dataAccess/api";
+import { CountrySpace, checkValidity } from "dataAccess/api";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { apiConfig } from "dataAccess/apiConfig";
+import FormLabel from "@material-ui/core/FormLabel";
 
 const countryDict: { [countrySpace: string]: string } = {
     "fr": "France",
     "ch": "China",
     "it": "Italy",
     "es": "Spain",
+    "cz": "Czech Republic",
+    "de": "Germany",
 }
 
 const AntTabs = withStyles(theme => ({
@@ -62,6 +65,23 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             flexGrow: 1,
         },
+        flexContainerCustom: {
+            display: "flex"
+        },
+        moveToTheRight: {
+            marginLeft: "auto",
+            paddingTop: "14px",
+            paddingBottom: "14px",
+            paddingLeft: "8px",
+            paddingRight: "8px",
+        },
+        stayOnTheLeft: {
+            paddingTop: "12px",
+            paddingBottom: "12px",
+            paddingLeft: "8px",
+            paddingRight: "8px",
+        },
+
         whiteBackground: {
             backgroundColor: theme.palette.background.paper,
         },
@@ -95,8 +115,8 @@ const Header = (props: RouteComponentProps) => {
     }
 
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState<any>(null);
     const [anchorElCountrySpace, setAnchorElCountrySpace] = useState<any>(null);
+    const [user, setUser] = useState<string>("Anonymous");
     const [_, setCountrySpace] = useState<CountrySpace>(apiConfig.defaultCountrySpace);
     const handleChange = (event: React.ChangeEvent<{}>, value: string) => {
         props.history.push({
@@ -122,32 +142,76 @@ const Header = (props: RouteComponentProps) => {
         setAnchorElCountrySpace(null);
     }
 
+
+    const getUserSet = async (authHeader: string) => {
+        console.log(111111);
+        checkValidity(authHeader)
+            .then((resp) => {
+                console.log(2222222);
+                if (resp.status === 401) {
+                    console.log(333333333);
+
+                    console.log(props.location.pathname);
+                    if (props.location.pathname != "/api/login/callback") {
+                        console.log(props.location.pathname);
+                        console.log(44444444444);
+
+                        props.history.push({
+                            pathname: "/auth",
+                            state: { countrySpace: currentCountry, authHeader: authHeader }
+                        });
+
+                    }else{
+                        console.log(5555555555);
+
+                    }
+
+                }
+                else {
+                    console.log(666666666666);
+                    setUser(resp.user);
+                }
+            });
+
+    };
+
+    useEffect(() => {
+        getUserSet(authHeader);
+    }, []);
+
+
+
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <div className={classes.floatOnTop}>
-                    <AntTabs value={props.location.pathname} onChange={handleChange}>
-                        <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Sports</div></>} />
-                        <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
-                        <AntTab value={""} label={<div>
+                    <div className={classes.flexContainerCustom}>
+                        <AntTabs value={props.location.pathname} onChange={handleChange}>
+                            <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Sports</div></>} />
+                            <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
+                        </AntTabs>
+                        <div className={classes.stayOnTheLeft}>
+                            <Button onClick={handleClickCountrySpace}>{`Choose country: ${countryDict[currentCountry]}`}</Button>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorElCountrySpace}
+                                keepMounted
+                                open={!!anchorElCountrySpace}
+                                onClose={handleCloseCountrySpaceSelector}
+                            >
+                                <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("es")}>{countryDict["es"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("it")}>{countryDict["it"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("ch")}>{countryDict["ch"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("cz")}>{countryDict["cz"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("de")}>{countryDict["de"]}</MenuItem>
+                            </Menu>
                         </div>
-                        } />
-                    </AntTabs>
-                    <Button onClick={handleClickCountrySpace}>{`Choose country: ${countryDict[currentCountry]}`}</Button>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorElCountrySpace}
-                        keepMounted
-                        open={!!anchorElCountrySpace}
-                        onClose={handleCloseCountrySpaceSelector}
-                    >
-                        <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem>
-                        <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem>
-                        <MenuItem onClick={() => handleChangeCountrySpace("es")}>{countryDict["es"]}</MenuItem>
-                        <MenuItem onClick={() => handleChangeCountrySpace("it")}>{countryDict["it"]}</MenuItem>
-                        <MenuItem onClick={() => handleChangeCountrySpace("ch")}>{countryDict["ch"]}</MenuItem>
-                    </Menu>
-
+                        <div className={classes.moveToTheRight}>
+                            <FormLabel>{user}</FormLabel>
+                        </div>
+                    </div>
                 </div>
             </AppBar>
         </div>

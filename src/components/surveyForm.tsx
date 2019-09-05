@@ -9,6 +9,27 @@ import { QuestionsAction } from "types/survey";
 import SurveyQuestionList from "components/surveyQuestionList";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { apiConfig } from "dataAccess/apiConfig";
+import SaveIcon from "@material-ui/icons/Save";
+import { Theme } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        fab: {
+            margin: theme.spacing(1),
+            top: "auto",
+            right: 20,
+            bottom: 20,
+            left: "auto",
+            position: "fixed",
+
+        },
+        extendedIcon: {
+            marginRight: theme.spacing(1),
+        },
+    }),
+);
+
 
 const SurveyForm = (props: RouteComponentProps) => {
     let currentCountry = "";
@@ -20,6 +41,7 @@ const SurveyForm = (props: RouteComponentProps) => {
         currentCountry = apiConfig.defaultCountrySpace;
     }
 
+    const classes = useStyles();
     const [surveys, setSurveys] = useState<SurveyResponse | null>(null)
     const [surveyType, setSurveyType] = useState<SurveyType>("intro");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -95,11 +117,15 @@ const SurveyForm = (props: RouteComponentProps) => {
                     onChange={onChange}
                     baseQuestions={benchmarkQuestions}
                 />
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <Button onClick={handleSave}>
                         Save
                     </Button>
-                </Grid>
+                </Grid> */}
+                <Button variant={"contained"} size={"large"} className={classes.fab} color={"primary"} onClick={handleSave}>
+                    <SaveIcon className={classes.extendedIcon} /> Save
+                </Button>
+
             </Grid>
         </div>
     )

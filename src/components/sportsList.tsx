@@ -185,22 +185,24 @@ const SportsList = (props: RouteComponentProps) => {
 
     useEffect(() => {
         getSports(authHeader, currentCountry)
-            .then((resp) => setSports(resp))
-            .catch(err => {
-                // for (var prop in err) {
-                //     if (Object.prototype.hasOwnProperty.call(err, prop)) {
-                //         console.log(prop, "::", err[prop]);
-                //     }
-                // }
+            .then((resp) => setSports(resp));
+        // .catch(err => {
+        //     // for (var prop in err) {
+        //     //     if (Object.prototype.hasOwnProperty.call(err, prop)) {
+        //     //         console.log(prop, "::", err[prop]);
+        //     //     }
+        //     // }
 
-                if (err.response != null && err.response.status == 401) {
-                    props.history.push({
-                        pathname: "/auth",
-                        state: { countrySpace: currentCountry, authHeader: authHeader }
-                    })
-                }
+        //     if (err.response != null && err.response.status == 401) {
+        //         props.history.push({
+        //             pathname: "/auth",
+        //             state: { countrySpace: currentCountry, authHeader: authHeader }
+        //         })
+        //     } else {
+        //         throw err;
+        //     }
 
-            });
+        // });
     }, [currentCountry]);
 
     return (
