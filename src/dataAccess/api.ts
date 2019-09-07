@@ -41,8 +41,9 @@ export const checkValidity = async (authHeader: string) => {
         })
 
 
-
+        console.log("aaaaaa")
         var token = authHeader.replace(/Bearer /, "");
+        console.log("bbbbbb")
 
         var decoded = parseJwt(token);
         console.log(decoded.sub);
