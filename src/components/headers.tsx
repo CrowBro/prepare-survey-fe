@@ -152,7 +152,7 @@ const Header = (props: RouteComponentProps) => {
                     console.log(333333333);
 
                     console.log(props.location.pathname);
-                    if (props.location.pathname != "/api/login/callback") {
+                    if (!props.location.pathname.includes("/api/login/callback")) {
                         console.log(props.location.pathname);
                         console.log(44444444444);
 
@@ -161,7 +161,7 @@ const Header = (props: RouteComponentProps) => {
                             state: { countrySpace: currentCountry, authHeader: authHeader }
                         });
 
-                    }else{
+                    } else {
                         console.log(5555555555);
 
                     }
