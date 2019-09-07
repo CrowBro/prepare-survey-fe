@@ -45,7 +45,8 @@ export const checkValidity = async (authHeader: string) => {
         var token = authHeader.replace(/Bearer /, "");
         console.log("bbbbbb")
 
-        var decoded = parseJwt(token);
+        var decoded = !!token ? parseJwt(token) : { sub: "Anonymous" };
+        console.log(decoded.sub);
 
         // const result = { status: response.status, user: response.headers["X-User"] };
         const result = { status: response.status, user: decoded.sub };
