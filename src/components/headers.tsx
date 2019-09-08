@@ -145,6 +145,7 @@ const Header = (props: RouteComponentProps) => {
 
     const getUserSet = async (authHeader: string) => {
         console.log(111111);
+        console.log(authHeader.length);
         checkValidity(authHeader)
             .then((resp) => {
                 console.log(2222222);
@@ -153,7 +154,6 @@ const Header = (props: RouteComponentProps) => {
 
                     console.log(props.location.pathname);
                     if (!props.location.pathname.includes("/api/login/callback")) {
-                        console.log(props.location.pathname);
                         console.log(44444444444);
 
                         props.history.push({

@@ -39,17 +39,19 @@ export const checkValidity = async (authHeader: string) => {
                 "Authorization": authHeader
             }
         })
+        // console.log(response.headers);
+        const headerUser = response.headers["x-user"]
 
-
-        console.log("aaaaaa")
         var token = authHeader.replace(/Bearer /, "");
-        console.log("bbbbbb")
+        const user = !!headerUser
+            ? headerUser
+            : (!!token
+                ? parseJwt(token).sub
+                : "Anonymous");
 
-        var decoded = !!token ? parseJwt(token) : { sub: "Anonymous" };
-        console.log(decoded.sub);
+        console.log(user);
 
-        // const result = { status: response.status, user: response.headers["X-User"] };
-        const result = { status: response.status, user: decoded.sub };
+        const result = { status: response.status, user: user };
 
         // console.log(response);
 
