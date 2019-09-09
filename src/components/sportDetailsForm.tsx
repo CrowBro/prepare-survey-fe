@@ -68,6 +68,7 @@ type SetDetails = (details: SportDetails) => SportDetails
 
 interface DetailsFormProps {
     authHeader: string;
+    currentCountry: string;
     details: SportDetails;
     benchmarkDetails: SportDetails;
     onChange: (action: SetDetails) => void;
@@ -97,10 +98,10 @@ const Item = (props: ItemProps) => {
     )
 }
 
-const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: DetailsFormProps) => {
+const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, onChange }: DetailsFormProps) => {
     const [brands, setBrands] = useState<OptionType<number>[]>([]);
     useEffect(() => {
-        getBrands(authHeader)
+        getBrands(authHeader, currentCountry)
             .then(resp => setBrands(resp.map(brand => ({ value: brand.id, label: brand.name }))));
     }, [])
     const onChangeSync = (

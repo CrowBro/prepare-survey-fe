@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface CategoryProps {
     authHeader: string;
+    currentCountry: string;
     product: BrandCompetitor;
     onChange: (value: BrandCompetitor) => void;
     addEnabled: boolean;
@@ -39,10 +40,10 @@ interface CategoryProps {
 }
 
 const Competitor = (props: CategoryProps) => {
-    const { authHeader, product, addEnabled, onAdd, onRemove, onChange } = props;
+    const { authHeader, currentCountry, product, addEnabled, onAdd, onRemove, onChange } = props;
     const [options, setOptions] = useState<OptionType<number>[]>([]);
     useEffect(() => {
-        getBrands(authHeader)
+        getBrands(authHeader, currentCountry)
             .then(resp => setOptions(resp.map(brand => ({ value: brand.id, label: brand.name }))))
     }, [])
 

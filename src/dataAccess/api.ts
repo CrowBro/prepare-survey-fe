@@ -74,7 +74,8 @@ export const getSports = async (authHeader: string, countrySpace: CountrySpace) 
 
     const response = await axios.get<Sport[]>(apiConfig.baseUrl + "/api/sports", {
         headers: {
-            "Authorization": authHeader
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
         },
         params: params
     })
@@ -104,11 +105,12 @@ export interface SportPair {
     benchmarkSport: SportDetails;
 }
 
-export const getSportDetails = async (authHeader: string, id: number) => {
+export const getSportDetails = async (authHeader: string, countrySpace: string, id: number) => {
     const response = await axios.get<SportPair>(apiConfig.baseUrl + `/api/sports/${id}/details`,
         {
             headers: {
-                "Authorization": authHeader
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
             },
         }
     );
@@ -116,10 +118,11 @@ export const getSportDetails = async (authHeader: string, id: number) => {
     return response.data;
 }
 
-export const saveSportDetails = async (authHeader: string, id: number, sportDetails: SportPair) => {
+export const saveSportDetails = async (authHeader: string, countrySpace: string, id: number, sportDetails: SportPair) => {
     await axios.put(apiConfig.baseUrl + `/api/sports/${id}/details`, sportDetails, {
         headers: {
-            "Authorization": authHeader
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
         },
     }
     );
@@ -147,10 +150,11 @@ interface ProductsPair {
     benchmarkDetails: ProductCategoryDetails;
 }
 
-export const getProductCategories = async (authHeader: string, sportId: number) => {
+export const getProductCategories = async (authHeader: string, countrySpace: string, sportId: number) => {
     const response = await axios.get<ProductsPair>(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, {
         headers: {
-            "Authorization": authHeader
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
         },
     }
     );
@@ -158,12 +162,13 @@ export const getProductCategories = async (authHeader: string, sportId: number) 
     return response.data;
 }
 
-export const saveProductCategories = async (authHeader: string, sportId: number, categories: ProductsPair) => {
+export const saveProductCategories = async (authHeader: string, countrySpace: string, sportId: number, categories: ProductsPair) => {
     const body: ProductsPair = categories;
 
     await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, body, {
         headers: {
-            "Authorization": authHeader
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
         },
     }
     );
@@ -180,11 +185,12 @@ interface BrandCompetitorResponse {
     competitors: BrandCompetitor[];
 }
 
-export const getCompetitorBrands = async (authHeader: string, sportId: number) => {
+export const getCompetitorBrands = async (authHeader: string, countrySpace: string, sportId: number) => {
     const response = await axios.get<BrandCompetitorResponse>(apiConfig.baseUrl + `/api/sports/${sportId}/brandsCompetitorDetails`,
         {
             headers: {
-                "Authorization": authHeader
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
             },
         }
     );
@@ -192,14 +198,15 @@ export const getCompetitorBrands = async (authHeader: string, sportId: number) =
     return response.data.competitors;
 }
 
-export const saveCompetitorBrands = async (authHeader: string, sportId: number, competitors: BrandCompetitor[]) => {
+export const saveCompetitorBrands = async (authHeader: string, countrySpace: string, sportId: number, competitors: BrandCompetitor[]) => {
     const body: BrandCompetitorResponse = {
         competitors
     }
 
     await axios.put(apiConfig.baseUrl + `/api/sports/${sportId}/brandsCompetitorDetails`, body, {
         headers: {
-            "Authorization": authHeader
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
         },
     }
     );
