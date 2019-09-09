@@ -143,7 +143,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                 </Grid>
                                 <Grid item lg={10}>
                                     <FormControl fullWidth className={classes.textFieldSpacing}>
-                                        <FormHelperText id="weight-helper-text">{benchmarkDetails.passionBrand.name}</FormHelperText>
+                                        <FormHelperText id="weight-helper-text">{""}</FormHelperText>
                                         <ReactSelect
                                             label={""}
                                             options={brands}

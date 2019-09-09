@@ -1,7 +1,5 @@
 import axios from "axios";
 import { apiConfig } from "./apiConfig";
-import * as QueryString from "query-string";
-
 
 export interface Sport {
     sportId: number;
