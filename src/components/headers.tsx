@@ -16,7 +16,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 
 const countryDict: { [countrySpace: string]: string } = {
     "fr": "France",
-    "ch": "China",
+    "cn": "China",
     "it": "Italy",
     "es": "Spain",
     "cz": "Czech Republic",
@@ -203,7 +203,7 @@ const Header = (props: RouteComponentProps) => {
                                 <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("es")}>{countryDict["es"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("it")}>{countryDict["it"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("ch")}>{countryDict["ch"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("cn")}>{countryDict["cn"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("cz")}>{countryDict["cz"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("de")}>{countryDict["de"]}</MenuItem>
                             </Menu>

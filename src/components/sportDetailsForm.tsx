@@ -64,10 +64,22 @@ const statusOptions: OptionType<string>[] = [
     }
 ]
 
+const videoOptions: OptionType<string>[] = [
+    {
+        label: "OUI",
+        value: "true"
+    },
+    {
+        label: "NON",
+        value: "false"
+    }
+]
+
 type SetDetails = (details: SportDetails) => SportDetails
 
 interface DetailsFormProps {
     authHeader: string;
+    currentCountry: string;
     details: SportDetails;
     benchmarkDetails: SportDetails;
     onChange: (action: SetDetails) => void;
@@ -97,10 +109,10 @@ const Item = (props: ItemProps) => {
     )
 }
 
-const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: DetailsFormProps) => {
+const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, onChange }: DetailsFormProps) => {
     const [brands, setBrands] = useState<OptionType<number>[]>([]);
     useEffect(() => {
-        getBrands(authHeader)
+        getBrands(authHeader, currentCountry)
             .then(resp => setBrands(resp.map(brand => ({ value: brand.id, label: brand.name }))));
     }, [])
     const onChangeSync = (
@@ -117,6 +129,14 @@ const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: Detail
         onChange(details => ({
             ...details,
             status: value
+        }))
+    }
+
+    const handleVideoChange = (event: React.ChangeEvent<{ name: string; value: "true" | "false" }>) => {
+        const value = event.target.value;
+        onChange(details => ({
+            ...details,
+            video: value
         }))
     }
 
@@ -142,7 +162,7 @@ const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: Detail
                                 </Grid>
                                 <Grid item lg={10}>
                                     <FormControl fullWidth className={classes.textFieldSpacing}>
-                                        <FormHelperText id="weight-helper-text">{benchmarkDetails.passionBrand.name}</FormHelperText>
+                                        <FormHelperText id="weight-helper-text">{""}</FormHelperText>
                                         <ReactSelect
                                             label={""}
                                             options={brands}
@@ -232,6 +252,27 @@ const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: Detail
                                     </Select>
                                 </FormControl>
                             </Grid>
+                            {/* asdfas */}
+                            <Grid item xs={2} className={clsx(classes.statusTitle)}>
+                                <Typography>
+                                    Get Video
+                                </Typography>
+                            </Grid>
+                            <Grid item lg={10}>
+                                <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                    <Select
+                                        value={details.video}
+                                        onChange={handleVideoChange}
+                                    >
+                                        {videoOptions.map(option => {
+                                            return (
+                                                <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            {/* asfdsafd */}
                         </Grid>
                     </Container>
                     <Divider />

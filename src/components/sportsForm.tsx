@@ -64,7 +64,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
     let isMounted = true;
 
     useEffect(() => {
-        getSportDetails(authHeader, id)
+        getSportDetails(authHeader, currentCountry, id)
             .then(resp => {
                 if (isMounted) {
                     setDetails(resp.targetSport);
@@ -72,7 +72,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
                 }
             })
 
-        getProductCategories(authHeader, id)
+        getProductCategories(authHeader, currentCountry, id)
             .then(resp => {
                 if (isMounted) {
                     setCategories(List(resp.targetDetails.productCategories));
@@ -80,7 +80,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
                 }
             })
 
-        getCompetitorBrands(authHeader, id)
+        getCompetitorBrands(authHeader, currentCountry, id)
             .then(resp => {
                 if (isMounted) {
                     setCompetitors(List(resp.sort((n1, n2) => n1.order - n2.order)));
@@ -94,9 +94,9 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
     const handleSave = () => {
         if (details && benchmarkDetails && categories && competitors) {
             Promise.all([
-                saveSportDetails(authHeader, id, { targetSport: details, benchmarkSport: benchmarkDetails }),
-                saveProductCategories(authHeader, id, { targetDetails: { productCategories: categories.toArray() }, benchmarkDetails: { productCategories: benchmarkCategories } }),
-                saveCompetitorBrands(authHeader, id, competitors.toArray().map((el: BrandCompetitor, index: number) => {
+                saveSportDetails(authHeader, currentCountry, id, { targetSport: details, benchmarkSport: benchmarkDetails }),
+                saveProductCategories(authHeader, currentCountry, id, { targetDetails: { productCategories: categories.toArray() }, benchmarkDetails: { productCategories: benchmarkCategories } }),
+                saveCompetitorBrands(authHeader, currentCountry, id, competitors.toArray().map((el: BrandCompetitor, index: number) => {
                     el.order = index + 1;
                     return el;
                 }))
@@ -118,7 +118,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
                 className={classes.gridMargin}
             >
                 {details && benchmarkDetails
-                    ? <DetailsForm authHeader={authHeader} details={details} benchmarkDetails={benchmarkDetails} onChange={setDetails} />
+                    ? <DetailsForm authHeader={authHeader} currentCountry={currentCountry} details={details} benchmarkDetails={benchmarkDetails} onChange={setDetails} />
                     : <div> Loading... </div>
                 }
                 {categories
@@ -126,7 +126,7 @@ const SportsForm = (props: RouteComponentProps<{ id: string }>) => {
                     : <div> Loading... </div>
                 }
                 {competitors
-                    ? <BrandsCompetitorsForm authHeader={authHeader} competitors={competitors} onChange={setCompetitors} />
+                    ? <BrandsCompetitorsForm authHeader={authHeader} currentCountry={currentCountry} competitors={competitors} onChange={setCompetitors} />
                     : <div> Loading... </div>
                 }
                 <Button variant={"contained"} size={"large"} className={classes.fab} color={"primary"} onClick={handleSave}>
