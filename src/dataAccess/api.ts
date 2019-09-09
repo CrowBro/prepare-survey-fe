@@ -96,6 +96,7 @@ export interface SportDetails {
     fullName2: string;
     shortName: string;
     status: "Approved" | "Pending" | "To Review";
+    video: "true" | "false";
 }
 
 export interface SportPair {

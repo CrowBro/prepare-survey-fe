@@ -64,6 +64,17 @@ const statusOptions: OptionType<string>[] = [
     }
 ]
 
+const videoOptions: OptionType<string>[] = [
+    {
+        label: "OUI",
+        value: "true"
+    },
+    {
+        label: "NON",
+        value: "false"
+    }
+]
+
 type SetDetails = (details: SportDetails) => SportDetails
 
 interface DetailsFormProps {
@@ -118,6 +129,14 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
         onChange(details => ({
             ...details,
             status: value
+        }))
+    }
+
+    const handleVideoChange = (event: React.ChangeEvent<{ name: string; value: "true" | "false" }>) => {
+        const value = event.target.value;
+        onChange(details => ({
+            ...details,
+            video: value
         }))
     }
 
@@ -233,6 +252,27 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                     </Select>
                                 </FormControl>
                             </Grid>
+                            {/* asdfas */}
+                            <Grid item xs={2} className={clsx(classes.statusTitle)}>
+                                <Typography>
+                                    Get Video
+                                </Typography>
+                            </Grid>
+                            <Grid item lg={10}>
+                                <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                    <Select
+                                        value={details.video}
+                                        onChange={handleVideoChange}
+                                    >
+                                        {videoOptions.map(option => {
+                                            return (
+                                                <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            {/* asfdsafd */}
                         </Grid>
                     </Container>
                     <Divider />
