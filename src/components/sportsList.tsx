@@ -23,6 +23,9 @@ const useStyles = makeStyles({
     chipOrange: {
         backgroundColor: "#FF6633",
     },
+    chipRed: {
+        backgroundColor: "#FF0000",
+    },
     header: {
         "& th": {
             color: "rgba(0, 0, 0, 0.9)",
@@ -39,7 +42,7 @@ const useStyles = makeStyles({
     },
 })
 
-const StatusChip = ({ status }: { status: "Approved" | "Pending" | "To Review" }) => {
+const StatusChip = ({ status }: { status: "To Review" | "Pending" | "Approved" | "Disabled" }) => {
     const classes = useStyles();
     switch (status) {
         case "Approved":
@@ -56,6 +59,15 @@ const StatusChip = ({ status }: { status: "Approved" | "Pending" | "To Review" }
                     size="small"
                     color="default"
                     label={status}
+                />
+            )
+        case "Disabled":
+            return (
+                <Chip
+                    size="small"
+                    color="secondary"
+                    label={status}
+                    className={classes.chipRed}
                 />
             )
         case "To Review":
