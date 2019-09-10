@@ -5,6 +5,7 @@ export interface Sport {
     sportId: number;
     sportDisplayId: number;
     sportName: string;
+    defaultSportName: string;
     products: string[];
     passionBrand: string;
     brands: string[];
