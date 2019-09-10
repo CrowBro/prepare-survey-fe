@@ -267,7 +267,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                             <Grid item xs={2} className={clsx(classes.statusTitle)}>
                                 <Typography>
                                     Video NPS motion report
-                                    </Typography>
+                                </Typography>
                             </Grid>
                             <Grid item lg={10}>
                                 <div className={classes.flexContainerStretch}>
@@ -290,7 +290,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                         target="_blank"
                                         href="https://drive.google.com/file/d/1xG2Ft7KkHvs_8LjvyN0KZ0mN2NQh1cTr/view?usp=drivesdk">
                                         Watch an example from 2018
-                                </Link>
+                                    </Link>
                                 </div>
                             </Grid>
                             {/* asfdsafd */}
