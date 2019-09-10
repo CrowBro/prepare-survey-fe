@@ -16,6 +16,7 @@ import ReactSelect, { OptionType } from "components/autoComplete";
 import { getBrands } from "dataAccess/brandsApi";
 import { SportDetails } from "dataAccess/api";
 import clsx from "clsx";
+import { RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -70,11 +71,11 @@ const statusOptions: OptionType<string>[] = [
 
 const videoOptions: OptionType<string>[] = [
     {
-        label: "OUI",
+        label: "Yes",
         value: "true"
     },
     {
-        label: "NON",
+        label: "No",
         value: "false"
     }
 ]
@@ -115,6 +116,7 @@ const Item = (props: ItemProps) => {
 
 const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, onChange }: DetailsFormProps) => {
     const [brands, setBrands] = useState<OptionType<number>[]>([]);
+    // console.log("TypeScript issues:", details.video === "false", details.video === false,details.video === "true", details.video === true, details.video);
     useEffect(() => {
         getBrands(authHeader, currentCountry)
             .then(resp => setBrands(resp.map(brand => ({ value: brand.id, label: brand.name }))));
@@ -133,7 +135,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
         onChange(details => ({
             ...details,
             status: value
-        }))
+        }));
     }
 
     const handleVideoChange = (event: React.ChangeEvent<{ name: string; value: "true" | "false" }>) => {
@@ -141,7 +143,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
         onChange(details => ({
             ...details,
             video: value
-        }))
+        }));
     }
 
     return (
@@ -259,21 +261,22 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                             {/* asdfas */}
                             <Grid item xs={2} className={clsx(classes.statusTitle)}>
                                 <Typography>
-                                    Get Video
+                                    Video NPS motion report
                                 </Typography>
                             </Grid>
                             <Grid item lg={10}>
                                 <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
-                                    <Select
-                                        value={details.video}
-                                        onChange={handleVideoChange}
-                                    >
+                                    <RadioGroup aria-label="video" name="video2" value={details.video + ""} onChange={handleVideoChange}>
                                         {videoOptions.map(option => {
                                             return (
-                                                <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                                                <FormControlLabel
+                                                    key={option.value}
+                                                    value={option.value}
+                                                    control={<Radio color="primary" />}
+                                                    label={option.label} />
                                             )
                                         })}
-                                    </Select>
+                                    </RadioGroup>
                                 </FormControl>
                             </Grid>
                             {/* asfdsafd */}
