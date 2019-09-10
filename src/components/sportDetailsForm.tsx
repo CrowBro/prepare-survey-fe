@@ -279,7 +279,12 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                     </RadioGroup>
                                 </FormControl>
                             </Grid>
-                            <Link rel="noopener noreferer" target="_blank" href='http://www.google.com'>Watch an example from 2018</Link>
+                            <Link
+                                rel="noopener noreferer"
+                                target="_blank"
+                                href="https://drive.google.com/file/d/1xG2Ft7KkHvs_8LjvyN0KZ0mN2NQh1cTr/view?usp=drivesdk">
+                                    Watch an example from 2018
+                            </Link>
                             {/* asfdsafd */}
                         </Grid>
                     </Container>

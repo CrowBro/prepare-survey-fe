@@ -240,6 +240,7 @@ const SportsList = (props: RouteComponentProps) => {
                     <TableRow className={classes.header}>
                         <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
+                        <TableCell>[Name]</TableCell>
                         <HeaderTitles listType={listType} />
                         <TableCell>Status</TableCell>
                     </TableRow>
@@ -253,6 +254,7 @@ const SportsList = (props: RouteComponentProps) => {
                             })}>
                             <TableCell>{sport.sportDisplayId}</TableCell>
                             <TableCell>{sport.sportName}</TableCell>
+                            <TableCell>{"[" + sport.defaultSportName + "]"}</TableCell>
                             <TableValues listType={listType} sport={sport} />
                             <TableCell><StatusChip status={sport.status} /></TableCell>
                         </TableRow>
