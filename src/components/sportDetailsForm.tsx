@@ -20,6 +20,10 @@ import { RadioGroup, FormControlLabel, Radio, Link } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        flexContainerStretch: {
+            display: "flex",
+            flexGrow: 1
+        },
         textFieldSpacing: {
             marginTop: theme.spacing(3),
         },
@@ -259,32 +263,36 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                 </FormControl>
                             </Grid>
                             {/* asdfas */}
+
                             <Grid item xs={2} className={clsx(classes.statusTitle)}>
                                 <Typography>
                                     Video NPS motion report
-                                </Typography>
+                                    </Typography>
                             </Grid>
                             <Grid item lg={10}>
-                                <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
-                                    <RadioGroup aria-label="video" name="video2" value={details.video + ""} onChange={handleVideoChange}>
-                                        {videoOptions.map(option => {
-                                            return (
-                                                <FormControlLabel
-                                                    key={option.value}
-                                                    value={option.value}
-                                                    control={<Radio color="primary" />}
-                                                    label={option.label} />
-                                            )
-                                        })}
-                                    </RadioGroup>
-                                </FormControl>
+                                <div className={classes.flexContainerStretch}>
+                                    <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                        <RadioGroup aria-label="video" name="video2" value={details.video + ""} onChange={handleVideoChange}>
+                                            {videoOptions.map(option => {
+                                                return (
+                                                    <FormControlLabel
+                                                        key={option.value}
+                                                        value={option.value}
+                                                        control={<Radio color="primary" />}
+                                                        label={option.label} />
+                                                )
+                                            })}
+                                        </RadioGroup>
+                                    </FormControl>
+
+                                    <Link
+                                        rel="noopener noreferer"
+                                        target="_blank"
+                                        href="https://drive.google.com/file/d/1xG2Ft7KkHvs_8LjvyN0KZ0mN2NQh1cTr/view?usp=drivesdk">
+                                        Watch an example from 2018
+                                </Link>
+                                </div>
                             </Grid>
-                            <Link
-                                rel="noopener noreferer"
-                                target="_blank"
-                                href="https://drive.google.com/file/d/1xG2Ft7KkHvs_8LjvyN0KZ0mN2NQh1cTr/view?usp=drivesdk">
-                                    Watch an example from 2018
-                            </Link>
                             {/* asfdsafd */}
                         </Grid>
                     </Container>
