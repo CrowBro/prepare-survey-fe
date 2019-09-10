@@ -14,7 +14,7 @@ export interface Sport {
     noRespondents2017: number;
     videoNote: boolean;
     sportLeader: string;
-    status: "Approved" | "Pending" | "To Review";
+    status: "To Review" | "Pending" | "Approved" | "Disabled";
 }
 
 function parseJwt(token: string) {
@@ -94,7 +94,7 @@ export interface SportDetails {
     fullName1: string;
     fullName2: string;
     shortName: string;
-    status: "Approved" | "Pending" | "To Review";
+    status: "To Review" | "Pending" | "Approved" | "Disabled";
     video: "true" | "false";
 }
 

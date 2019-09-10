@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const statusOptions: OptionType<string>[] = [
     {
+        label: "To Review",
+        value: "To Review"
+    },
+    {
         label: "Pending",
         value: "Pending"
     },
@@ -59,9 +63,9 @@ const statusOptions: OptionType<string>[] = [
         value: "Approved"
     },
     {
-        label: "To Review",
-        value: "To Review"
-    }
+        label: "Disabled",
+        value: "Disabled"
+    },
 ]
 
 const videoOptions: OptionType<string>[] = [
@@ -124,7 +128,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
     }
     const classes = useStyles();
 
-    const handleStatusChange = (event: React.ChangeEvent<{ name: string; value: "Approved" | "Pending" | "To Review" }>) => {
+    const handleStatusChange = (event: React.ChangeEvent<{ name: string; value: "To Review" | "Pending" | "Approved" | "Disabled" }>) => {
         const value = event.target.value;
         onChange(details => ({
             ...details,
