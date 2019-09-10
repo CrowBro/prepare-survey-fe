@@ -16,7 +16,7 @@ import ReactSelect, { OptionType } from "components/autoComplete";
 import { getBrands } from "dataAccess/brandsApi";
 import { SportDetails } from "dataAccess/api";
 import clsx from "clsx";
-import { RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import { RadioGroup, FormControlLabel, Radio, Link } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -279,6 +279,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                     </RadioGroup>
                                 </FormControl>
                             </Grid>
+                            <Link rel="noopener noreferer" target="_blank" href='http://www.google.com'>Watch an example from 2018</Link>
                             {/* asfdsafd */}
                         </Grid>
                     </Container>
