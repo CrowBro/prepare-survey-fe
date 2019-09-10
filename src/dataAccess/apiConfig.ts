@@ -1,7 +1,7 @@
 export const apiConfig = {
     baseUrl: "https://produits-gagnants.decathlon.fr/preparation", // when staging with docker and domain
     defaultCountrySpace: "fr", 
-    authClientId: "C344d538f23aa65cec06705296f9034ce5d5e657c",
+    authClientId: "C02192c9da610262216c2b812a5595ea5e8188505",
     authCallbackUrl: "https://produits-gagnants.decathlon.fr/preparation/api/login/callback",
-    authAuthUrl: "https://preprod.idpdecathlon.oxylane.com/as/authorization.oauth2",
+    authAuthUrl: "https://idpdecathlon.oxylane.com/as/authorization.oauth2",
 }
