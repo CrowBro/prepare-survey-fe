@@ -117,11 +117,6 @@ const SurveyForm = (props: RouteComponentProps) => {
                     onChange={onChange}
                     baseQuestions={benchmarkQuestions}
                 />
-                {/* <Grid item xs={12}>
-                    <Button onClick={handleSave}>
-                        Save
-                    </Button>
-                </Grid> */}
                 <Button variant={"contained"} size={"large"} className={classes.fab} color={"primary"} onClick={handleSave}>
                     <SaveIcon className={classes.extendedIcon} /> Save
                 </Button>
