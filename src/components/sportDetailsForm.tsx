@@ -24,6 +24,14 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flexGrow: 1
         },
+        linkStyle: {
+            paddingLeft: "20px"
+        },
+
+        marginToppy: {
+            marginTop: "6px",
+        },
+
         textFieldSpacing: {
             marginTop: theme.spacing(3),
         },
@@ -265,15 +273,15 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                             {/* asdfas */}
 
                             <Grid item xs={2} className={clsx(classes.statusTitle)}>
-                                <Typography>
-                                    Video NPS motion report
-                                    </Typography>
+                                <Typography className={classes.marginToppy}>
+                                    Video NPS <br /> motion report
+                                </Typography>
                             </Grid>
                             <Grid item lg={10}>
                                 <div className={classes.flexContainerStretch}>
                                     <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
                                         <RadioGroup aria-label="video" name="video2" value={details.video + ""} onChange={handleVideoChange}>
-                                            {videoOptions.map(option => {
+                                            {/* {videoOptions.map(option => {
                                                 return (
                                                     <FormControlLabel
                                                         key={option.value}
@@ -281,16 +289,33 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                                         control={<Radio color="primary" />}
                                                         label={option.label} />
                                                 )
-                                            })}
+                                            })} */}
+                                            <FormControlLabel
+                                                key={videoOptions[0].value}
+                                                value={videoOptions[0].value}
+                                                control={<Radio color="primary" />}
+                                                label={
+                                                    <>
+                                                        {videoOptions[0].label}
+                                                        <Link
+                                                            className={classes.linkStyle}
+                                                            rel="noopener noreferer"
+                                                            target="_blank"
+                                                            href="https://drive.google.com/file/d/1xG2Ft7KkHvs_8LjvyN0KZ0mN2NQh1cTr/view?usp=drivesdk">
+                                                            Watch an example from 2018
+                                                        </Link>
+                                                    </>
+                                                } >
+                                            </FormControlLabel>
+                                            <FormControlLabel
+                                                key={videoOptions[1].value}
+                                                value={videoOptions[1].value}
+                                                control={<Radio color="primary" />}
+                                                label={videoOptions[1].label} />
+
                                         </RadioGroup>
                                     </FormControl>
 
-                                    <Link
-                                        rel="noopener noreferer"
-                                        target="_blank"
-                                        href="https://drive.google.com/file/d/1xG2Ft7KkHvs_8LjvyN0KZ0mN2NQh1cTr/view?usp=drivesdk">
-                                        Watch an example from 2018
-                                </Link>
                                 </div>
                             </Grid>
                             {/* asfdsafd */}
