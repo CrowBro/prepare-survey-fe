@@ -47,7 +47,7 @@ export default () => (
                     }} />
                     <Route path="/sports/:id" component={SportsForm} />
                     <Route path="/sports" component={SportsList} />
-                    <Route path="/survey" component={SurveyForm} />
+                    {/* <Route path="/survey" component={SurveyForm} /> */}
                     <Route path="/api/login/callback" component={CallbackComponent} />
                     <Route path="/preparation/api/login/callback" component={CallbackComponent} />
                     <Route path="/" component={SportsList} />
