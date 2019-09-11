@@ -49,7 +49,8 @@ interface SurveyQuestionFormProps {
 const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }: SurveyQuestionFormProps) => {
     const classes = useStyles();
 
-    const [ editing, setEditing ] = useState(false);
+    const [editing, setEditing] = useState(false);
+    const [editingNote, setEditingNote] = useState(false);
 
     const handleTitleChange = (text: string) => {
         onChange((question: Question) => ({
@@ -57,6 +58,14 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }
             questionText: text
         }));
         setEditing(false);
+    }
+
+    const handleNoteChange = (text: string) => {
+        onChange((question: Question) => ({
+            ...question,
+            noteText: text
+        }));
+        setEditingNote(false);
     }
 
     const handleAnswersChange = (action: AnswersAction) => {
@@ -69,14 +78,49 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }
     return (
         <Grid container>
             <Card className={classes.card}>
+                <>
+                    {question.noteText === "!TranslationNotFound:!"
+                        ? <></>
+                        : <CardHeader
+                            titleTypographyProps={{ variant: "body1" }}
+                            title={
+                                <>
+                                    {editingNote
+                                        ? <ConfirmableTextInput
+                                            value={question.noteText}
+                                            onConfirm={handleNoteChange}
+                                            onCancel={() => setEditingNote(false)}
+                                            placeholder="Note text"
+                                            smallFont={true}
+                                        />
+                                        : question.noteText
+                                    }
+                                </>
+                            }
+                            action={
+                                <>
+                                    {editingNote || !editable
+                                        ? <IconButton />
+                                        :
+                                        <IconButton onClick={() => setEditingNote(s => !s)} >
+                                            <Edit />
+                                        </IconButton>
+                                    }
+                                </>
+                            }
+                        />
+                    }
+                </>
                 <CardHeader
                     title={
                         <>
-                            { editing
+                            {editing
                                 ? <ConfirmableTextInput
                                     value={question.questionText}
                                     onConfirm={handleTitleChange}
                                     onCancel={() => setEditing(false)}
+                                    placeholder="Question text"
+                                    smallFont={false}
                                 />
                                 : question.questionText
                             }
@@ -84,7 +128,7 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }
                     }
                     action={
                         <>
-                            { editing || !editable
+                            {editing || !editable
                                 ? <IconButton />
                                 :
                                 <IconButton onClick={() => setEditing(s => !s)} >
@@ -111,7 +155,7 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }
                     </IconButton>
                 </CardActions>
                 <Collapse in={expanded} timeout={"auto"}>
-                    <AnswerForm answers={question.answerVariants} editable={editable} onChange={handleAnswersChange}/>
+                    <AnswerForm answers={question.answerVariants} editable={editable} onChange={handleAnswersChange} />
                 </Collapse>
             </Card>
         </Grid>
