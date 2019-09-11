@@ -38,7 +38,8 @@ export const getSurvey = async (authHeader: string, surveyType: SurveyType, coun
     const response = await axios.get<SurveyResponse>(apiConfig.baseUrl + "/api/Surveys",
         {
             headers: {
-                "Authorization": authHeader
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
             },
             params: params
         }
@@ -51,7 +52,8 @@ export const saveSurvey = async (authHeader: string, surveyType: SurveyType, sur
     const response = await axios.put<SurveyResponse>(`${apiConfig.baseUrl}/api/Surveys`, survey,
         {
             headers: {
-                "Authorization": authHeader
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
             },
             params: {
                 country: countrySpace,

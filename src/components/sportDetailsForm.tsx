@@ -16,9 +16,22 @@ import ReactSelect, { OptionType } from "components/autoComplete";
 import { getBrands } from "dataAccess/brandsApi";
 import { SportDetails } from "dataAccess/api";
 import clsx from "clsx";
+import { RadioGroup, FormControlLabel, Radio, Link } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        flexContainerStretch: {
+            display: "flex",
+            flexGrow: 1
+        },
+        linkStyle: {
+            paddingLeft: "20px"
+        },
+
+        marginToppy: {
+            marginTop: "6px",
+        },
+
         textFieldSpacing: {
             marginTop: theme.spacing(3),
         },
@@ -51,6 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const statusOptions: OptionType<string>[] = [
     {
+        label: "To Review",
+        value: "To Review"
+    },
+    {
         label: "Pending",
         value: "Pending"
     },
@@ -59,8 +76,19 @@ const statusOptions: OptionType<string>[] = [
         value: "Approved"
     },
     {
-        label: "To Review",
-        value: "To Review"
+        label: "Disabled",
+        value: "Disabled"
+    },
+]
+
+const videoOptions: OptionType<string>[] = [
+    {
+        label: "Yes",
+        value: "true"
+    },
+    {
+        label: "No",
+        value: "false"
     }
 ]
 
@@ -68,6 +96,7 @@ type SetDetails = (details: SportDetails) => SportDetails
 
 interface DetailsFormProps {
     authHeader: string;
+    currentCountry: string;
     details: SportDetails;
     benchmarkDetails: SportDetails;
     onChange: (action: SetDetails) => void;
@@ -97,10 +126,11 @@ const Item = (props: ItemProps) => {
     )
 }
 
-const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: DetailsFormProps) => {
+const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, onChange }: DetailsFormProps) => {
     const [brands, setBrands] = useState<OptionType<number>[]>([]);
+    // console.log("TypeScript issues:", details.video === "false", details.video === false,details.video === "true", details.video === true, details.video);
     useEffect(() => {
-        getBrands(authHeader)
+        getBrands(authHeader, currentCountry)
             .then(resp => setBrands(resp.map(brand => ({ value: brand.id, label: brand.name }))));
     }, [])
     const onChangeSync = (
@@ -112,12 +142,20 @@ const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: Detail
     }
     const classes = useStyles();
 
-    const handleStatusChange = (event: React.ChangeEvent<{ name: string; value: "Approved" | "Pending" | "To Review" }>) => {
+    const handleStatusChange = (event: React.ChangeEvent<{ name: string; value: "To Review" | "Pending" | "Approved" | "Disabled" }>) => {
         const value = event.target.value;
         onChange(details => ({
             ...details,
             status: value
-        }))
+        }));
+    }
+
+    const handleVideoChange = (event: React.ChangeEvent<{ name: string; value: "true" | "false" }>) => {
+        const value = event.target.value;
+        onChange(details => ({
+            ...details,
+            video: value
+        }));
     }
 
     return (
@@ -142,7 +180,7 @@ const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: Detail
                                 </Grid>
                                 <Grid item lg={10}>
                                     <FormControl fullWidth className={classes.textFieldSpacing}>
-                                        <FormHelperText id="weight-helper-text">{benchmarkDetails.passionBrand.name}</FormHelperText>
+                                        <FormHelperText id="weight-helper-text">{""}</FormHelperText>
                                         <ReactSelect
                                             label={""}
                                             options={brands}
@@ -232,6 +270,55 @@ const DetailsForm = ({ authHeader, details, benchmarkDetails, onChange }: Detail
                                     </Select>
                                 </FormControl>
                             </Grid>
+                            {/* asdfas */}
+
+                            <Grid item xs={2} className={clsx(classes.statusTitle)}>
+                                <Typography className={classes.marginToppy}>
+                                    Video NPS <br /> motion report
+                                </Typography>
+                            </Grid>
+                            <Grid item lg={10}>
+                                <div className={classes.flexContainerStretch}>
+                                    <FormControl fullWidth className={clsx(classes.textFieldSpacing, classes.lastTextField)}>
+                                        <RadioGroup aria-label="video" name="video2" value={details.video + ""} onChange={handleVideoChange}>
+                                            {/* {videoOptions.map(option => {
+                                                return (
+                                                    <FormControlLabel
+                                                        key={option.value}
+                                                        value={option.value}
+                                                        control={<Radio color="primary" />}
+                                                        label={option.label} />
+                                                )
+                                            })} */}
+                                            <FormControlLabel
+                                                key={videoOptions[0].value}
+                                                value={videoOptions[0].value}
+                                                control={<Radio color="primary" />}
+                                                label={
+                                                    <>
+                                                        {videoOptions[0].label}
+                                                        <Link
+                                                            className={classes.linkStyle}
+                                                            rel="noopener noreferer"
+                                                            target="_blank"
+                                                            href="https://drive.google.com/file/d/1xG2Ft7KkHvs_8LjvyN0KZ0mN2NQh1cTr/view?usp=drivesdk">
+                                                            Watch an example from 2018
+                                                        </Link>
+                                                    </>
+                                                } >
+                                            </FormControlLabel>
+                                            <FormControlLabel
+                                                key={videoOptions[1].value}
+                                                value={videoOptions[1].value}
+                                                control={<Radio color="primary" />}
+                                                label={videoOptions[1].label} />
+
+                                        </RadioGroup>
+                                    </FormControl>
+
+                                </div>
+                            </Grid>
+                            {/* asfdsafd */}
                         </Grid>
                     </Container>
                     <Divider />

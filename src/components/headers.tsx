@@ -16,11 +16,15 @@ import FormLabel from "@material-ui/core/FormLabel";
 
 const countryDict: { [countrySpace: string]: string } = {
     "fr": "France",
-    "ch": "China",
+    "cn": "China",
     "it": "Italy",
     "es": "Spain",
     "cz": "Czech Republic",
     "de": "Germany",
+    "in": "India",
+    "sg": "Singapore",
+    "co": "Colombia",
+    "cl": "Chile",
 }
 
 const AntTabs = withStyles(theme => ({
@@ -116,7 +120,7 @@ const Header = (props: RouteComponentProps) => {
 
     const classes = useStyles();
     const [anchorElCountrySpace, setAnchorElCountrySpace] = useState<any>(null);
-    const [user, setUser] = useState<string>("Anonymous");
+    const [user, setUser] = useState<string>("");
     const [_, setCountrySpace] = useState<CountrySpace>(apiConfig.defaultCountrySpace);
     const handleChange = (event: React.ChangeEvent<{}>, value: string) => {
         props.history.push({
@@ -145,6 +149,7 @@ const Header = (props: RouteComponentProps) => {
 
     const getUserSet = async (authHeader: string) => {
         console.log(111111);
+        console.log(authHeader.length);
         checkValidity(authHeader)
             .then((resp) => {
                 console.log(2222222);
@@ -152,8 +157,7 @@ const Header = (props: RouteComponentProps) => {
                     console.log(333333333);
 
                     console.log(props.location.pathname);
-                    if (props.location.pathname != "/api/login/callback") {
-                        console.log(props.location.pathname);
+                    if (!props.location.pathname.includes("/api/login/callback")) {
                         console.log(44444444444);
 
                         props.history.push({
@@ -161,7 +165,7 @@ const Header = (props: RouteComponentProps) => {
                             state: { countrySpace: currentCountry, authHeader: authHeader }
                         });
 
-                    }else{
+                    } else {
                         console.log(5555555555);
 
                     }
@@ -203,9 +207,13 @@ const Header = (props: RouteComponentProps) => {
                                 <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("es")}>{countryDict["es"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("it")}>{countryDict["it"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("ch")}>{countryDict["ch"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("cn")}>{countryDict["cn"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("cz")}>{countryDict["cz"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("de")}>{countryDict["de"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("in")}>{countryDict["in"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("sg")}>{countryDict["sg"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("co")}>{countryDict["co"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("cl")}>{countryDict["cl"]}</MenuItem>
                             </Menu>
                         </div>
                         <div className={classes.moveToTheRight}>
