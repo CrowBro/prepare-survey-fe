@@ -17,6 +17,11 @@ const useStyles = makeStyles({
         marginLeft: 8,
         flex: 1,
     },
+    smallInput: {
+        marginLeft: 8,
+        flex: 1,
+        fontSize: "16px"
+    },
     iconButton: {
         padding: 10,
     }
@@ -24,6 +29,8 @@ const useStyles = makeStyles({
 
 interface QuestionTitleInput {
     value: string;
+    smallFont: boolean;
+    placeholder: string;
     onConfirm: (text: string) => void;
     onCancel: () => void;
 }
@@ -31,17 +38,17 @@ interface QuestionTitleInput {
 const ConfirmableTextInput = (props: QuestionTitleInput) => {
     const classes = useStyles();
 
-    const { onConfirm, onCancel, value } = props;
+    const { onConfirm, onCancel, value, placeholder, smallFont } = props;
 
-    const [ text, setText ] = useState(value);
+    const [text, setText] = useState(value);
 
     return (
         <Paper className={classes.root}>
             <InputBase
-                className={classes.input}
+                className={smallFont ? classes.input : classes.smallInput}
                 value={text}
                 onChange={(evt) => setText(evt.target.value)}
-                placeholder="Question text"/>
+                placeholder={placeholder} />
             <IconButton className={classes.iconButton} onClick={() => onConfirm(text)}>
                 <Check />
             </IconButton>
