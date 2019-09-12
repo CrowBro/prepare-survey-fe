@@ -94,4 +94,3 @@ const Competitor = (props: CategoryProps) => {
 }
 
 export default Competitor;
-w
