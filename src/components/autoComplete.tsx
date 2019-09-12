@@ -243,7 +243,7 @@ const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
                 options={props.options}
                 components={components}
                 value={currentValue}
-                onChange={handleChangeSingle(value)}
+                onChange={handleChangeSingle}
                 required
                 onBlur={() => {
                     handleChangeSingle(currentValue)
