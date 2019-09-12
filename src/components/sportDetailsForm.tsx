@@ -182,6 +182,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                     <FormControl fullWidth className={classes.textFieldSpacing}>
                                         <FormHelperText id="weight-helper-text">{""}</FormHelperText>
                                         <ReactSelect
+                                            defaultT={0}
                                             label={""}
                                             options={brands}
                                             value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
