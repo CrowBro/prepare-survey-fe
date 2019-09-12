@@ -49,7 +49,7 @@ export default () => (
                     <Route path="/sports" component={SportsList} />
                     <Route path="/survey" component={SurveyForm} />
                     <Route path="/api/login/callback" component={CallbackComponent} />
-                    <Route path="/preparation/api/login/callback" component={CallbackComponent} />
+                    <Route path="/preparation2/api/login/callback" component={CallbackComponent} />
                     <Route path="/" component={SportsList} />
                 </Switch>
             </BrowserRouter>
