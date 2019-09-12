@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface CategoryProps {
     authHeader: string;
     currentCountry: string;
-    product: BrandCompetitor;
+    brand: BrandCompetitor;
     onChange: (value: BrandCompetitor) => void;
     addEnabled: boolean;
     onAdd: () => void;
@@ -40,7 +40,7 @@ interface CategoryProps {
 }
 
 const Competitor = (props: CategoryProps) => {
-    const { authHeader, currentCountry, product, addEnabled, onAdd, onRemove, onChange } = props;
+    const { authHeader, currentCountry, brand, addEnabled, onAdd, onRemove, onChange } = props;
     const [options, setOptions] = useState<OptionType<number>[]>([]);
     useEffect(() => {
         getBrands(authHeader, currentCountry)
@@ -50,7 +50,7 @@ const Competitor = (props: CategoryProps) => {
     const classes = useStyles();
 
     return (
-        <Grid className={classes.textFieldSpacing} container spacing={0} key={product.id}>
+        <Grid className={classes.textFieldSpacing} container spacing={0} key={brand.id}>
             <Container maxWidth={"lg"}>
                 <Grid container>
                     <Grid item xs={2} className={classes.titleGrid}>
@@ -64,11 +64,12 @@ const Competitor = (props: CategoryProps) => {
                                 <ReactSelect
                                     label={""}
                                     options={options}
-                                    value={({ value: product.id, label: product.name })}
+                                    value={({ value: brand.id, label: brand.name })}
                                     onChange={(value) => onChange({ id: value.value, name: value.label, order: 0, history: "" })}
+                                    defaultT={0}
                                 />
-                                {product.history &&
-                                    <FormHelperText id="weight-helper-text">{`Previously: ${product.history}`}</FormHelperText>
+                                {brand.history &&
+                                    <FormHelperText id="weight-helper-text">{`Previously: ${brand.history}`}</FormHelperText>
                                 }
                             </FormControl>
                         </FormControl>
@@ -93,3 +94,4 @@ const Competitor = (props: CategoryProps) => {
 }
 
 export default Competitor;
+w

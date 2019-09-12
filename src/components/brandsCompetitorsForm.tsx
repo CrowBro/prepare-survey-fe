@@ -35,15 +35,15 @@ const CompetitorBrandsForm = ({ authHeader, currentCountry, competitors, onChang
                             ? <AddCircle color="primary" onClick={() => onChange(s => s.push({ id: 0, name: "", order: 1, history: "" }))} />
                             : <>
                                 {
-                                    competitors.map((product: BrandCompetitor, index: number) => (
+                                    competitors.map((brand: BrandCompetitor, index: number) => (
                                         <BrandsCompetitor
                                             authHeader={authHeader}
                                             currentCountry={currentCountry}
                                             key={index}
-                                            product={product}
+                                            brand={brand}
                                             onChange={(value) => onChange(s => s.set(index, value))}
                                             addEnabled={competitors.count() < 4}
-                                            onAdd={() => onChange(s => s.insert(index + 1, { id: 0, name: "", order: product.order, history: product.history }))}
+                                            onAdd={() => onChange(s => s.insert(index + 1, { id: 0, name: "", order: brand.order, history: brand.history }))}
                                             onRemove={() => onChange(s => s.remove(index))}
                                         />
                                     ))

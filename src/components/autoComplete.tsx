@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CSSProperties, HTMLAttributes } from "react";
+import { CSSProperties, HTMLAttributes, useState } from "react";
 import clsx from "clsx";
 import Select from "react-select";
 import { createStyles, emphasize, makeStyles, useTheme, Theme } from "@material-ui/core/styles";
@@ -190,6 +190,7 @@ const components = {
 };
 
 interface SelectProps<T> {
+    defaultT: T;
     label: string;
     placeholder?: string;
     value?: OptionType<T>;
@@ -201,6 +202,8 @@ interface SelectProps<T> {
 const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
     const classes = useStyles();
     const theme = useTheme();
+    const [currentValue, setCurrentValue] = useState<OptionType<T>>(props.value ? props.value : { label: "", value: props.defaultT });
+
 
     function handleChangeSingle(value: OptionType<T>) {
         props.onChange(value);
@@ -216,12 +219,16 @@ const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
         }),
     };
     const resultLimit = 20
-    let i = 0
+    let iiii = 0
     return (
         <div className={classes.root}>
             <Select
-                filterOption={({label}, query) => label.toLowerCase().indexOf(query.toLowerCase()) >= 0 && i++ < resultLimit}
-                onInputChange={() => { i = 0 }}
+                filterOption={({ label }, query) => label.toLowerCase().indexOf(query.toLowerCase()) >= 0 && iiii++ < resultLimit}
+                onInputChange={(newLabel) => {
+                    setCurrentValue({ value: props.defaultT, label: newLabel })
+                    iiii = 0;
+
+                }}
                 classes={classes}
                 styles={selectStyles}
                 inputId="react-select-single"
@@ -235,9 +242,17 @@ const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
                 }}
                 options={props.options}
                 components={components}
-                value={props.value}
-                onChange={handleChangeSingle}
+                value={currentValue}
+                onChange={handleChangeSingle(value)}
                 required
+                onBlur={() => {
+                    handleChangeSingle(currentValue)
+                }}
+                onKeyDown={(event) => {
+                    if (event.keyCode === 13) {
+                        handleChangeSingle(currentValue)
+                    }
+                }}
             />
         </div>
     );
