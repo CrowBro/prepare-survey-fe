@@ -210,3 +210,31 @@ export const saveCompetitorBrands = async (authHeader: string, countrySpace: str
     }
     );
 }
+
+export interface SportsLabelsItem {
+    sportId: number;
+    sportDisplayId: number;
+    adultSportName: string;
+    juniorSportName: string;
+    sportFullName1: string;
+    sportFullName2: string;
+    sportShortName: string;
+    passionBrand: string;
+}
+
+export const getSportsLabels = async (authHeader: string, countrySpace: CountrySpace) => {
+    const params = {
+        year: 2019,
+        country: countrySpace
+    }
+
+    const response = await axios.get<SportsLabelsItem[]>(apiConfig.baseUrl + "/api/sports/labels", {
+        headers: {
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
+        },
+        params: params
+    })
+
+    return response.data;
+}
