@@ -187,6 +187,8 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
                                             options={brands}
                                             value={({ label: details.passionBrand.name, value: details.passionBrand.id })}
                                             onChange={(value) => onChange(s => ({ ...s, passionBrand: { id: value.value, name: value.label } }))}
+                                            // Workaround, but the issue lies in the ReactSelect component
+                                            key={details.passionBrand.id}
                                         />
                                     </FormControl>
                                 </Grid>
@@ -319,7 +321,6 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
 
                                 </div>
                             </Grid>
-                            {/* asfdsafd */}
                         </Grid>
                     </Container>
                     <Divider />
