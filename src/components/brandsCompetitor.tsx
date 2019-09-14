@@ -58,7 +58,7 @@ const Competitor = (props: CategoryProps) => {
                             Name
                         </Typography>
                     </Grid>
-                    <Grid item lg={7}>
+                    <Grid item xs lg={7}>
                         <FormControl fullWidth>
                             <FormControl fullWidth>
                                 <ReactSelect
