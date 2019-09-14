@@ -4,6 +4,7 @@ import { useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
@@ -15,6 +16,7 @@ import { Question } from "dataAccess/surveyApi";
 import { QuestionChange, AnswersAction } from "types/survey";
 import ConfirmableTextInput from "components/confirmableTextInput";
 import AnswerForm from "components/answerForm";
+import { QuestionWithPreview } from "./surveyQuestionList";
 
 const useStyles = makeStyles((theme: Theme) => ({
     card: {
@@ -36,17 +38,27 @@ const useStyles = makeStyles((theme: Theme) => ({
     questionHeadermargin: {
         verticalAlign: "bottom",
     },
+    questionPreview: {
+        backgroundColor: "#F2F3F8",
+        padding: 5,
+    },
+    cartContent: {
+        paddingTop: 0,
+        paddingBottom: 0,
+    },
+
 }));
 
 interface SurveyQuestionFormProps {
-    question: Question;
+    question: QuestionWithPreview;
     expanded: boolean;
     onExpand: () => void;
     editable: boolean;
     onChange: QuestionChange;
+    enablePreview?: boolean;
 }
 
-const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }: SurveyQuestionFormProps) => {
+const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange, enablePreview }: SurveyQuestionFormProps) => {
     const classes = useStyles();
 
     const [editing, setEditing] = useState(false);
@@ -138,7 +150,14 @@ const SurveyQuestionForm = ({ question, expanded, onExpand, editable, onChange }
                         </>
                     }
                 />
-
+                {enablePreview && question.questionPreview && (
+                    <CardContent className={classes.cartContent}>
+                        <div className={classes.questionPreview}>
+                            <Typography variant="h6" display="block">Preview:</Typography>
+                            <Typography variant="body1" display="block">{question.questionPreview}</Typography>
+                        </div>
+                    </CardContent>
+                )}
                 <CardActions>
                     <Typography>
                         List {question.answerCategory}
