@@ -6,6 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TimerIcon from "@material-ui/icons/Timer";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import { makeStyles, withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { CountrySpace, checkValidity } from "dataAccess/api";
 import Button from "@material-ui/core/Button";
@@ -193,6 +194,7 @@ const Header = (props: RouteComponentProps) => {
                         <AntTabs value={props.location.pathname} onChange={handleChange}>
                             <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Sports</div></>} />
                             <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
+                            <AntTab value={"/help"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Help</div></>} />
                         </AntTabs>
                         <div className={classes.stayOnTheLeft}>
                             <Button onClick={handleClickCountrySpace}>{`Choose country: ${countryDict[currentCountry]}`}</Button>
