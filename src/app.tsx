@@ -11,6 +11,7 @@ import store from "store/store";
 import DeTheme from "components/deTheme";
 import { apiConfig } from "dataAccess/apiConfig";
 import CallbackComponent from "components/callbackComponent";
+import Help from "components/help";
 
 
 const GlobalCss = withStyles({
@@ -48,6 +49,7 @@ export default () => (
                     <Route path="/sports/:id" component={SportsForm} />
                     <Route path="/sports" component={SportsList} />
                     {/* <Route path="/survey" component={SurveyForm} /> */}
+                    <Route path="/help" component={Help} />
                     <Route path="/api/login/callback" component={CallbackComponent} />
                     <Route path="/preparation/api/login/callback" component={CallbackComponent} />
                     <Route path="/" component={SportsList} />
