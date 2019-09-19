@@ -69,6 +69,8 @@ const AnswerListItem = (props: AnswerListItemProps) => {
                             value={answer.answerText}
                             onConfirm={handleTextChange}
                             onCancel={() => setEditing(false)}
+                            placeholder = "Answer text"
+                            smallFont={false}
                         />
                     }
                 />

@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "deca-prep",
   "version": "1.0.0",
-  "description": "This is a boilerplate app",
+  "description": "Decathlon survey preparation FE.",
   "private": true,
   "scripts": {
     "build": "webpack --mode production",
@@ -82,7 +82,7 @@
     "core-js": "^3.1.4",
     "immutable": "^4.0.0-rc.12",
     "jwt-decode": "^2.2.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.15",
     "query-string": "^6.8.3",
     "react": "16.8.6",
     "react-dom": "16.8.6",
