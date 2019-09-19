@@ -150,7 +150,7 @@ const DetailsForm = ({ authHeader, currentCountry, details, benchmarkDetails, on
         }));
     }
 
-    const handleVideoChange = (event: React.ChangeEvent<{ name: string; value: "true" | "false" }>) => {
+    const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         onChange(details => ({
             ...details,

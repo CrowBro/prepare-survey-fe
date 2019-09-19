@@ -192,10 +192,8 @@ const Help = () => {
                                     title="Reviewing products translations"
                                     className={classes.respIFrame}
                                     src="https://www.loom.com/embed/9b8517a8d7f64655acfe38ab24ee8506"
-                                    frameborder="0"
-                                    webkitallowfullscreen
-                                    mozallowfullscreen
-                                    allowfullscreen
+                                    frameBorder="0"
+                                    allowFullScreen
                                 />
                             </Box>
                         </Box>
@@ -232,10 +230,8 @@ const Help = () => {
                                     title="Reviewing brands"
                                     className={classes.respIFrame}
                                     src="https://www.loom.com/embed/55d64cd0787f413c98653c29984ab4d0"
-                                    frameborder="0"
-                                    webkitallowfullscreen
-                                    mozallowfullscreen
-                                    allowfullscreen
+                                    frameBorder="0"
+                                    allowFullScreen
                                 />
                             </Box>
                         </Box>
@@ -269,10 +265,8 @@ const Help = () => {
                                     title="Disabling a sport"
                                     className={classes.respIFrame}
                                     src="https://www.loom.com/embed/485e1ad76c864c9c828a7601c4a72086"
-                                    frameborder="0"
-                                    webkitallowfullscreen
-                                    mozallowfullscreen
-                                    allowfullscreen
+                                    frameBorder="0"
+                                    allowFullScreen
                                 />
                             </Box>
                         </Box>
