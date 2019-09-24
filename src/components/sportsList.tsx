@@ -225,10 +225,29 @@ const headCells: HeadCell[] = [
 //     return !!headCell ? headCell.label : null;
 // }
 
+const reA = /[^a-zA-Z]/g;
+const reN = /[^0-9]/g;
+
+function sortAlphaNum(a: string, b: string) {
+    const aA = a.replace(reA, "");
+    const bA = b.replace(reA, "");
+    if (aA === bA) {
+        const aN = parseInt(a.replace(reN, ""), 10);
+        const bN = parseInt(b.replace(reN, ""), 10);
+        return aN === bN ? 0 : aN > bN ? 1 : -1;
+    } else {
+        return aA > bA ? 1 : -1;
+    }
+}
+
 function desc(a: Sport, b: Sport, orderBy: HeaderCellId) {
     const headCell = headCells[headCells.findIndex(x => x.id === orderBy)];
     const valueA = headCell.selector(a) || "";
     const valueB = headCell.selector(b) || "";
+
+    if (orderBy === "sportDisplayId" && typeof valueA === "string" && typeof valueB === "string") {
+        return -sortAlphaNum(valueA, valueB)
+    }
 
     if (valueB < valueA) {
         // console.log(`A: ${valueA}, B ${valueB}. returning -1. A > B`)
@@ -340,7 +359,7 @@ const SportsList = (props: RouteComponentProps) => {
     }
     const classes = useStyles();
     const [order, setOrder] = useState<"desc" | "asc">("asc");
-    const [orderBy, setOrderBy] = useState<HeaderCellId>("sportId");
+    const [orderBy, setOrderBy] = useState<HeaderCellId>("sportDisplayId");
 
     const [sports, setSports] = useState<Sport[]>([])
     const [listType, setListType] = useState<ListType>("categories");
