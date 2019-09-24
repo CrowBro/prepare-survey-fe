@@ -13,6 +13,9 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
 import Chip from "@material-ui/core/Chip";
 import { apiConfig } from "dataAccess/apiConfig";
+import { TabBarIOS } from "react-native";
+import { TableSortLabel } from "@material-ui/core";
+import { string } from "prop-types";
 
 const useStyles = makeStyles({
     root: {
@@ -39,6 +42,17 @@ const useStyles = makeStyles({
     marginTop: {
         marginTop: "72px",
     },
+    // visuallyHidden: {
+    //     border: 0,
+    //     clip: 'rect(0 0 0 0)',
+    //     height: 1,
+    //     margin: -1,
+    //     overflow: 'hidden',
+    //     padding: 0,
+    //     position: 'absolute',
+    //     top: 20,
+    //     width: 1,
+    // },
 })
 
 const StatusChip = ({ status }: { status: "To Review" | "Pending" | "Approved" | "Disabled" }) => {
@@ -165,6 +179,174 @@ const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) 
     return <></>
 }
 
+
+type HeaderCellId = "sportId" | "sportDisplayId" | "sportName" | "defaultSportName" | "status" | "passionBrand" | "brands0" | "brands1" | "brands2" | "brands3" | "products0" | "products1" | "products2" | "products3" | "products4" | "products5" | "nps2017" | "noRespondents2017" | "sportLeader" | "videoNote" | "nps2018" | "noRespondents2018";
+
+type HeaderCellLabel = null | "ID" | "Name" | "[Name]" | "Product 1" | "Product 2" | "Product 3" | "Product 4" | "Product 5" | "Product 6" | "Brand Passion" | "Competitor 1" | "Competitor 2" | "Competitor 3" | "Competitor 4" | "№ Respondents" | "NPS 2017" | "Leader Sport" | "Video Note" | "NPS 2018" | "Status";
+
+interface HeadCell {
+    id: HeaderCellId;
+    label: HeaderCellLabel;
+    selector: (sport: Sport) => number | (string | undefined);
+}
+
+
+const headCells: HeadCell[] = [
+    { id: "sportId", label: null, selector: (sport: Sport) => sport.sportId },
+    { id: "sportDisplayId", label: "ID", selector: (sport: Sport) => sport.sportDisplayId },
+    { id: "sportName", label: "Name", selector: (sport: Sport) => sport.sportName },
+    { id: "defaultSportName", label: "[Name]", selector: (sport: Sport) => sport.defaultSportName },
+    { id: "passionBrand", label: "Brand Passion", selector: (sport: Sport) => sport.passionBrand },
+    { id: "brands0", label: "Competitor 1", selector: (sport: Sport) => sport.brands[0] },
+    { id: "brands1", label: "Competitor 2", selector: (sport: Sport) => sport.brands[1] },
+    { id: "brands2", label: "Competitor 3", selector: (sport: Sport) => sport.brands[2] },
+    { id: "brands3", label: "Competitor 4", selector: (sport: Sport) => sport.brands[3] },
+    { id: "products0", label: "Product 1", selector: (sport: Sport) => sport.products[0] },
+    { id: "products1", label: "Product 2", selector: (sport: Sport) => sport.products[1] },
+    { id: "products2", label: "Product 3", selector: (sport: Sport) => sport.products[2] },
+    { id: "products3", label: "Product 4", selector: (sport: Sport) => sport.products[3] },
+    { id: "products4", label: "Product 5", selector: (sport: Sport) => sport.products[4] },
+    { id: "products5", label: "Product 6", selector: (sport: Sport) => sport.products[5] },
+    { id: "nps2017", label: "NPS 2017", selector: (sport: Sport) => sport.sportDisplayId },
+    { id: "noRespondents2017", label: "№ Respondents", selector: (sport: Sport) => sport.sportDisplayId },
+    { id: "sportLeader", label: "Leader Sport", selector: (sport: Sport) => sport.sportDisplayId },
+    { id: "videoNote", label: "Video Note", selector: (sport: Sport) => sport.sportDisplayId },
+    { id: "nps2018", label: "NPS 2018", selector: (sport: Sport) => sport.sportDisplayId },
+    { id: "noRespondents2018", label: "№ Respondents", selector: (sport: Sport) => sport.sportDisplayId },
+    { id: "status", label: "Status", selector: (sport: Sport) => sport.status },
+];
+
+// function selectoras(cells: HeadCell[], id: HeaderCellId) {
+//     const headCell = cells.find(x => x.id === id)
+//     return !!headCell ? headCell.selector : null;
+// }
+// function label(cells: HeadCell[], id: HeaderCellId) {
+//     const headCell = cells.find(x => x.id === id)
+//     return !!headCell ? headCell.label : null;
+// }
+
+const reA = /[^a-zA-Z]/g;
+const reN = /[^0-9]/g;
+
+function sortAlphaNum(a: string, b: string) {
+    const aA = a.replace(reA, "");
+    const bA = b.replace(reA, "");
+    if (aA === bA) {
+        const aN = parseInt(a.replace(reN, ""), 10);
+        const bN = parseInt(b.replace(reN, ""), 10);
+        return aN === bN ? 0 : aN > bN ? 1 : -1;
+    } else {
+        return aA > bA ? 1 : -1;
+    }
+}
+
+function desc(a: Sport, b: Sport, orderBy: HeaderCellId) {
+    const headCell = headCells[headCells.findIndex(x => x.id === orderBy)];
+    const valueA = headCell.selector(a) || "";
+    const valueB = headCell.selector(b) || "";
+
+    if (orderBy === "sportDisplayId" && typeof valueA === "string" && typeof valueB === "string") {
+        return -sortAlphaNum(valueA, valueB)
+    }
+
+    if (valueB < valueA) {
+        // console.log(`A: ${valueA}, B ${valueB}. returning -1. A > B`)
+        return -1;
+    }
+    if (valueB > valueA) {
+        // console.log(`A: ${valueA}, B ${valueB}. returning 1. A < B`)
+        return 1;
+    }
+    return 0;
+}
+
+function getSorting(order: string, orderBy: HeaderCellId) {
+    console.log("sorting by: ", orderBy);
+    return order === "desc" ? (a: Sport, b: Sport) => desc(a, b, orderBy) : (a: Sport, b: Sport) => -desc(a, b, orderBy);
+}
+
+function stableSort(array: Sport[], cmp: (a: Sport, b: Sport) => number) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a: [Sport, number], b: [Sport, number]) => {
+        const order = cmp(a[0], b[0]);
+        if (order !== 0) return order;
+        return a[1] - b[1];
+    });
+    return stabilizedThis.map((el: [Sport, number]) => el[0]);
+}
+
+interface TableHeadPros {
+    order: "desc" | "asc";
+    orderBy: string;
+    onRequestSort: (event: React.MouseEvent<HTMLButtonElement>, property: string) => any;
+    listType: ListType;
+}
+
+
+function EnhancedTableHead(props: TableHeadPros) {
+    const { order, orderBy, onRequestSort, listType } = props;
+    const createSortHandler = (property: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
+        onRequestSort(event, property);
+    };
+    // const classes = useStyles();
+
+    let composedHeadCells: (HeadCell)[] = [headCells[1], headCells[2], headCells[3]];
+    switch (listType) {
+        case "categories":
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "products0")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "products1")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "products2")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "products3")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "products4")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "products5")]);
+            break;
+        case "brands":
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "passionBrand")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands0")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands1")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands2")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands3")]);
+            break;
+        case "misc":
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "nps2017")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "noRespondents2017")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "sportLeader")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "videoNote")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "nps2018")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "noRespondents2018")]);
+            break;
+        default:
+            break;
+    }
+    composedHeadCells.push(headCells[headCells.length - 1])
+
+    return (
+        <TableHead>
+            <TableRow>
+                {composedHeadCells.map(headCell => (
+                    <TableCell
+                        key={headCell.id}
+                        sortDirection={orderBy === headCell.id ? order : false}
+                    >
+                        <TableSortLabel
+                            active={orderBy === headCell.id}
+                            direction={order}
+                            onClick={createSortHandler(headCell.id)}
+                        >
+                            {headCell.label}
+                            {/* {orderBy === headCell.id ? (
+                                <span className={classes.visuallyHidden}>
+                                    {order === "desc" ? "sorted descending" : "sorted ascending"}
+                                </span>
+                            ) : null} */}
+                        </TableSortLabel>
+                    </TableCell>
+                ))}
+            </TableRow>
+        </TableHead>
+    );
+}
+
 const SportsList = (props: RouteComponentProps) => {
 
     let currentCountry = "";
@@ -176,8 +358,17 @@ const SportsList = (props: RouteComponentProps) => {
         currentCountry = apiConfig.defaultCountrySpace;
     }
     const classes = useStyles();
+    const [order, setOrder] = useState<"desc" | "asc">("asc");
+    const [orderBy, setOrderBy] = useState<HeaderCellId>("sportDisplayId");
+
     const [sports, setSports] = useState<Sport[]>([])
     const [listType, setListType] = useState<ListType>("categories");
+
+    function handleRequestSort(event: React.MouseEvent<HTMLButtonElement>, property: HeaderCellId) {
+        const isDesc = orderBy === property && order === "desc";
+        setOrder(isDesc ? "asc" : "desc");
+        setOrderBy(property);
+    }
 
     const handleChange = (value: ListType) => {
         setListType(value);
@@ -186,23 +377,6 @@ const SportsList = (props: RouteComponentProps) => {
     useEffect(() => {
         getSports(authHeader, currentCountry)
             .then((resp) => setSports(resp));
-        // .catch(err => {
-        //     // for (var prop in err) {
-        //     //     if (Object.prototype.hasOwnProperty.call(err, prop)) {
-        //     //         console.log(prop, "::", err[prop]);
-        //     //     }
-        //     // }
-
-        //     if (err.response != null && err.response.status == 401) {
-        //         props.history.push({
-        //             pathname: "/auth",
-        //             state: { countrySpace: currentCountry, authHeader: authHeader }
-        //         })
-        //     } else {
-        //         throw err;
-        //     }
-
-        // });
     }, [currentCountry]);
 
     return (
@@ -214,7 +388,13 @@ const SportsList = (props: RouteComponentProps) => {
             </ButtonGroup>
 
             <Table size="medium">
-                <TableHead className={classes.header}>
+                <EnhancedTableHead
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                    listType={listType}
+                />
+                {/* <TableHead className={classes.header}>
                     <TableRow className={classes.header}>
                         <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
@@ -222,21 +402,26 @@ const SportsList = (props: RouteComponentProps) => {
                         <HeaderTitles listType={listType} />
                         <TableCell>Status</TableCell>
                     </TableRow>
-                </TableHead>
+                </TableHead> */}
                 <TableBody className={classes.body}>
-                    {sports.map(sport => (
-                        <TableRow key={sport.sportId} onClick={event =>
-                            props.history.push({
-                                pathname: `/sports/${sport.sportId}`,
-                                state: { countrySpace: currentCountry, authHeader: authHeader }
-                            })}>
-                            <TableCell>{sport.sportDisplayId}</TableCell>
-                            <TableCell>{sport.sportName}</TableCell>
-                            <TableCell>{"[" + sport.defaultSportName + "]"}</TableCell>
-                            <TableValues listType={listType} sport={sport} />
-                            <TableCell><StatusChip status={sport.status} /></TableCell>
-                        </TableRow>
-                    ))}
+                    {/* sports */}
+                    {stableSort(sports, getSorting(order, orderBy))
+                        .map(sport => (
+                            <TableRow
+                                key={sport.sportId}
+                                tabIndex={-1}
+                                onClick={event =>
+                                    props.history.push({
+                                        pathname: `/sports/${sport.sportId}`,
+                                        state: { countrySpace: currentCountry, authHeader: authHeader }
+                                    })}>
+                                <TableCell>{sport.sportDisplayId}</TableCell>
+                                <TableCell>{sport.sportName}</TableCell>
+                                <TableCell>{"[" + sport.defaultSportName + "]"}</TableCell>
+                                <TableValues listType={listType} sport={sport} />
+                                <TableCell><StatusChip status={sport.status} /></TableCell>
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
         </Paper>
