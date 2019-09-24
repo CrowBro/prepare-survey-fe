@@ -187,7 +187,7 @@ type HeaderCellLabel = null | "ID" | "Name" | "[Name]" | "Product 1" | "Product 
 interface HeadCell {
     id: HeaderCellId;
     label: HeaderCellLabel;
-    selector: (sport: Sport) => string | number;
+    selector: (sport: Sport) => number | (string | undefined);
 }
 
 
@@ -227,11 +227,15 @@ const headCells: HeadCell[] = [
 
 function desc(a: Sport, b: Sport, orderBy: HeaderCellId) {
     const headCell = headCells[headCells.findIndex(x => x.id === orderBy)];
+    const valueA = headCell.selector(a) || "";
+    const valueB = headCell.selector(b) || "";
 
-    if (headCell.selector(b) < headCell.selector(a)) {
+    if (valueB < valueA) {
+        // console.log(`A: ${valueA}, B ${valueB}. returning -1. A > B`)
         return -1;
     }
-    if (headCell.selector(b) > headCell.selector(a)) {
+    if (valueB > valueA) {
+        // console.log(`A: ${valueA}, B ${valueB}. returning 1. A < B`)
         return 1;
     }
     return 0;
