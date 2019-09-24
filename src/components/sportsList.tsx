@@ -7,8 +7,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
 import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getSports, Sport } from "dataAccess/api";
@@ -179,20 +178,9 @@ const SportsList = (props: RouteComponentProps) => {
     const classes = useStyles();
     const [sports, setSports] = useState<Sport[]>([])
     const [listType, setListType] = useState<ListType>("categories");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [anchorEl, setAnchorEl] = useState<any>(null);
-
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    }
 
     const handleChange = (value: ListType) => {
         setListType(value);
-        setAnchorEl(null);
-    }
-
-    const handleClose = (value: ListType) => {
-        setAnchorEl(null);
     }
 
     useEffect(() => {
@@ -219,21 +207,11 @@ const SportsList = (props: RouteComponentProps) => {
 
     return (
         <Paper className={`${classes.root} ${classes.marginTop}`}>
-            {/* <>{isLoaderVisible ? Loader() : null}</> */}
-            <Button onClick={handleClick}>
-                Choose sport list
-            </Button>
-            <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={!!anchorEl}
-                onClose={handleClose}
-            >
-                <MenuItem onClick={() => handleChange("categories")}>Product Categories</MenuItem>
-                <MenuItem onClick={() => handleChange("brands")}>Brands</MenuItem>
-                <MenuItem onClick={() => handleChange("misc")}>Miscelanious</MenuItem>
-            </Menu>
+            <ButtonGroup size="medium" aria-label="Select table view mode">
+                <Button onClick={() => handleChange("categories")} disabled={listType === "categories"} variant="text"><b>Review Products</b></Button>
+                <Button onClick={() => handleChange("brands")} disabled={listType === "brands"} variant="text"><b>Review Competitors</b></Button>
+                <Button onClick={() => handleChange("misc")} disabled={listType === "misc"} variant="text"><b>Other Options</b></Button>
+            </ButtonGroup>
 
             <Table size="medium">
                 <TableHead className={classes.header}>
