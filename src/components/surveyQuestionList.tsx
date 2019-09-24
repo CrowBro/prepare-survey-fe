@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import SurveyQuestionForm from "components/surveyQuestionForm";
 import { Question } from "dataAccess/surveyApi";
 import { QuestionsChange, QuestionAction, QuestionChange } from "types/survey";
-import { SportsLabelsItem } from "dataAccess/api";
 
 export interface QuestionWithPreview extends Question {
     questionPreview?: string;
@@ -53,25 +52,13 @@ const SurveyQuestionListItem = (props: SurveyQuestionListItemProps) => {
 }
 
 interface QuestionsListProps {
-    questions: Question[];
+    questions: QuestionWithPreview[];
     onChange: QuestionsChange;
     baseQuestions: Question[];
-    selectedSportLabels: SportsLabelsItem | null;
     enablePreview: boolean;
 };
 
-const questionKeySourceMap: { [key: string]: string } = {
-    "[sport_adult]": "adultSportName",
-    "[sport_junior]": "juniorSportName",
-    "[sport_full]": "sportFullName1",
-    "[sport_full2]": "sportFullName2",
-    "[sport_short]": "sportShortName",
-    "[passion_brand]": "passionBrand",
-};
-
-const regexString = /\[sport_adult\]|\[sport_junior\]|\[sport_full\]|\[sport_full2\]|\[sport_short\]|\[passion_brand\]/g;
-
-const SurveyQuestionList = ({ questions, onChange, baseQuestions, selectedSportLabels, enablePreview }: QuestionsListProps) => {
+const SurveyQuestionList = ({ questions, onChange, baseQuestions, enablePreview }: QuestionsListProps) => {
     const handleQuestionChange = (questionAction: QuestionAction, index: number) => {
         onChange(questions => {
             questions[index] = questionAction(questions[index]);
@@ -79,23 +66,9 @@ const SurveyQuestionList = ({ questions, onChange, baseQuestions, selectedSportL
         })
     }
 
-    const populateQuestionsKeys = (questions: Question[]) => {
-        if (enablePreview && selectedSportLabels) {        
-            return questions.map((q) => {
-                const questionPreview = q.questionText.replace(
-                    new RegExp(regexString),
-                    // @ts-ignore
-                    (match: string) => selectedSportLabels[questionKeySourceMap[match]],
-                );
-                return { ...q, questionPreview };
-            });
-        }
-        return questions;
-    };
-
     return (
         <>
-            { populateQuestionsKeys(questions).map((question, index) => (
+            { questions.map((question, index) => (
                 <SurveyQuestionListItem
                     key={index}
                     question={question}

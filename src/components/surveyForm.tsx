@@ -15,7 +15,7 @@ import { Theme, Paper } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/styles";
 import ReactSelect, { OptionType } from "components/autoComplete";
 import { SportsLabelsItem, getSportsLabels } from "dataAccess/api";
-import { getSurvey, saveSurvey, SurveyResponse, SurveyType } from "dataAccess/surveyApi";
+import { getSurvey, saveSurvey, SurveyResponse, SurveyType, Question } from "dataAccess/surveyApi";
 import { QuestionsAction } from "types/survey";
 import SurveyQuestionList from "components/surveyQuestionList";
 import { apiConfig } from "dataAccess/apiConfig";
@@ -40,6 +40,17 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
+
+const questionKeySourceMap: { [key: string]: string } = {
+    "[sport_adult]": "adultSportName",
+    "[sport_junior]": "juniorSportName",
+    "[sport_full]": "sportFullName1",
+    "[sport_full2]": "sportFullName2",
+    "[sport_short]": "sportShortName",
+    "[passion_brand]": "passionBrand",
+};
+
+const regexString = /\[sport_adult\]|\[sport_junior\]|\[sport_full\]|\[sport_full2\]|\[sport_short\]|\[passion_brand\]/g;
 
 const SurveyForm = (props: RouteComponentProps) => {
     let currentCountry = "";
@@ -131,6 +142,30 @@ const SurveyForm = (props: RouteComponentProps) => {
         }
     };
 
+    const populateStringKeys = (str: string, handler?: (match: string, val: string) => string) =>
+        str.replace(
+            new RegExp(regexString),
+            (match: string) => handler
+                // @ts-ignore
+                ? handler(match, selectedSport[questionKeySourceMap[match]])
+                // @ts-ignore
+                : selectedSport[questionKeySourceMap[match]]
+        );
+
+    const populateQuestionsKeys = (questions: Question[]) => {
+        if (isPreviewAvailable && preview && selectedSport) {        
+            return questions.map((q) => ({ ...q, questionPreview: populateStringKeys(q.questionText) }));
+        }
+        return questions;
+    };
+
+    const populatePreviewKeys = (previewStr: string) => {
+        if (isPreviewAvailable && preview && selectedSport) {
+            return populateStringKeys(previewStr, (match, val) => `${match} "${val}"`)
+        }
+        return previewStr;
+    };
+
     return (
         <div style={{ padding: 20, marginTop: 72 }}>
             <Grid
@@ -162,7 +197,9 @@ const SurveyForm = (props: RouteComponentProps) => {
                             The preview functionality can be used to check how the wording of the questions turns out.
                         </Typography>
                         <Typography component="p">
-                            The available keys are: [sport_adult], [sport_junior], [sport_full], [sport_full2], [sport_short], [passion_brand].
+                            {populatePreviewKeys(
+                                "The available keys are: [sport_adult], [sport_junior], [sport_full], [sport_full2], [sport_short], [passion_brand].",
+                            )}
                         </Typography>
                         <FormGroup row>
                             <Grid item xs={12}>
@@ -200,10 +237,9 @@ const SurveyForm = (props: RouteComponentProps) => {
                     </Paper>
                 </Grid>
                 <SurveyQuestionList
-                    questions={currentQuestions}
+                    questions={populateQuestionsKeys(currentQuestions)}
                     onChange={onChange}
                     baseQuestions={benchmarkQuestions}
-                    selectedSportLabels={selectedSport}
                     enablePreview={isPreviewAvailable && preview}
                 />
                 <Button variant={"contained"} size={"large"} className={classes.fab} color={"primary"} onClick={handleSave}>
