@@ -193,7 +193,7 @@ const Header = (props: RouteComponentProps) => {
                     <div className={classes.flexContainerCustom}>
                         <AntTabs value={props.location.pathname} onChange={handleChange}>
                             <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Sports</div></>} />
-                            <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
+                            {/* <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} /> */}
                             <AntTab value={"/help"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Help</div></>} />
                         </AntTabs>
                         <div className={classes.stayOnTheLeft}>
