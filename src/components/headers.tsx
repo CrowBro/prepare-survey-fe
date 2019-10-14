@@ -26,6 +26,7 @@ const countryDict: { [countrySpace: string]: string } = {
     "sg": "Singapore",
     "co": "Colombia",
     "cl": "Chile",
+    "pl": "Poland",
 }
 
 const AntTabs = withStyles(theme => ({
@@ -216,6 +217,7 @@ const Header = (props: RouteComponentProps) => {
                                 <MenuItem onClick={() => handleChangeCountrySpace("sg")}>{countryDict["sg"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("co")}>{countryDict["co"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("cl")}>{countryDict["cl"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("pl")}>{countryDict["pl"]}</MenuItem>
                             </Menu>
                         </div>
                         <div className={classes.moveToTheRight}>
