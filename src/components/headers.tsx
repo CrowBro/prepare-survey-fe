@@ -27,7 +27,6 @@ const countryDict: { [countrySpace: string]: string } = {
     "co": "Colombia",
     "cl": "Chile",
     "pl": "Poland",
-    "be": "Belgium",
     "tr": "Turkey",
     "uk": "United Kingdom",
 
@@ -200,6 +199,7 @@ const Header = (props: RouteComponentProps) => {
                             <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Sports</div></>} />
                             <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
                             <AntTab value={"/help"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Help</div></>} />
+                            <AntTab value={"/users"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Users</div></>} />
                         </AntTabs>
                         <div className={classes.stayOnTheLeft}>
                             <Button onClick={handleClickCountrySpace}>{`Choose country: ${countryDict[currentCountry]}`}</Button>
@@ -222,7 +222,6 @@ const Header = (props: RouteComponentProps) => {
                                 <MenuItem onClick={() => handleChangeCountrySpace("co")}>{countryDict["co"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("cl")}>{countryDict["cl"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("pl")}>{countryDict["pl"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("be")}>{countryDict["be"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("tr")}>{countryDict["tr"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("uk")}>{countryDict["uk"]}</MenuItem>
                             </Menu>
