@@ -18,6 +18,14 @@ export interface Sport {
     status: "To Review" | "Pending" | "Approved" | "Disabled";
 }
 
+export interface User {
+    userId: number;
+    name: string;
+    email: string;
+    role: string;
+    countryCode: string;
+}
+
 function parseJwt(token: string) {
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -72,6 +80,25 @@ export const getSports = async (authHeader: string, countrySpace: CountrySpace) 
     }
 
     const response = await axios.get<Sport[]>(apiConfig.baseUrl + "/api/sports", {
+        headers: {
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
+        },
+        params: params
+    })
+
+    console.debug(response);
+
+    return response.data;
+}
+
+export const getUsers = async (authHeader: string, countrySpace: CountrySpace) => {
+    const params = {
+        year: 2019,
+        country: countrySpace
+    }
+
+    const response = await axios.get<User[]>(apiConfig.baseUrl + "/api/users", {
         headers: {
             "Authorization": authHeader,
             "X-CountrySpace": countrySpace
