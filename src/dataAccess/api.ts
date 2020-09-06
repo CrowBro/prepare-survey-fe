@@ -104,7 +104,8 @@ export const getUsers = async (authHeader: string, countrySpace: CountrySpace) =
 }
 
 export const saveUser = async (authHeader: string, user: User, countrySpace: string) => {
-    const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${user.userId}`, user,
+    const id = user.userId;
+    const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${id}`, user,
         {
             headers: {
                 "Authorization": authHeader,

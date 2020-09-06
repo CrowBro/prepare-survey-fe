@@ -190,7 +190,7 @@ const UsersList = (props: RouteComponentProps) => {
 
     useEffect(() => {
         getUsers(authHeader, currentCountry)
-            .then((resp) => setUsers(resp));
+            .then((resp) => setUsers([{userId:0, name:"", email: "", role: "BasicUser", countryCode:""}, ...resp]));
     }, [currentCountry]);
 
     const onChange = React.useCallback(
@@ -199,7 +199,7 @@ const UsersList = (props: RouteComponentProps) => {
         },
         [setUsers],
     );
-
+    
     return (
         <Paper className={`${classes.root} ${classes.marginTop}`}>
             <Table size="medium">
@@ -210,6 +210,8 @@ const UsersList = (props: RouteComponentProps) => {
                     listType={listType}
                 />
                 <TableBody className={classes.body}>
+                    <TableRow>
+                    </TableRow>
                     {stableSort(users, getSorting(order, orderBy))
                         .map(user => (
                             <TableRow

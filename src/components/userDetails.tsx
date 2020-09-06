@@ -73,6 +73,7 @@ const UserDetails = React.memo((props: UserProps) => {
 
     return (
         <>
+        <TableCell> {user.userId} </TableCell>
         <TableCell> <TextField value={user.name} onChange={handleNameChange}/></TableCell>
         <TableCell> <TextField value={user.email} onChange={handleEmailChange}/></TableCell>
         <TableCell> <TextField value={user.role} onChange={handleRoleChange}/></TableCell>
