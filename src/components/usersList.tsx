@@ -10,12 +10,13 @@ import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { getUsers, User } from "dataAccess/api";
+import { getUsers, User, saveUser } from "dataAccess/api";
 import Chip from "@material-ui/core/Chip";
 import { apiConfig } from "dataAccess/apiConfig";
 import { TabBarIOS } from "react-native";
 import { TableSortLabel } from "@material-ui/core";
 import { string } from "prop-types";
+import UserDetails from "components/userDetails"
 
 const useStyles = makeStyles({
     root: {
@@ -44,46 +45,6 @@ const useStyles = makeStyles({
     },
 })
 
-const StatusChip = ({ status }: { status: "To Review" | "Pending" | "Approved" | "Disabled" }) => {
-    const classes = useStyles();
-    switch (status) {
-        case "Approved":
-            return (
-                <Chip
-                    size="small"
-                    color="primary"
-                    label={status}
-                />
-            )
-        case "Pending":
-            return (
-                <Chip
-                    size="small"
-                    color="default"
-                    label={status}
-                />
-            )
-        case "Disabled":
-            return (
-                <Chip
-                    size="small"
-                    color="secondary"
-                    label={status}
-                    className={classes.chipRed}
-                />
-            )
-        case "To Review":
-            return (
-                <Chip
-                    size="small"
-                    color="secondary"
-                    label={status}
-                    className={classes.chipOrange}
-                />
-            )
-    }
-}
-
 type ListType = "users";
 
 const TableValues = ({ listType, user }: { listType: ListType; user: User }) => {
@@ -91,16 +52,15 @@ const TableValues = ({ listType, user }: { listType: ListType; user: User }) => 
         case "users": {
             return (
                 <>
+                    <TableCell>{user.userId}</TableCell>
                     <TableCell>{user.name}</TableCell>
                     <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.role}</TableCell>
                 </>
             )
         }
     }
     return <></>
 }
-
 
 type HeaderCellId = "userId" | "name" | "email" | "role";
 
@@ -185,7 +145,7 @@ function EnhancedTableHead(props: TableHeadPros) {
     };
     // const classes = useStyles();
 
-    let composedHeadCells: (HeadCell)[] = [headCells[1], headCells[2], headCells[3]];
+    let composedHeadCells: (HeadCell)[] = [headCells[0],headCells[1], headCells[2], headCells[3]];
     switch (listType) {
         case "users":
             // composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "name")]);
@@ -211,11 +171,6 @@ function EnhancedTableHead(props: TableHeadPros) {
                             onClick={createSortHandler(headCell.id)}
                         >
                             {headCell.label}
-                            {/* {orderBy === headCell.id ? (
-                                <span className={classes.visuallyHidden}>
-                                    {order === "desc" ? "sorted descending" : "sorted ascending"}
-                                </span>
-                            ) : null} */}
                         </TableSortLabel>
                     </TableCell>
                 ))}
@@ -225,7 +180,6 @@ function EnhancedTableHead(props: TableHeadPros) {
 }
 
 const UsersList = (props: RouteComponentProps) => {
-
     let currentCountry = "";
     let authHeader = "";
     if (props.location.state != null) {
@@ -234,21 +188,19 @@ const UsersList = (props: RouteComponentProps) => {
     } else {
         currentCountry = apiConfig.defaultCountrySpace;
     }
+
     const classes = useStyles();
     const [order, setOrder] = useState<"desc" | "asc">("asc");
     const [orderBy, setOrderBy] = useState<HeaderCellId>("name");
 
     const [users, setUsers] = useState<User[]>([])
+    const [user, setUser] = useState<User>()
     const [listType, setListType] = useState<ListType>("users");
 
     function handleRequestSort(event: React.MouseEvent<HTMLButtonElement>, property: HeaderCellId) {
         const isDesc = orderBy === property && order === "desc";
         setOrder(isDesc ? "asc" : "desc");
         setOrderBy(property);
-    }
-
-    const handleChange = (value: ListType) => {
-        setListType(value);
     }
 
     useEffect(() => {
@@ -258,10 +210,6 @@ const UsersList = (props: RouteComponentProps) => {
 
     return (
         <Paper className={`${classes.root} ${classes.marginTop}`}>
-            <ButtonGroup size="medium" aria-label="Select table view mode">
-                <Button onClick={() => handleChange("users")} disabled={listType === "users"} variant="text"><b>Users</b></Button>
-            </ButtonGroup>
-
             <Table size="medium">
                 <EnhancedTableHead
                     order={order}
@@ -281,7 +229,13 @@ const UsersList = (props: RouteComponentProps) => {
                                         pathname: `/users/${user.userId}`,
                                         state: { countrySpace: currentCountry, authHeader: authHeader }
                                     })}>
-                                <TableValues listType={listType} user={user} />
+                                {/* <TableValues listType={listType} user={user} /> */}
+                                <UserDetails user={user}
+                                             authHeader={authHeader}
+                                             currentCountry={currentCountry}
+                                             onChange={(value) => onChange({id: value.userId, name: value.name, email: value.email})}
+                                             onAdd={() => {}}
+                                             />
                             </TableRow>
                         ))}
                 </TableBody>

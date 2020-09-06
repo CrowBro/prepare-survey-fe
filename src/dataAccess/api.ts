@@ -18,14 +18,6 @@ export interface Sport {
     status: "To Review" | "Pending" | "Approved" | "Disabled";
 }
 
-export interface User {
-    userId: number;
-    name: string;
-    email: string;
-    role: string;
-    countryCode: string;
-}
-
 function parseJwt(token: string) {
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -111,6 +103,19 @@ export const getUsers = async (authHeader: string, countrySpace: CountrySpace) =
     return response.data;
 }
 
+export const saveUser = async (authHeader: string, user: User, countrySpace: string) => {
+    const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${user.userId}`, user,
+        {
+            headers: {
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
+            },
+            params: {}
+        });
+
+    return response.data;
+}
+
 export interface PassionBrand {
     id: number;
     name: string;
@@ -175,6 +180,14 @@ interface ProductCategoryDetails {
 interface ProductsPair {
     targetDetails: ProductCategoryDetails;
     benchmarkDetails: ProductCategoryDetails;
+}
+
+export interface User {
+    userId: number;
+    name: string;
+    email: string;
+    role: string;
+    countryCode: string;
 }
 
 export const getProductCategories = async (authHeader: string, countrySpace: string, sportId: number) => {
