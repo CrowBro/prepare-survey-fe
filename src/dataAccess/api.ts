@@ -117,6 +117,20 @@ export const saveUser = async (authHeader: string, user: User, countrySpace: str
     return response.data;
 }
 
+export const deleteUser = async (authHeader: string, user: User, countrySpace: string) => {
+    const id = user.userId;
+    const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${id}/delete`, user,
+        {
+            headers: {
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
+            },
+            params: {}
+        });
+
+    return response.data;
+}
+
 export interface PassionBrand {
     id: number;
     name: string;

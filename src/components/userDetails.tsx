@@ -10,7 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 import Button from "@material-ui/core/Button";
 import DetailsForm from "components/userDetails";
 import SaveIcon from "@material-ui/icons/Save";
-import { User, saveUser } from "dataAccess/api";
+import { User, saveUser, deleteUser } from "dataAccess/api";
 import { apiConfig } from "dataAccess/apiConfig";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
@@ -71,6 +71,13 @@ const UserDetails = React.memo((props: UserProps) => {
         }
     }
 
+    const handleDelete = () => {
+        if (user) {
+            deleteUser(authHeader, user, currentCountry)
+                .then(() => window.location.reload(false));
+        }
+    }
+
     return (
         <>
         <TableCell> {user.userId} </TableCell>
@@ -82,7 +89,7 @@ const UserDetails = React.memo((props: UserProps) => {
                     <SaveIcon/> Save
                     </Button>
         </TableCell>
-        <TableCell> <Button variant={"contained"} size={"small"} color={"secondary"}>
+        <TableCell> <Button variant={"contained"} size={"small"} color={"secondary"} onClick={handleDelete}>
                     <SaveIcon/> Delete
                     </Button>
         </TableCell>
