@@ -13,7 +13,6 @@ import SaveIcon from "@material-ui/icons/Save";
 import { User, saveUser } from "dataAccess/api";
 import { apiConfig } from "dataAccess/apiConfig";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { useEffect, useState } from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
