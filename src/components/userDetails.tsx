@@ -38,16 +38,28 @@ interface UserProps {
     currentCountry: string;
     user: User;
     onChange: (user: User) => void;
-    onAdd: () => void;
 }
 
-const UserDetails = (props: UserProps) => {
+const UserDetails = React.memo((props: UserProps) => {
     const { user, onChange } = props;
     const authHeader = props.authHeader;
     const currentCountry = props.currentCountry;
+
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const value = event.currentTarget.value;
         onChange({ ...user, name: value });
+    }
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const value = event.currentTarget.value;
+        onChange({ ...user, email: value });
+    }
+    const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const value = event.currentTarget.value;
+        onChange({ ...user, role: value });
+    }
+    const handleCountryCodeChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const value = event.currentTarget.value;
+        onChange({ ...user, countryCode: value });
     }
 
     const classes = useStyles();
@@ -62,13 +74,21 @@ const UserDetails = (props: UserProps) => {
     return (
         <>
         <TableCell> <TextField value={user.name} onChange={handleNameChange}/></TableCell>
-        <TableCell> <TextField value={user.email} onChange={handleNameChange}/></TableCell>
-        <TableCell> <TextField value={user.role} onChange={handleNameChange}/></TableCell>
+        <TableCell> <TextField value={user.email} onChange={handleEmailChange}/></TableCell>
+        <TableCell> <TextField value={user.role} onChange={handleRoleChange}/></TableCell>
+        <TableCell> <TextField value={user.countryCode} onChange={handleCountryCodeChange}/></TableCell>
         <TableCell> <Button variant={"contained"} size={"small"} color={"primary"} onClick={handleSave}>
                     <SaveIcon/> Save
-            </Button></TableCell>
+                    </Button>
+        </TableCell>
+        <TableCell> <Button variant={"contained"} size={"small"} color={"secondary"}>
+                    <SaveIcon/> Delete
+                    </Button>
+        </TableCell>
         </>
+
+             
     )
-}
+})
 
 export default UserDetails;

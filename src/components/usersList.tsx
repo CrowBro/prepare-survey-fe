@@ -47,21 +47,6 @@ const useStyles = makeStyles({
 
 type ListType = "users";
 
-const TableValues = ({ listType, user }: { listType: ListType; user: User }) => {
-    switch (listType) {
-        case "users": {
-            return (
-                <>
-                    <TableCell>{user.userId}</TableCell>
-                    <TableCell>{user.name}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                </>
-            )
-        }
-    }
-    return <></>
-}
-
 type HeaderCellId = "userId" | "name" | "email" | "role";
 
 type HeaderCellLabel ="User Id" |"Name" | "E-Mail" | "Role";
@@ -208,6 +193,13 @@ const UsersList = (props: RouteComponentProps) => {
             .then((resp) => setUsers(resp));
     }, [currentCountry]);
 
+    const onChange = React.useCallback(
+        (user: User) => {
+            setUsers(users => users.map(x => x.userId === user.userId ? user : x));
+        },
+        [setUsers],
+    );
+
     return (
         <Paper className={`${classes.root} ${classes.marginTop}`}>
             <Table size="medium">
@@ -218,24 +210,17 @@ const UsersList = (props: RouteComponentProps) => {
                     listType={listType}
                 />
                 <TableBody className={classes.body}>
-                    {/* users */}
                     {stableSort(users, getSorting(order, orderBy))
                         .map(user => (
                             <TableRow
                                 key={user.userId}
                                 tabIndex={-1}
-                                onClick={event =>
-                                    props.history.push({
-                                        pathname: `/users/${user.userId}`,
-                                        state: { countrySpace: currentCountry, authHeader: authHeader }
-                                    })}>
-                                {/* <TableValues listType={listType} user={user} /> */}
+                                onClick={() => { }}>
                                 <UserDetails user={user}
-                                             authHeader={authHeader}
-                                             currentCountry={currentCountry}
-                                             onChange={(value) => onChange({id: value.userId, name: value.name, email: value.email})}
-                                             onAdd={() => {}}
-                                             />
+                                    authHeader={authHeader}
+                                    currentCountry={currentCountry}
+                                    onChange={onChange}
+                                />
                             </TableRow>
                         ))}
                 </TableBody>
