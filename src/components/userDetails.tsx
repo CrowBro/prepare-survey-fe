@@ -13,6 +13,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import { User, saveUser } from "dataAccess/api";
 import { apiConfig } from "dataAccess/apiConfig";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { useEffect, useState } from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -67,7 +68,7 @@ const UserDetails = React.memo((props: UserProps) => {
     const handleSave = () => {
         if (user) {
             saveUser(authHeader, user, currentCountry)
-                .then(resp => console.log(resp.email +" saved"));
+                .then(res => window.location.reload(false));
         }
     }
 
