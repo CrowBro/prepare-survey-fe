@@ -27,6 +27,7 @@ const countryDict: { [countrySpace: string]: string } = {
     "co": "Colombia",
     "cl": "Chile",
     "pl": "Poland",
+    "be": "Belgium",
     "tr": "Turkey",
     "uk": "United Kingdom",
 
@@ -222,6 +223,7 @@ const Header = (props: RouteComponentProps) => {
                                 <MenuItem onClick={() => handleChangeCountrySpace("co")}>{countryDict["co"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("cl")}>{countryDict["cl"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("pl")}>{countryDict["pl"]}</MenuItem>
+                                <MenuItem onClick={() => handleChangeCountrySpace("be")}>{countryDict["be"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("tr")}>{countryDict["tr"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("uk")}>{countryDict["uk"]}</MenuItem>
                             </Menu>
