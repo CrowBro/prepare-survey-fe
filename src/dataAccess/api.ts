@@ -18,13 +18,7 @@ export interface Sport {
     status: "To Review" | "Pending" | "Approved" | "Disabled";
 }
 
-export interface User {
-    userId: number;
-    name: string;
-    email: string;
-    role: string;
-    countryCode: string;
-}
+
 
 function parseJwt(token: string) {
     var base64Url = token.split(".")[1];
@@ -39,7 +33,6 @@ function parseJwt(token: string) {
 export type CountrySpace = string;
 
 export const checkValidity = async (authHeader: string) => {
-
     try {
         const response = await axios.get<string>(apiConfig.baseUrl + "/api/heartBeat/auth", {
             headers: {
@@ -75,7 +68,7 @@ export const checkValidity = async (authHeader: string) => {
 
 export const getSports = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
-        year: 2019,
+        year: 2020,
         country: countrySpace
     }
 
@@ -94,7 +87,7 @@ export const getSports = async (authHeader: string, countrySpace: CountrySpace) 
 
 export const getUsers = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
-        year: 2019,
+        year: 2020,
         country: countrySpace
     }
 
@@ -138,6 +131,7 @@ export const deleteUser = async (authHeader: string, user: User, countrySpace: s
 
     return response.data;
 }
+
 export interface PassionBrand {
     id: number;
     name: string;
@@ -211,6 +205,7 @@ export interface User {
     role: string;
     countryCode: string;
 }
+
 export const getProductCategories = async (authHeader: string, countrySpace: string, sportId: number) => {
     const response = await axios.get<ProductsPair>(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, {
         headers: {
@@ -286,7 +281,7 @@ export interface SportsLabelsItem {
 
 export const getSportsLabels = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
-        year: 2019,
+        year: 2020,
         country: countrySpace
     }
 
