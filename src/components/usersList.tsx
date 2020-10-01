@@ -6,16 +6,11 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles } from "@material-ui/styles";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { getUsers, User, saveUser } from "dataAccess/api";
-import Chip from "@material-ui/core/Chip";
 import { apiConfig } from "dataAccess/apiConfig";
-import { TabBarIOS } from "react-native";
 import { TableSortLabel } from "@material-ui/core";
-import { string } from "prop-types";
 import UserDetails from "components/userDetails"
 
 const useStyles = makeStyles({

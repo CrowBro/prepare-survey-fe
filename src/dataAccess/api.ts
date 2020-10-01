@@ -67,7 +67,7 @@ export const checkValidity = async (authHeader: string) => {
 
 export const getSports = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
-        year: 2019,
+        year: 2020,
         country: countrySpace
     }
 
@@ -86,7 +86,7 @@ export const getSports = async (authHeader: string, countrySpace: CountrySpace) 
 
 export const getUsers = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
-        year: 2019,
+        year: 2020,
         country: countrySpace
     }
 
@@ -280,7 +280,7 @@ export interface SportsLabelsItem {
 
 export const getSportsLabels = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
-        year: 2019,
+        year: 2020,
         country: countrySpace
     }
 

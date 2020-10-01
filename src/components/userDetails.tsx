@@ -1,17 +1,9 @@
 import * as React from "react";
-import FormControl from "@material-ui/core/FormControl";
-import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import Grid from "@material-ui/core/Grid";
 import TableCell from "@material-ui/core/TableCell";
 import Button from "@material-ui/core/Button";
-import DetailsForm from "components/userDetails";
 import SaveIcon from "@material-ui/icons/Save";
 import { User, saveUser, deleteUser } from "dataAccess/api";
-import { apiConfig } from "dataAccess/apiConfig";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -85,14 +77,8 @@ const UserDetails = React.memo((props: UserProps) => {
         <TableCell> <TextField value={user.email} onChange={handleEmailChange}/></TableCell>
         <TableCell> <TextField value={user.role} onChange={handleRoleChange}/></TableCell>
         <TableCell> <TextField value={user.countryCode} onChange={handleCountryCodeChange}/></TableCell>
-        <TableCell> <Button variant={"contained"} size={"small"} color={"primary"} onClick={handleSave}>
-                    <SaveIcon/> Save
-                    </Button>
-        </TableCell>
-        <TableCell> <Button variant={"contained"} size={"small"} color={"secondary"} onClick={handleDelete}>
-                    <SaveIcon/> Delete
-                    </Button>
-        </TableCell>
+        <TableCell> <Button variant={"contained"} size={"small"} color={"primary"} onClick={handleSave}><SaveIcon/> Save</Button></TableCell>
+        <TableCell> <Button variant={"contained"} size={"small"} color={"secondary"} onClick={handleDelete}><SaveIcon/> Delete</Button></TableCell>
         </>
 
              
