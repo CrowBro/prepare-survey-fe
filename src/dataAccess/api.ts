@@ -111,6 +111,33 @@ export const getUsers = async (authHeader: string, countrySpace: CountrySpace) =
     return response.data;
 }
 
+export const saveUser = async (authHeader: string, user: User, countrySpace: string) => {
+    const id = user.userId;
+    const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${id}`, user,
+        {
+            headers: {
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
+            },
+            params: {}
+        });
+
+    return response.data;
+}
+
+export const deleteUser = async (authHeader: string, user: User, countrySpace: string) => {
+    const id = user.userId;
+    const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${id}/delete`, user,
+        {
+            headers: {
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
+            },
+            params: {}
+        });
+
+    return response.data;
+}
 export interface PassionBrand {
     id: number;
     name: string;
@@ -177,6 +204,13 @@ interface ProductsPair {
     benchmarkDetails: ProductCategoryDetails;
 }
 
+export interface User {
+    userId: number;
+    name: string;
+    email: string;
+    role: string;
+    countryCode: string;
+}
 export const getProductCategories = async (authHeader: string, countrySpace: string, sportId: number) => {
     const response = await axios.get<ProductsPair>(apiConfig.baseUrl + `/api/sports/${sportId}/productCategoryDetails`, {
         headers: {
