@@ -1,5 +1,4 @@
-ls ;
-yarn build ;
-docker build -t prepare-survey-fe2 . ;
-docker tag prepare-survey-fe2 crowbro/prepare-survey-fe2:staging ;
-docker push crowbro/prepare-survey-fe2:staging
+yarn build 
+docker build -t prepare-survey-fe2 . 
+docker tag prepare-survey-fe2 nicolasgodon/prepare-survey-fe2:staging 
+docker push nicolasgodon/prepare-survey-fe2:staging
