@@ -18,6 +18,8 @@ export interface Sport {
     status: "To Review" | "Pending" | "Approved" | "Disabled";
 }
 
+
+
 function parseJwt(token: string) {
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -31,7 +33,6 @@ function parseJwt(token: string) {
 export type CountrySpace = string;
 
 export const checkValidity = async (authHeader: string) => {
-
     try {
         const response = await axios.get<string>(apiConfig.baseUrl + "/api/heartBeat/auth", {
             headers: {
@@ -66,7 +67,7 @@ export const checkValidity = async (authHeader: string) => {
 
 export const getSports = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
-        year: 2019,
+        year: 2020,
         country: countrySpace
     }
 
@@ -79,6 +80,53 @@ export const getSports = async (authHeader: string, countrySpace: CountrySpace) 
     })
 
     console.debug(response);
+
+    return response.data;
+}
+
+export const getUsers = async (authHeader: string, countrySpace: CountrySpace) => {
+    const params = {
+        year: 2020,
+        country: countrySpace
+    }
+
+    const response = await axios.get<User[]>(apiConfig.baseUrl + "/api/users", {
+        headers: {
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
+        },
+        params: params
+    })
+
+    console.debug(response);
+
+    return response.data;
+}
+
+export const saveUser = async (authHeader: string, user: User, countrySpace: string) => {
+    const id = user.userId;
+    const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${id}`, user,
+        {
+            headers: {
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
+            },
+            params: {}
+        });
+
+    return response.data;
+}
+
+export const deleteUser = async (authHeader: string, user: User, countrySpace: string) => {
+    const id = user.userId;
+    const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${id}/delete`, user,
+        {
+            headers: {
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
+            },
+            params: {}
+        });
 
     return response.data;
 }
@@ -147,6 +195,14 @@ interface ProductCategoryDetails {
 interface ProductsPair {
     targetDetails: ProductCategoryDetails;
     benchmarkDetails: ProductCategoryDetails;
+}
+
+export interface User {
+    userId: number;
+    name: string;
+    email: string;
+    role: string;
+    countryCode: string;
 }
 
 export const getProductCategories = async (authHeader: string, countrySpace: string, sportId: number) => {
@@ -224,7 +280,7 @@ export interface SportsLabelsItem {
 
 export const getSportsLabels = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
-        year: 2019,
+        year: 2020,
         country: countrySpace
     }
 

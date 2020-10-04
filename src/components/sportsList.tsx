@@ -119,6 +119,8 @@ const HeaderTitles = ({ listType }: { listType: ListType }) => {
                     <TableCell>Competitor 2</TableCell>
                     <TableCell>Competitor 3</TableCell>
                     <TableCell>Competitor 4</TableCell>
+                    <TableCell>Competitor 5</TableCell>
+                    <TableCell>Competitor 6</TableCell>
                 </>
             )
         }
@@ -160,6 +162,8 @@ const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) 
                     <TableCell>{sport.brands[1]}</TableCell>
                     <TableCell>{sport.brands[2]}</TableCell>
                     <TableCell>{sport.brands[3]}</TableCell>
+                    <TableCell>{sport.brands[4]}</TableCell>
+                    <TableCell>{sport.brands[5]}</TableCell>
                 </>
             )
         }
@@ -180,9 +184,9 @@ const TableValues = ({ listType, sport }: { listType: ListType; sport: Sport }) 
 }
 
 
-type HeaderCellId = "sportId" | "sportDisplayId" | "sportName" | "defaultSportName" | "status" | "passionBrand" | "brands0" | "brands1" | "brands2" | "brands3" | "products0" | "products1" | "products2" | "products3" | "products4" | "products5" | "nps2017" | "noRespondents2017" | "sportLeader" | "videoNote" | "nps2018" | "noRespondents2018";
+type HeaderCellId = "sportId" | "sportDisplayId" | "sportName" | "defaultSportName" | "status" | "passionBrand" | "brands0" | "brands1" | "brands2" | "brands3" | "brands4" | "brands5" | "products0" | "products1" | "products2" | "products3" | "products4" | "products5" | "nps2017" | "noRespondents2017" | "sportLeader" | "videoNote" | "nps2018" | "noRespondents2018";
 
-type HeaderCellLabel = null | "ID" | "Name" | "[Name]" | "Product 1" | "Product 2" | "Product 3" | "Product 4" | "Product 5" | "Product 6" | "Brand Passion" | "Competitor 1" | "Competitor 2" | "Competitor 3" | "Competitor 4" | "№ Respondents" | "NPS 2017" | "Leader Sport" | "Video Note" | "NPS 2018" | "Status";
+type HeaderCellLabel = null | "ID" | "Name" | "[Name]" | "Product 1" | "Product 2" | "Product 3" | "Product 4" | "Product 5" | "Product 6" | "Brand Passion" | "Competitor 1" | "Competitor 2" | "Competitor 3" | "Competitor 4" | "Competitor 5" | "Competitor 6" |  "№ Respondents" | "NPS 2017" | "Leader Sport" | "Video Note" | "NPS 2018" | "Status";
 
 interface HeadCell {
     id: HeaderCellId;
@@ -201,6 +205,8 @@ const headCells: HeadCell[] = [
     { id: "brands1", label: "Competitor 2", selector: (sport: Sport) => sport.brands[1] },
     { id: "brands2", label: "Competitor 3", selector: (sport: Sport) => sport.brands[2] },
     { id: "brands3", label: "Competitor 4", selector: (sport: Sport) => sport.brands[3] },
+    { id: "brands4", label: "Competitor 5", selector: (sport: Sport) => sport.brands[4] },
+    { id: "brands5", label: "Competitor 6", selector: (sport: Sport) => sport.brands[5] },
     { id: "products0", label: "Product 1", selector: (sport: Sport) => sport.products[0] },
     { id: "products1", label: "Product 2", selector: (sport: Sport) => sport.products[1] },
     { id: "products2", label: "Product 3", selector: (sport: Sport) => sport.products[2] },
@@ -306,6 +312,8 @@ function EnhancedTableHead(props: TableHeadPros) {
             composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands1")]);
             composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands2")]);
             composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands3")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands4")]);
+            composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "brands5")]);
             break;
         case "misc":
             composedHeadCells.push(headCells[headCells.findIndex(x => x.id === "nps2017")]);
