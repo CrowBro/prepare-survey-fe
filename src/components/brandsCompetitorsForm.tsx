@@ -42,7 +42,7 @@ const CompetitorBrandsForm = ({ authHeader, currentCountry, competitors, onChang
                                             key={index}
                                             brand={brand}
                                             onChange={(value) => onChange(s => s.set(index, value))}
-                                            addEnabled={competitors.count() < 4}
+                                            addEnabled={competitors.count() < 6}
                                             onAdd={() => onChange(s => s.insert(index + 1, { id: 0, name: "", order: brand.order, history: brand.history }))}
                                             onRemove={() => onChange(s => s.remove(index))}
                                         />
