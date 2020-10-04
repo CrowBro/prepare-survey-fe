@@ -200,7 +200,7 @@ const Header = (props: RouteComponentProps) => {
                             <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Sports</div></>} />
                             <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
                             <AntTab value={"/help"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Help</div></>} />
-                            {/* <AntTab value={"/users"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Users</div></>} /> */}
+                            {/* <AntTab value={"/users"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Users</div></>} /> */}   
                         </AntTabs>
                         <div className={classes.stayOnTheLeft}>
                             <Button onClick={handleClickCountrySpace}>{`Choose country: ${countryDict[currentCountry]}`}</Button>
