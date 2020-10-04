@@ -7,6 +7,6 @@ export const apiConfig = {
     //countrySpace: "dev",
     defaultCountrySpace: "fr", 
     authClientId: "C02192c9da610262216c2b812a5995ea5e8188505",
-    authCallbackUrl: "https://produits-gagnants.decathlon.fr/preparation2/api/login/callback",
+    authCallbackUrl: "https://produits-gagnants.decathlon.fr/preparation/api/login/callback",
     authAuthUrl: "https://idpdecathlon.oxylane.com/as/authorization.oauth2",
 }
