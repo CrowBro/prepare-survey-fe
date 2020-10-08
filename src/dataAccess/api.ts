@@ -33,7 +33,7 @@ function parseJwt(token: string) {
 export type CountrySpace = string;
 
 export const checkValidity = async (authHeader: string) => {
-    return { status: 200, user: "asdf" };
+    // return { status: 200, user: "asdf" };
     try {
         const response = await axios.get<string>(apiConfig.baseUrl + "/api/heartBeat/auth", {
             headers: {
@@ -50,7 +50,7 @@ export const checkValidity = async (authHeader: string) => {
                 ? parseJwt(token).sub
                 : "Anonymous");
 
-        console.log(user);
+        // console.log(user);
 
         const result = { status: response.status, user: user };
 
@@ -103,6 +103,16 @@ export const getUsers = async (authHeader: string, countrySpace: CountrySpace) =
     console.debug(response);
 
     return response.data;
+}
+
+export const checkPermissionsToViewUsers = async (authHeader: string) => {
+    const response = await axios.get<any>(apiConfig.baseUrl + "/api/users/checkPermissions", {
+        headers: {
+            "Authorization": authHeader
+        }
+    });
+
+    return response.status === 200;
 }
 
 export const saveUser = async (authHeader: string, user: User, countrySpace: string) => {

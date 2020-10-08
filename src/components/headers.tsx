@@ -8,7 +8,7 @@ import TimerIcon from "@material-ui/icons/Timer";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import { makeStyles, withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { CountrySpace, checkValidity } from "dataAccess/api";
+import { CountrySpace, checkValidity, checkPermissionsToViewUsers } from "dataAccess/api";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -127,6 +127,7 @@ const Header = (props: RouteComponentProps) => {
     const classes = useStyles();
     const [anchorElCountrySpace, setAnchorElCountrySpace] = useState<any>(null);
     const [user, setUser] = useState<string>("");
+    const [canAccessUsers, setCanAccessUsers] = useState<boolean>(false);
     const [_, setCountrySpace] = useState<CountrySpace>(apiConfig.defaultCountrySpace);
     const handleChange = (event: React.ChangeEvent<{}>, value: string) => {
         props.history.push({
@@ -187,6 +188,13 @@ const Header = (props: RouteComponentProps) => {
 
     useEffect(() => {
         getUserSet(authHeader);
+        checkPermissionsToViewUsers(authHeader)
+          .then((response) => {
+            setCanAccessUsers(response);
+          })
+          .catch(() => {
+            setCanAccessUsers(false);
+          });
     }, []);
 
 
@@ -200,7 +208,9 @@ const Header = (props: RouteComponentProps) => {
                             <AntTab value={"/sports"} label={<><div className={classes.margin}><TimerIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Sports</div></>} />
                             <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
                             <AntTab value={"/help"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Help</div></>} />
-                            <AntTab value={"/users"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Users</div></>} />
+                            {canAccessUsers && (
+                              <AntTab value={"/users"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Users</div></>} />
+                            )}
                         </AntTabs>
                         <div className={classes.stayOnTheLeft}>
                             <Button onClick={handleClickCountrySpace}>{`Choose country: ${countryDict[currentCountry]}`}</Button>
