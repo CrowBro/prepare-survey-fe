@@ -188,6 +188,10 @@ const Header = (props: RouteComponentProps) => {
 
     useEffect(() => {
         getUserSet(authHeader);
+    }, []);
+
+    useEffect(() => {
+        if (!authHeader) return;
         checkPermissionsToViewUsers(authHeader)
             .then((response) => {
                 setCanAccessUsers(response);
@@ -195,9 +199,7 @@ const Header = (props: RouteComponentProps) => {
             .catch(() => {
                 setCanAccessUsers(false);
             });
-    }, []);
-
-
+    }, [authHeader]);
 
     return (
         <div className={classes.root}>
