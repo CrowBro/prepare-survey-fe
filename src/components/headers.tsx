@@ -189,12 +189,12 @@ const Header = (props: RouteComponentProps) => {
     useEffect(() => {
         getUserSet(authHeader);
         checkPermissionsToViewUsers(authHeader)
-          .then((response) => {
-            setCanAccessUsers(response);
-          })
-          .catch(() => {
-            setCanAccessUsers(false);
-          });
+            .then((response) => {
+                setCanAccessUsers(response);
+            })
+            .catch(() => {
+                setCanAccessUsers(false);
+            });
     }, []);
 
 
@@ -209,7 +209,7 @@ const Header = (props: RouteComponentProps) => {
                             <AntTab value={"/survey"} label={<><div className={classes.margin}><AssignmentIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Survey</div></>} />
                             <AntTab value={"/help"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Help</div></>} />
                             {canAccessUsers && (
-                              <AntTab value={"/users"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Users</div></>} />
+                                <AntTab value={"/users"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Users</div></>} />
                             )}
                         </AntTabs>
                         <div className={classes.stayOnTheLeft}>
