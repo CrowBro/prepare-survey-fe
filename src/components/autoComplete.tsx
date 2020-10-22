@@ -218,7 +218,7 @@ const IntegrationReactSelect = <T extends any>(props: SelectProps<T>) => {
             },
         }),
     };
-    const resultLimit = 20
+    const resultLimit = 2000
     let iiii = 0
     return (
         <div className={classes.root}>
