@@ -12,7 +12,7 @@ export default {
     output: {
         publicPath: "/",
         path: resolve(__dirname, "dist"),
-        filename: "bundle.js",
+        filename: "bundle.[chunkhash].js",
     },
     resolve: {
         modules: ["node_modules", "./src"],
