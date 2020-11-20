@@ -225,23 +225,23 @@ const Header = (props: RouteComponentProps) => {
                                 open={!!anchorElCountrySpace}
                                 onClose={handleCloseCountrySpaceSelector}
                             >
-                                <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("es")}>{countryDict["es"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("it")}>{countryDict["it"]}</MenuItem>
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem> */}
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("fr")}>{countryDict["fr"]}</MenuItem> */}
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("es")}>{countryDict["es"]}</MenuItem> */}
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("it")}>{countryDict["it"]}</MenuItem> */}
                                 <MenuItem onClick={() => handleChangeCountrySpace("cn")}>{countryDict["cn"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("cz")}>{countryDict["cz"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("de")}>{countryDict["de"]}</MenuItem>
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("cz")}>{countryDict["cz"]}</MenuItem> */}
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("de")}>{countryDict["de"]}</MenuItem> */}
                                 <MenuItem onClick={() => handleChangeCountrySpace("in")}>{countryDict["in"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("sg")}>{countryDict["sg"]}</MenuItem>
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("sg")}>{countryDict["sg"]}</MenuItem> */}
                                 <MenuItem onClick={() => handleChangeCountrySpace("co")}>{countryDict["co"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("cl")}>{countryDict["cl"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("pl")}>{countryDict["pl"]}</MenuItem>
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("pl")}>{countryDict["pl"]}</MenuItem> */}
                                 <MenuItem onClick={() => handleChangeCountrySpace("be")}>{countryDict["be"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("tr")}>{countryDict["tr"]}</MenuItem>
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("tr")}>{countryDict["tr"]}</MenuItem> */}
                                 <MenuItem onClick={() => handleChangeCountrySpace("uk")}>{countryDict["uk"]}</MenuItem>
                                 <MenuItem onClick={() => handleChangeCountrySpace("tw")}>{countryDict["tw"]}</MenuItem>
-                                <MenuItem onClick={() => handleChangeCountrySpace("nl")}>{countryDict["nl"]}</MenuItem>
+                                {/* <MenuItem onClick={() => handleChangeCountrySpace("nl")}>{countryDict["nl"]}</MenuItem> */}
                             </Menu>
                         </div>
                         <div className={classes.moveToTheRight}>
