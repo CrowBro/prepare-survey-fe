@@ -5,6 +5,7 @@ import { withStyles, ThemeProvider } from "@material-ui/styles";
 import SportsForm from "components/sportsForm";
 import SportsList from "components/sportsList";
 import UsersList from "components/usersList";
+import LocationsList from "components/locationsList";
 import Header from "components/headers";
 import SurveyForm from "components/surveyForm";
 import { Provider } from "react-redux";
@@ -51,6 +52,7 @@ export default () => (
                     <Route path="/sports" component={SportsList} />
                     <Route path="/survey" component={SurveyForm} />
                     <Route path="/users" component={UsersList} />
+                    <Route path="/locations" component={LocationsList} />
                     <Route path="/help" component={Help} />
                     <Route path="/api/login/callback" component={CallbackComponent} />
                     <Route path="/preparation2/api/login/callback" component={CallbackComponent} />

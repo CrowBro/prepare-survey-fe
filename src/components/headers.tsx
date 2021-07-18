@@ -215,6 +215,7 @@ const Header = (props: RouteComponentProps) => {
                             {canAccessUsers && (
                                 <AntTab value={"/users"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Users</div></>} />
                             )}
+                            <AntTab value={"/locations"} label={<><div className={classes.margin}><HelpOutlineIcon fontSize="inherit" />&nbsp;&nbsp;&nbsp;Locations</div></>} />
                         </AntTabs>
                         <div className={classes.stayOnTheLeft}>
                             <Button onClick={handleClickCountrySpace}>{`Choose country: ${countryDict[currentCountry]}`}</Button>

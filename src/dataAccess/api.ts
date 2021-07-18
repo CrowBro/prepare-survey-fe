@@ -33,7 +33,7 @@ function parseJwt(token: string) {
 export type CountrySpace = string;
 
 export const checkValidity = async (authHeader: string) => {
-    // return { status: 200, user: "asdf" };
+    return { status: 200, user: "asdf" };
     try {
         const response = await axios.get<string>(apiConfig.baseUrl + "/api/heartBeat/auth", {
             headers: {
@@ -86,6 +86,14 @@ export const getSports = async (authHeader: string, countrySpace: CountrySpace) 
     return response.data;
 }
 
+export interface User {
+    userId: number;
+    name: string;
+    email: string;
+    role: string;
+    countryCode: string;
+}
+
 export const getUsers = async (authHeader: string, countrySpace: CountrySpace) => {
     const params = {
         year: 2020,
@@ -132,6 +140,62 @@ export const saveUser = async (authHeader: string, user: User, countrySpace: str
 export const deleteUser = async (authHeader: string, user: User, countrySpace: string) => {
     const id = user.userId;
     const response = await axios.put<User>(`${apiConfig.baseUrl}/api/Users/${id}/delete`, user,
+        {
+            headers: {
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
+            },
+            params: {}
+        });
+
+    return response.data;
+}
+
+export interface Location {
+    locationId: number;
+    source: string;
+    name: string;
+    region: string;
+    countryCode: string;
+    isHidden: boolean;
+}
+
+export const getLocations = async (authHeader: string, countrySpace: CountrySpace) => {
+    const params = {
+        year: 2020,
+        country: countrySpace
+    }
+
+    const response = await axios.get<Location[]>(apiConfig.baseUrl + "/api/locations", {
+        headers: {
+            "Authorization": authHeader,
+            "X-CountrySpace": countrySpace
+        },
+        params: params
+    })
+
+    console.debug(response);
+
+    return response.data;
+}
+
+export const saveLocation = async (authHeader: string, location: Location, countrySpace: string) => {
+    const id = location.locationId;
+    const response = await axios.put<Location>(`${apiConfig.baseUrl}/api/Locations/${id}`, location,
+        {
+            headers: {
+                "Authorization": authHeader,
+                "X-CountrySpace": countrySpace
+            },
+            params: {}
+        });
+
+    return response.data;
+}
+
+export const switchLocationVisibility = async (authHeader: string, location: Location, countrySpace: string) => {
+    const id = location.locationId;
+    const response = await axios.put<Location>(`${apiConfig.baseUrl}/api/Locations/${id}/switchVisibility`, location,
         {
             headers: {
                 "Authorization": authHeader,
@@ -207,14 +271,6 @@ interface ProductCategoryDetails {
 interface ProductsPair {
     targetDetails: ProductCategoryDetails;
     benchmarkDetails: ProductCategoryDetails;
-}
-
-export interface User {
-    userId: number;
-    name: string;
-    email: string;
-    role: string;
-    countryCode: string;
 }
 
 export const getProductCategories = async (authHeader: string, countrySpace: string, sportId: number) => {
